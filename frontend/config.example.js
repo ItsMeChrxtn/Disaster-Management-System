@@ -1,0 +1,7 @@
+window.DISASTER_MAP_CONFIG = {
+  API_URL: 'https://your-api.up.railway.app/api',
+  MAP_CENTER: [14.2554073, 120.8671503],
+  MAP_BOUNDS: [[14.0568738, 120.4161392], [14.5856400, 121.0776824]],
+  MAP_ZOOM: 10,
+  ALERT_POLL_MS: 30000
+};

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Public hazard map and emergency alerts">
+  <title>Disaster Map</title>
+  <link rel="stylesheet" href="assets/css/tailwind.css?v=20260620">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
+  <link rel="stylesheet" href="assets/css/app.css?v=20260620-ui2">
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <header class="sticky top-0 z-50 border-b bg-white/90 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-[1600px] items-center justify-between px-4 py-3 lg:px-8">
+      <a href="index.html" class="flex items-center gap-3" aria-label="Disaster Map home">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-xl text-white">⌖</span>
+        <div><strong class="block leading-tight">Disaster Map</strong><span class="text-xs text-slate-500">Hazards & real-time alerts</span></div>
+      </a>
+      <div class="flex items-center gap-2">
+        <button id="locateBtn" class="rounded-lg border px-3 py-2 text-sm hover:bg-slate-50">Use my location</button>
+        <a id="accountLink" href="login.html" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">Sign in</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[1600px] px-4 py-6 lg:px-8">
+    <section id="alertStrip" class="mb-4 hidden rounded-xl border-l-4 border-red-600 bg-red-50 p-4" aria-live="polite"></section>
+    <div class="mb-5"><p class="text-xs font-extrabold uppercase tracking-[.18em] text-blue-600">Public situational awareness</p><h1 class="mt-2 text-3xl font-black tracking-tight">Cavite hazard and evacuation map</h1><p class="mt-1 text-sm text-slate-500">Explore verified hazard zones, safety facilities, and evacuation routes.</p></div>
+    <div class="mb-4 grid gap-3 rounded-2xl border bg-white p-4 shadow-sm lg:grid-cols-[1fr_220px_200px_auto]">
+      <form id="locationSearchForm" class="flex gap-2"><label for="locationSearch" class="sr-only">Search location</label><input id="locationSearch" required minlength="2" maxlength="160" type="search" placeholder="Search barangay, municipality, or address" class="min-w-0 flex-1 rounded-lg border px-4 py-2.5 text-sm"><button class="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">Search</button></form>
+      <label class="sr-only" for="municipalityFilter">Filter municipality</label><select id="municipalityFilter" class="rounded-lg border bg-white px-4 py-2.5 text-sm"><option value="">All municipalities</option></select>
+      <label class="sr-only" for="hazardTypeFilter">Filter hazard type</label><select id="hazardTypeFilter" class="rounded-lg border bg-white px-4 py-2.5 text-sm"><option value="">All hazard types</option><option value="flood">Flood zones</option><option value="storm">Storm surge</option><option value="earthquake">Earthquake areas</option></select>
+      <button id="fitLayersBtn" class="rounded-lg border px-4 py-2.5 text-sm font-semibold">Fit visible layers</button>
+    </div>
+    <div class="grid gap-4 lg:grid-cols-[260px_1fr]">
+      <aside class="space-y-4 rounded-2xl border bg-white p-4 shadow-sm lg:sticky lg:top-24 lg:self-start">
+        <div><h2 class="font-semibold">Map layers</h2><p id="layerStatus" class="text-xs text-slate-500">Loading GIS data…</p></div>
+        <div id="layerToggles" class="space-y-2 text-sm">
+          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-sm bg-blue-500"></i>Flood layer</span><input data-layer="flood" type="checkbox" checked class="h-4 w-4 accent-blue-600"></label>
+          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-sm bg-violet-600"></i>Storm surge layer</span><input data-layer="storm" type="checkbox" checked class="h-4 w-4 accent-violet-600"></label>
+          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-sm bg-orange-500"></i>Earthquake layer</span><input data-layer="earthquake" type="checkbox" checked class="h-4 w-4 accent-orange-600"></label>
+          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-full bg-emerald-500"></i>Safe zones</span><input data-layer="safeZones" type="checkbox" checked class="h-4 w-4 accent-emerald-600"></label>
+          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-full bg-indigo-700"></i>Evacuation centers</span><input data-layer="centers" type="checkbox" checked class="h-4 w-4 accent-indigo-700"></label>
+          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-1 w-4 bg-teal-600"></i>Routes</span><input data-layer="routes" type="checkbox" checked class="h-4 w-4 accent-teal-600"></label>
+        </div>
+        <div class="border-t pt-4"><h2 class="font-semibold">Risk legend</h2><div class="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-600"><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-emerald-500"></i>Low</span><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-amber-500"></i>Moderate</span><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-orange-500"></i>High</span><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-red-600"></i>Critical</span></div></div>
+        <p class="border-t pt-4 text-xs text-slate-500">Location search results are provided by OpenStreetMap Nominatim.</p>
+      </aside>
+      <div id="publicMapShell" class="map-shell"><button id="fullscreenMapBtn" class="absolute right-3 top-3 z-[500] rounded-xl bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-lg">Full screen</button><div id="map" aria-label="Interactive GIS disaster map"></div></div>
+    </div>
+  </main>
+  <div id="toast" class="fixed bottom-5 right-5 hidden max-w-sm rounded-xl bg-slate-900 px-4 py-3 text-sm text-white shadow-xl" role="status"></div>
+  <script src="vendor/leaflet/leaflet.js?v=1.9.4"></script><script src="vendor/sweetalert2/sweetalert2.all.min.js?v=11"></script>
+  <script src="config.js?v=20260620-fix2"></script><script src="assets/js/api.js?v=20260620-fix2"></script><script src="assets/js/alerts.js?v=20260620-fix1"></script><script src="assets/js/map.js?v=20260620-4"></script>
+</body>
+</html>

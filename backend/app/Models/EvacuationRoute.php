@@ -1,0 +1,12 @@
+<?php
+namespace App\Models;
+final class EvacuationRoute extends BaseModel
+{
+    private const SELECT='SELECT r.id,r.route_name,r.municipality_id,m.municipality_name,r.start_location,r.end_location,r.geojson_data,r.distance_km,r.estimated_travel_minutes,r.created_at,r.updated_at FROM evacuation_routes r LEFT JOIN municipalities m ON m.id=r.municipality_id';
+    public function all(?int $municipalityId=null): array { $sql=self::SELECT;$values=[];if($municipalityId){$sql.=' WHERE r.municipality_id=?';$values[]=$municipalityId;}$sql.=' ORDER BY r.id DESC LIMIT 250';$statement=$this->db->prepare($sql);$statement->execute($values);return $this->decode($statement->fetchAll()); }
+    public function find(int $id): ?array { $statement=$this->db->prepare(self::SELECT.' WHERE r.id=?');$statement->execute([$id]);$rows=$this->decode($statement->fetchAll());return $rows[0]??null; }
+    public function create(array $data): int { $statement=$this->db->prepare('INSERT INTO evacuation_routes (route_name,municipality_id,start_location,end_location,geojson_data,distance_km,estimated_travel_minutes) VALUES (?,?,?,?,?,?,?)');$statement->execute([$data['route_name'],$data['municipality_id'],$data['start_location'],$data['end_location'],$data['geojson_data'],$data['distance_km'],$data['estimated_travel_minutes']]);return (int)$this->db->lastInsertId(); }
+    public function update(int $id,array $data): void { $this->db->prepare('UPDATE evacuation_routes SET route_name=?,municipality_id=?,start_location=?,end_location=?,geojson_data=?,distance_km=?,estimated_travel_minutes=? WHERE id=?')->execute([$data['route_name'],$data['municipality_id'],$data['start_location'],$data['end_location'],$data['geojson_data'],$data['distance_km'],$data['estimated_travel_minutes'],$id]); }
+    public function delete(int $id): void { $this->db->prepare('DELETE FROM evacuation_routes WHERE id=?')->execute([$id]); }
+    private function decode(array $rows): array { foreach($rows as &$row){$row['id']=(int)$row['id'];$row['municipality_id']=$row['municipality_id']===null?null:(int)$row['municipality_id'];$row['distance_km']=$row['distance_km']===null?null:(float)$row['distance_km'];$row['estimated_travel_minutes']=$row['estimated_travel_minutes']===null?null:(int)$row['estimated_travel_minutes'];foreach(['start_location','end_location','geojson_data'] as $field)$row[$field]=json_decode($row[$field],true);}return $rows; }
+}

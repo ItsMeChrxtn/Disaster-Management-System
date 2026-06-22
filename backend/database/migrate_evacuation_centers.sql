@@ -1,0 +1,10 @@
+USE disaster_map;
+ALTER TABLE evacuation_centers CHANGE name center_name VARCHAR(180) NOT NULL;
+ALTER TABLE evacuation_centers ADD COLUMN contact_number VARCHAR(30) NULL AFTER address;
+UPDATE evacuation_centers SET address='' WHERE address IS NULL;
+UPDATE evacuation_centers SET capacity=0 WHERE capacity IS NULL;
+ALTER TABLE evacuation_centers MODIFY address VARCHAR(255) NOT NULL;
+ALTER TABLE evacuation_centers MODIFY capacity INT UNSIGNED NOT NULL;
+ALTER TABLE evacuation_centers MODIFY status ENUM('open','closed','standby','deleted') NOT NULL DEFAULT 'standby';
+ALTER TABLE evacuation_centers DROP COLUMN current_occupancy;
+ALTER TABLE evacuation_centers ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER created_at;

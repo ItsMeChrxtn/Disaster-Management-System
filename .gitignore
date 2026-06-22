@@ -1,0 +1,11 @@
+.env
+backend/.env
+frontend/.env
+vendor/
+node_modules/
+*.log
+.vercel/
+backend/storage/reports/*
+!backend/storage/reports/.gitkeep
+backend/storage/reports/*
+!backend/storage/reports/.gitkeep

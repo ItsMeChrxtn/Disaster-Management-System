@@ -1,0 +1,14 @@
+{
+  "name": "disaster-management-system",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./frontend/assets/css/tailwind.input.css -o ./frontend/assets/css/tailwind.css --minify"
+  },
+  "dependencies": {
+    "leaflet": "1.9.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.1",
+    "tailwindcss": "4.3.1"
+  }
+}

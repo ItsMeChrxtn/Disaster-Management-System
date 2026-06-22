@@ -1,0 +1,5 @@
+USE disaster_map;
+ALTER TABLE safe_zones CHANGE name safezone_name VARCHAR(180) NOT NULL;
+ALTER TABLE safe_zones ADD COLUMN description TEXT NULL AFTER capacity;
+ALTER TABLE safe_zones ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER created_at;
+

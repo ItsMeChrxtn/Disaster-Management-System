@@ -1,0 +1,10 @@
+{
+  "name": "pdrrmo/disaster-map-api",
+  "description": "Disaster Map REST API",
+  "license": "proprietary",
+  "require": {"php": ">=8.1", "ext-pdo": "*", "ext-json": "*",
+    "dompdf/dompdf": "^3.1",
+    "phpoffice/phpspreadsheet": "^5.8"},
+  "autoload": {"psr-4": {"App\\": "app/"}},
+  "scripts": {"serve": "php -S 0.0.0.0:8080 -t public"}
+}
