@@ -7,7 +7,7 @@ use App\Models\Municipality;
 final class MunicipalityController
 {
     public function index(Request $r): never { Response::success((new Municipality())->all()); }
-    public function options(Request $r): never { Response::success((new Municipality())->all(true)); }
+    public function options(Request $r): never { Response::success((new Municipality())->all(false)); }
     public function show(Request $r): never
     {
         $item=(new Municipality())->find((int)$r->params['id']);if(!$item)Response::error('Municipality not found',404);Response::success($item);
@@ -22,7 +22,10 @@ final class MunicipalityController
     }
     public function destroy(Request $r): never
     {
-        $id=(int)$r->params['id'];$model=new Municipality();if(!$model->find($id))Response::error('Municipality not found',404);$model->deactivate($id);Response::success(['message'=>'Municipality deactivated']);
+        $id=(int)$r->params['id'];$model=new Municipality();if(!$model->find($id))Response::error('Municipality not found',404);
+        try{$model->delete($id);}
+        catch(\PDOException $e){if($e->getCode()==='23000')Response::error('Cannot delete municipality because related records still reference it',409);throw $e;}
+        Response::success(['message'=>'Municipality deleted']);
     }
     private function validated(Request $r): array
     {

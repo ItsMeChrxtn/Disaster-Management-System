@@ -1,0 +1,125 @@
+<section id="view-safezones" class="view hidden">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">Safety facilities</h1>
+      <p class="text-sm text-slate-500">Green markers are safe zones. Blue markers are evacuation centers.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button id="nearestSafeZoneBtn" class="rounded-lg border bg-white px-4 py-2.5 text-sm font-semibold">Find nearest safe zone</button>
+      <button id="nearestEvacuationCenterBtn" class="rounded-lg border bg-white px-4 py-2.5 text-sm font-semibold">Find nearest evacuation center</button>
+    </div>
+  </div>
+
+  <div class="safe-zone-workspace mt-5 grid gap-5 xl:grid-cols-3">
+    <div class="safe-zone-map-card overflow-hidden rounded-2xl border bg-white xl:col-span-2">
+      <div id="safeZoneRouteModes" class="safe-zone-route-modes safe-zone-map-route-modes" role="group" aria-label="Route travel mode">
+        <button type="button" data-route-mode="driving" class="is-active" title="Car" aria-label="Car route">
+          <span class="route-mode-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path class="route-icon-fill" d="M6.2 10.8 7.5 7.4A2.7 2.7 0 0 1 10 5.8h4a2.7 2.7 0 0 1 2.5 1.6l1.3 3.4A2.8 2.8 0 0 1 20 13.5v4.2c0 .7-.6 1.3-1.3 1.3H18v1.1c0 .5-.4.9-.9.9h-1.2c-.5 0-.9-.4-.9-.9V19H9v1.1c0 .5-.4.9-.9.9H6.9c-.5 0-.9-.4-.9-.9V19h-.7c-.7 0-1.3-.6-1.3-1.3v-4.2c0-1.2.9-2.4 2.2-2.7Z"/>
+              <path class="route-icon-cut-fill" d="M8.8 8.1h6.4l.9 2.4H7.9l.9-2.4Z"/>
+              <circle class="route-icon-cut-fill" cx="7.5" cy="15.3" r="1.1"/>
+              <circle class="route-icon-cut-fill" cx="16.5" cy="15.3" r="1.1"/>
+            </svg>
+          </span>
+        </button>
+        <button type="button" data-route-mode="motorcycle" title="Motorcycle" aria-label="Motorcycle route">
+          <span class="route-mode-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path class="route-icon-fill" d="M6 13.8a3.2 3.2 0 1 0 3.2 3.2A3.2 3.2 0 0 0 6 13.8Zm12 0a3.2 3.2 0 1 0 3.2 3.2 3.2 3.2 0 0 0-3.2-3.2ZM10 16.1h2.4l2.2-3.6h2.5l1.1 2.1h2.2l-1.9-3.7a1.8 1.8 0 0 0-1.6-1h-3.4l-1.1 1.9H9.9L8.8 9.6H6.7l1.8 4.2L7.3 16H10Z"/>
+              <circle class="route-icon-cut-fill" cx="6" cy="17" r="1.3"/>
+              <circle class="route-icon-cut-fill" cx="18" cy="17" r="1.3"/>
+            </svg>
+          </span>
+        </button>
+        <button type="button" data-route-mode="walking" title="Walk" aria-label="Walking route">
+          <span class="route-mode-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path class="route-icon-fill" d="M8.3 4.7c1.1 0 2 .8 2 1.9 0 1.4-.8 2.4-1.9 2.4-1.2 0-2-.8-2-1.9 0-1.4.8-2.4 1.9-2.4Zm7 5.2c1.2 0 2 .8 2 1.9 0 1.5-.8 2.4-2 2.4-1.1 0-1.9-.8-1.9-1.9 0-1.5.8-2.4 1.9-2.4ZM7.8 10.1c1.6 0 3.2 1.1 3.2 2.7 0 1.2-.9 2-2.1 2H6.7c-1.3 0-2.2-.8-2.2-2 0-1.6 1.7-2.7 3.3-2.7Zm7 5.1c1.7 0 3.5 1.1 3.5 2.8 0 1.2-.9 2-2.2 2h-2.7c-1.3 0-2.2-.8-2.2-2 0-1.7 1.8-2.8 3.6-2.8Z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div class="safe-zone-map-legend" aria-label="Safety facilities legend">
+        <span>Legend</span>
+        <ul>
+          <li><i class="legend-pin safe-zone"></i>Safe zone</li>
+          <li><i class="legend-pin evacuation-center"></i>Evacuation center</li>
+          <li><i class="legend-pin nearest"></i>Nearest result</li>
+          <li><i class="legend-route safe-zone-route"></i>Safe zone route</li>
+          <li><i class="legend-route evacuation-route"></i>Evacuation center route</li>
+          <li><i class="legend-dot"></i>Your location</li>
+        </ul>
+      </div>
+      <div id="safeZoneMap" class="h-[500px]"></div>
+      <div id="safeZoneRouteSummary" class="safe-zone-route-summary hidden"></div>
+    </div>
+
+    <aside id="safeZoneFormCard" class="manager-only hidden rounded-2xl border bg-white p-5">
+      <form id="safeZoneForm" class="space-y-3">
+        <input name="id" type="hidden">
+        <input name="address" type="hidden">
+        <div class="safe-zone-form-head">
+          <div>
+            <span>Facility record</span>
+            <h2 id="safeZoneFormTitle" class="font-semibold">Add facility</h2>
+          </div>
+          <p>Fill the location fields, then verify the detected map point.</p>
+        </div>
+        <label><span>Facility type</span><select name="facility_type" required class="w-full rounded-lg border p-2.5"><option value="safe_zone">Safe zone</option><option value="evacuation_center">Evacuation center</option></select></label>
+        <label><span>Facility name</span><input name="safezone_name" required minlength="2" maxlength="180" placeholder="e.g. Barangay Hall Covered Court" class="w-full rounded-lg border p-2.5"></label>
+        <div class="safe-zone-location-grid">
+          <label><span>Municipality / city</span><select name="municipality_id" required class="w-full rounded-lg border p-2.5"><option value="">Select city / municipality</option></select></label>
+          <label><span>Barangay</span><select name="barangay" class="w-full rounded-lg border p-2.5" disabled><option value="">Select barangay</option></select></label>
+        </div>
+        <label><span>Exact address</span><input name="exact_address" required maxlength="160" placeholder="Street, building, school, court, or landmark" class="w-full rounded-lg border p-2.5"></label>
+        <button type="button" id="safeZoneGeocodeBtn" class="rounded-lg border bg-white px-4 py-2.5 text-sm font-semibold">Detect latitude and longitude</button>
+        <div class="safe-zone-coordinate-grid grid grid-cols-2 gap-2">
+          <label><span>Latitude</span><input name="latitude" type="number" step="any" required placeholder="Auto detected" readonly class="w-full rounded-lg border p-2.5"></label>
+          <label><span>Longitude</span><input name="longitude" type="number" step="any" required placeholder="Auto detected" readonly class="w-full rounded-lg border p-2.5"></label>
+        </div>
+        <label><span>Capacity</span><input name="capacity" type="number" min="0" required placeholder="Number of people" class="w-full rounded-lg border p-2.5"></label>
+        <div class="safe-zone-contact-grid">
+          <label><span>Contact person</span><input name="contact_person" maxlength="120" placeholder="Name of focal person or caretaker" class="w-full rounded-lg border p-2.5"></label>
+          <label><span>Contact number</span><input name="contact_number" maxlength="30" placeholder="Mobile or telephone number" class="w-full rounded-lg border p-2.5"></label>
+        </div>
+        <label data-center-only><span>Status</span><select name="center_status" class="w-full rounded-lg border p-2.5"><option value="available">Available</option><option value="full">Full</option><option value="closed">Closed</option><option value="under_maintenance">Under maintenance</option></select></label>
+        <label data-safezone-only><span>Description</span><textarea name="description" maxlength="5000" rows="4" placeholder="Notes, access instructions, or facility details" class="w-full rounded-lg border p-2.5"></textarea></label>
+        <p id="safeZoneFormError" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700"></p>
+        <button class="w-full rounded-lg bg-emerald-600 p-2.5 font-semibold text-white">Save facility</button>
+      </form>
+    </aside>
+  </div>
+
+  <div class="safe-zone-table-card mt-5 overflow-x-auto rounded-2xl border bg-white" data-custom-table-toolbar="true">
+    <div class="safe-zone-table-toolbar admin-table-toolbar">
+      <div class="table-toolbar-title">
+        <span>Directory</span>
+        <strong>Safety facilities</strong>
+      </div>
+      <div class="table-export-group" aria-label="Table export actions">
+        <button data-export="csv" title="Export CSV">CSV</button>
+        <button data-export="excel" title="Export Excel">Excel</button>
+        <button data-export="pdf" title="Print to PDF">PDF</button>
+        <button data-export="print" title="Print table">Print</button>
+      </div>
+      <div class="safe-zone-table-controls">
+        <div class="safe-zone-filter-buttons" role="group" aria-label="Filter safety facilities">
+          <button type="button" data-facility-filter="all" class="is-active"><span>All</span><b data-filter-count="all">0</b></button>
+          <button type="button" data-facility-filter="safe_zone"><span>Safe zones</span><b data-filter-count="safe_zone">0</b></button>
+          <button type="button" data-facility-filter="evacuation_center"><span>Evacuation centers</span><b data-filter-count="evacuation_center">0</b></button>
+        </div>
+        <label class="safe-zone-table-search table-search">
+          <span>Search</span>
+          <input id="safeZoneSearch" type="search" placeholder="Search facility, municipality, address">
+        </label>
+      </div>
+    </div>
+    <table class="w-full text-left text-sm">
+      <thead class="bg-slate-50 text-slate-500">
+        <tr><th class="p-4">Facility</th><th class="p-4">Type</th><th class="p-4">Municipality</th><th class="p-4">Address</th><th class="p-4">Contact</th><th class="p-4">Capacity</th><th class="p-4 text-right">Actions</th></tr>
+      </thead>
+      <tbody id="safeZonesTable"></tbody>
+    </table>
+  </div>
+</section>

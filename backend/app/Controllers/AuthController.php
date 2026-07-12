@@ -44,13 +44,13 @@ final class AuthController
     {
         $d=$r->body();Validator::require($d,['token','password','password_confirmation']);$this->validatePasswordConfirmation($d);
         $db=Database::connection();$s=$db->prepare('SELECT * FROM password_reset_tokens WHERE token_hash=? AND used_at IS NULL AND expires_at>UTC_TIMESTAMP() LIMIT 1');$s->execute([hash('sha256',$d['token'])]);$reset=$s->fetch();if(!$reset)Response::error('Reset token is invalid or expired',422);
-        $db->beginTransaction();try{$db->prepare('UPDATE users SET password=? WHERE id=?')->execute([password_hash($d['password'],PASSWORD_DEFAULT),$reset['user_id']]);$db->prepare('UPDATE password_reset_tokens SET used_at=UTC_TIMESTAMP() WHERE id=?')->execute([$reset['id']]);$db->prepare('UPDATE user_sessions SET revoked_at=UTC_TIMESTAMP() WHERE user_id=? AND revoked_at IS NULL')->execute([$reset['user_id']]);$db->commit();}catch(\Throwable $e){$db->rollBack();throw $e;}Response::success(['message'=>'Password reset successfully']);
+        $db->beginTransaction();try{$db->prepare('UPDATE users SET password=? WHERE id=?')->execute([password_hash($d['password'],PASSWORD_DEFAULT),$reset['user_id']]);(new User())->clearPasswordMustChange((int)$reset['user_id']);$db->prepare('UPDATE password_reset_tokens SET used_at=UTC_TIMESTAMP() WHERE id=?')->execute([$reset['id']]);$db->prepare('UPDATE user_sessions SET revoked_at=UTC_TIMESTAMP() WHERE user_id=? AND revoked_at IS NULL')->execute([$reset['user_id']]);$db->commit();}catch(\Throwable $e){$db->rollBack();throw $e;}Response::success(['message'=>'Password reset successfully']);
     }
 
     public function changePassword(Request $r): never
     {
         $d=$r->body();Validator::require($d,['current_password','password','password_confirmation']);$this->validatePasswordConfirmation($d);$user=(new User())->findByEmail($r->user['email']);if(!$user||!password_verify($d['current_password'],$user['password']))Response::error('Current password is incorrect',422);
-        $db=Database::connection();$db->prepare('UPDATE users SET password=? WHERE id=?')->execute([password_hash($d['password'],PASSWORD_DEFAULT),$r->user['id']]);$db->prepare('UPDATE user_sessions SET revoked_at=UTC_TIMESTAMP() WHERE user_id=? AND jti<>? AND revoked_at IS NULL')->execute([$r->user['id'],$r->params['_jwt_jti']]);Response::success(['message'=>'Password changed successfully']);
+        $db=Database::connection();$db->prepare('UPDATE users SET password=? WHERE id=?')->execute([password_hash($d['password'],PASSWORD_DEFAULT),$r->user['id']]);(new User())->clearPasswordMustChange((int)$r->user['id']);$db->prepare('UPDATE user_sessions SET revoked_at=UTC_TIMESTAMP() WHERE user_id=? AND jti<>? AND revoked_at IS NULL')->execute([$r->user['id'],$r->params['_jwt_jti']]);Response::success(['message'=>'Password changed successfully','password_must_change'=>0]);
     }
 
     public function updateProfile(Request $r): never

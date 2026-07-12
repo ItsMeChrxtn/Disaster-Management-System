@@ -1,0 +1,81 @@
+<section id="view-municipalities" class="view hidden">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">Municipalities</h1>
+      <p class="text-sm text-slate-500">Manage municipality records and availability.</p>
+    </div>
+    <button id="addMunicipalityBtn" class="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white">Add municipality</button>
+  </div>
+
+  <div class="mt-5">
+    <div class="municipalities-table-card overflow-x-auto rounded-2xl border bg-white">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-slate-50 text-slate-500">
+          <tr>
+            <th class="p-4">Municipality</th>
+            <th class="p-4">Description</th>
+            <th class="p-4">Status</th>
+            <th class="p-4 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="municipalitiesTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <aside id="municipalityPanel" class="crud-modal fixed inset-0 z-[1000] hidden items-center justify-center bg-slate-950/60 p-4 backdrop-blur-md">
+    <div class="modal-dialog municipality-dialog">
+      <div class="municipality-modal-header">
+        <div class="municipality-modal-heading">
+          <span class="municipality-modal-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-7h6v7"/><path d="M3 21h18"/></svg>
+          </span>
+          <div>
+            <span class="modal-kicker">Jurisdiction record</span>
+            <h2 id="municipalityPanelTitle">Add municipality</h2>
+            <p>Keep municipal coverage, status, and operational notes current.</p>
+          </div>
+        </div>
+        <button id="closeMunicipalityPanel" type="button" data-modal-close class="municipality-modal-close" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body municipality-modal-body">
+        <div id="municipalityDetails" class="mt-4 hidden space-y-3 text-sm"></div>
+        <form id="municipalityForm" class="municipality-form">
+          <input name="id" type="hidden">
+          <div class="municipality-form-section">
+            <span>Record details</span>
+            <strong>Municipal profile</strong>
+          </div>
+          <div class="municipality-field full">
+            <label for="municipalityName">Municipality name</label>
+            <input id="municipalityName" name="municipality_name" minlength="2" maxlength="120" required placeholder="Enter municipality name">
+          </div>
+          <div class="municipality-field full">
+            <label for="municipalityDescription">Description</label>
+            <textarea id="municipalityDescription" name="description" maxlength="2000" rows="5" placeholder="Add coverage notes, key areas, or administrative context"></textarea>
+          </div>
+          <div class="municipality-field">
+            <label for="municipalityStatus">Status</label>
+            <select id="municipalityStatus" name="status">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <p id="municipalityFormError" class="hidden"></p>
+          <div class="municipality-modal-actions">
+            <button type="button" data-modal-close class="municipality-button secondary">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              Cancel
+            </button>
+            <button type="submit" class="municipality-button primary">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+              Save municipality
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </aside>
+</section>

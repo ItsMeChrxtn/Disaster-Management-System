@@ -10,7 +10,8 @@ final class UserController
     public function show(Request $r): never { Response::success($this->scopedUser($r)); }
     public function store(Request $r): never
     {
-        $data=$this->validated($r,true);$model=new User();$id=$model->managementCreate($data);Response::success($model->findManaged($id),201);
+        $data=$this->validated($r,true);$plainPassword=$data['password'];$data['password_must_change']=true;$model=new User();$id=$model->managementCreate($data);$item=$model->findManaged($id);
+        Response::success(['user'=>$item,'temporary_password'=>$plainPassword,'message'=>'User created. Sending temporary password by EmailJS...'],201);
     }
     public function update(Request $r): never
     {
@@ -30,9 +31,13 @@ final class UserController
     }
     private function validated(Request $r,bool $creating,?int $id=null): array
     {
-        $d=$r->body();$required=['fullname','email','role'];if($creating)$required[]='password';Validator::require($d,$required);$errors=[];$name=trim((string)$d['fullname']);$email=strtolower(trim((string)$d['email']));$role=(string)$d['role'];$password=(string)($d['password']??'');$mid=isset($d['municipality_id'])&&$d['municipality_id']!==''?(int)$d['municipality_id']:null;
+        $d=$r->body();$required=['fullname','email','role'];Validator::require($d,$required);$errors=[];$name=trim((string)$d['fullname']);$email=strtolower(trim((string)$d['email']));$role=(string)$d['role'];$password=trim((string)($d['password']??''));if($creating&&$password==='')$password=$this->temporaryPassword();$mid=isset($d['municipality_id'])&&$d['municipality_id']!==''?(int)$d['municipality_id']:null;
         if(strlen($name)<2||strlen($name)>150)$errors['fullname']='Must contain 2 to 150 characters';if(!filter_var($email,FILTER_VALIDATE_EMAIL))$errors['email']='Invalid email address';if(!in_array($role,['admin','subadmin','resident'],true))$errors['role']='Invalid role';if(($creating||$password!=='')&&strlen($password)<8)$errors['password']='Must contain at least 8 characters';if($role!=='admin'&&!$mid)$errors['municipality_id']='Required for Sub Admin and Resident roles';
         $db=Database::connection();$s=$db->prepare('SELECT 1 FROM users WHERE email=? AND id<>?');$s->execute([$email,$id??0]);if($s->fetchColumn())$errors['email']='Email is already in use';if($mid){$s=$db->prepare('SELECT 1 FROM municipalities WHERE id=? AND status="active"');$s->execute([$mid]);if(!$s->fetchColumn())$errors['municipality_id']='Municipality is invalid or inactive';}if($errors)Response::error('Validation failed',422,$errors);
         return ['municipality_id'=>$mid,'fullname'=>$name,'email'=>$email,'password'=>$password,'phone'=>trim((string)($d['phone']??''))?:null,'address'=>trim((string)($d['address']??''))?:null,'barangay'=>trim((string)($d['barangay']??''))?:null,'role'=>$role];
+    }
+    private function temporaryPassword(): string
+    {
+        return 'DM-'.bin2hex(random_bytes(4)).'-'.random_int(100,999);
     }
 }

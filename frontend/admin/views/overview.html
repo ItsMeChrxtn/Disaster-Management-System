@@ -1,0 +1,64 @@
+<section id="view-overview" class="view">
+  <div class="overview-hero">
+    <div>
+      <span class="eyebrow">Live command overview</span>
+      <h1 id="dashboardTitle">Situational overview</h1>
+      <p>Monitor active hazards, public alerts, response facilities, and municipal readiness from one operating view.</p>
+    </div>
+    <div class="overview-hero-status">
+      <span>System status</span>
+      <strong>Operational</strong>
+      <p id="updatedAt"></p>
+    </div>
+  </div>
+
+  <div id="stats" class="overview-stats grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
+
+  <div class="overview-grid mt-6 grid gap-5 xl:grid-cols-12">
+    <div class="chart-panel xl:col-span-4">
+      <div class="panel-heading">
+        <div>
+          <span>Risk profile</span>
+          <h2>Hazards by severity</h2>
+        </div>
+      </div>
+      <div class="chart-frame">
+        <canvas id="severityChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-panel xl:col-span-5">
+      <div class="panel-heading">
+        <div>
+          <span>Notification trend</span>
+          <h2>Alert activity</h2>
+        </div>
+      </div>
+      <div class="chart-frame">
+        <canvas id="alertsChart"></canvas>
+      </div>
+    </div>
+
+    <div class="alert-panel xl:col-span-3">
+      <div class="panel-heading">
+        <div>
+          <span>Current advisories</span>
+          <h2>Active alerts</h2>
+        </div>
+      </div>
+      <div id="alertList" class="alert-list"></div>
+    </div>
+
+    <div class="chart-panel xl:col-span-7">
+      <div class="panel-heading">
+        <div>
+          <span>Response capacity</span>
+          <h2>Response facilities</h2>
+        </div>
+      </div>
+      <div class="chart-frame compact">
+        <canvas id="facilitiesChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>

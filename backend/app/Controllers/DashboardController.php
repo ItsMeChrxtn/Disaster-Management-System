@@ -27,7 +27,7 @@ final class DashboardController
             'total_alerts'=>$this->count($db,'SELECT COUNT(*) FROM alerts WHERE status="sent"'.$scope,$params),
             'total_reports'=>$this->count($db,'SELECT COUNT(*) FROM reports'.($role==='subadmin'?' WHERE generated_by=?':''),$role==='subadmin'?[$userId]:[]),
         ];
-        if($role==='admin')$cards=['total_residents'=>$cards['total_residents'],'total_municipalities'=>$this->count($db,'SELECT COUNT(*) FROM municipalities WHERE status="active"'),...array_slice($cards,1,null,true)];
+        if($role==='admin')$cards=array_merge(['total_residents'=>$cards['total_residents'],'total_municipalities'=>$this->count($db,'SELECT COUNT(*) FROM municipalities WHERE status="active"')],array_slice($cards,1,null,true));
         return $cards;
     }
 

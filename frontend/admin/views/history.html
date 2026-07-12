@@ -1,0 +1,99 @@
+<section id="view-history" class="view hidden">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">Historical disaster records</h1>
+      <p class="text-sm text-slate-500">Review recorded disasters, casualties, and estimated damages.</p>
+    </div>
+    <button id="newHistoricalBtn" class="admin-only rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white">Add record</button>
+  </div>
+
+  <div class="mt-5 grid gap-5 xl:grid-cols-3">
+    <div class="history-table-card overflow-x-auto rounded-2xl border bg-white xl:col-span-2">
+      <table class="history-table w-full text-left text-sm">
+        <thead class="bg-slate-50 text-slate-500">
+          <tr>
+            <th class="p-4">Disaster</th>
+            <th class="p-4">Municipality</th>
+            <th class="p-4">Date</th>
+            <th class="p-4">Casualties</th>
+            <th class="p-4">Damages</th>
+            <th class="p-4 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="historicalTable"></tbody>
+      </table>
+    </div>
+    <aside id="historicalFormCard" class="admin-only hidden rounded-2xl border bg-white p-5 history-record-modal">
+      <form id="historicalForm" class="history-record-form space-y-3">
+        <input name="id" type="hidden">
+        <h2 id="historicalFormTitle" class="font-semibold">Add historical record</h2>
+        <label class="history-form-field history-form-field-full">
+          <span>Record title</span>
+          <input name="title" required minlength="2" maxlength="180" placeholder="e.g. Barangay flood event" class="w-full rounded-lg border p-3">
+        </label>
+        <div class="history-form-grid">
+          <label class="history-form-field">
+            <span>Disaster type</span>
+            <select name="disaster_type" required class="w-full rounded-lg border p-3">
+              <option value="">Select disaster type</option>
+              <option value="Flood">Flood</option>
+              <option value="Flash Flood">Flash Flood</option>
+              <option value="Typhoon">Typhoon</option>
+              <option value="Tropical Cyclone">Tropical Cyclone</option>
+              <option value="Storm">Storm</option>
+              <option value="Severe Thunderstorm">Severe Thunderstorm</option>
+              <option value="Storm Surge">Storm Surge</option>
+              <option value="Tornado">Tornado</option>
+              <option value="Earthquake">Earthquake</option>
+              <option value="Tsunami">Tsunami</option>
+              <option value="Volcanic Eruption">Volcanic Eruption</option>
+              <option value="Lahar">Lahar</option>
+              <option value="Landslide">Landslide</option>
+              <option value="Mudslide">Mudslide</option>
+              <option value="Sinkhole">Sinkhole</option>
+              <option value="Fire">Fire</option>
+              <option value="Forest Fire">Forest Fire</option>
+              <option value="Drought">Drought</option>
+              <option value="Extreme Heat">Extreme Heat</option>
+              <option value="El Nino">El Nino</option>
+              <option value="La Nina">La Nina</option>
+              <option value="Disease Outbreak">Disease Outbreak</option>
+              <option value="Epidemic">Epidemic</option>
+              <option value="Pandemic">Pandemic</option>
+              <option value="Chemical Spill">Chemical Spill</option>
+              <option value="Oil Spill">Oil Spill</option>
+              <option value="Industrial Accident">Industrial Accident</option>
+              <option value="Transport Accident">Transport Accident</option>
+              <option value="Structural Collapse">Structural Collapse</option>
+              <option value="Power Outage">Power Outage</option>
+              <option value="Coastal Erosion">Coastal Erosion</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+          <label class="history-form-field">
+            <span>Municipality</span>
+            <select name="municipality_id" required class="w-full rounded-lg border p-3"><option value="">Select municipality</option></select>
+          </label>
+          <label class="history-form-field">
+            <span>Date occurred</span>
+            <input name="date_occurred" type="date" required class="w-full rounded-lg border p-3">
+          </label>
+          <label class="history-form-field">
+            <span>Casualties</span>
+            <input name="casualties" type="number" min="0" required placeholder="0" class="w-full rounded-lg border p-3">
+          </label>
+          <label class="history-form-field">
+            <span>Estimated damages</span>
+            <input name="damages" type="number" min="0" step="0.01" required placeholder="0.00" class="w-full rounded-lg border p-3">
+          </label>
+        </div>
+        <label class="history-form-field history-form-field-full">
+          <span>Description</span>
+          <textarea name="description" maxlength="5000" rows="5" placeholder="Briefly describe the impact, affected areas, and response notes." class="w-full rounded-lg border p-3"></textarea>
+        </label>
+        <p id="historicalFormError" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700"></p>
+        <button class="w-full rounded-lg bg-indigo-600 p-3 font-semibold text-white">Save record</button>
+      </form>
+    </aside>
+  </div>
+</section>

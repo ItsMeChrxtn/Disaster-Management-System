@@ -3,55 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Public hazard map and emergency alerts">
-  <title>Disaster Map</title>
+  <meta name="description" content="Cavite public hazard map, evacuation guidance, and emergency alerts">
+  <title>Disaster Map | Cavite Emergency Readiness</title>
   <link rel="stylesheet" href="assets/css/tailwind.css?v=20260620">
   <link rel="preconnect" href="https://unpkg.com">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
-  <link rel="stylesheet" href="assets/css/app.css?v=20260620-ui2">
+  <link rel="stylesheet" href="assets/css/app.css?v=20260701-nearest1">
 </head>
-<body class="bg-slate-50 text-slate-900">
-  <header class="sticky top-0 z-50 border-b bg-white/90 backdrop-blur-xl">
-    <div class="mx-auto flex max-w-[1600px] items-center justify-between px-4 py-3 lg:px-8">
-      <a href="index.html" class="flex items-center gap-3" aria-label="Disaster Map home">
-        <span class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-xl text-white">⌖</span>
-        <div><strong class="block leading-tight">Disaster Map</strong><span class="text-xs text-slate-500">Hazards & real-time alerts</span></div>
+<body class="public-page text-slate-950">
+  <header class="public-header">
+    <div class="public-nav">
+      <a href="#home" class="brand-mark" aria-label="Disaster Map home">
+        <span class="brand-icon">DM</span>
+        <span>
+          <strong>Disaster Map</strong>
+          <small>Cavite Readiness Hub</small>
+        </span>
       </a>
-      <div class="flex items-center gap-2">
-        <button id="locateBtn" class="rounded-lg border px-3 py-2 text-sm hover:bg-slate-50">Use my location</button>
-        <a id="accountLink" href="login.html" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">Sign in</a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#live-map">Map</a>
+        <a href="#about">About</a>
+        <a href="#preparedness">Preparedness</a>
+        <a href="#faqs">FAQs</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="locateBtn" class="button-ghost" type="button">Use my location</button>
+        <a id="accountLink" href="login.html" class="button-solid">Sign in</a>
       </div>
     </div>
   </header>
 
-  <main class="mx-auto max-w-[1600px] px-4 py-6 lg:px-8">
-    <section id="alertStrip" class="mb-4 hidden rounded-xl border-l-4 border-red-600 bg-red-50 p-4" aria-live="polite"></section>
-    <div class="mb-5"><p class="text-xs font-extrabold uppercase tracking-[.18em] text-blue-600">Public situational awareness</p><h1 class="mt-2 text-3xl font-black tracking-tight">Cavite hazard and evacuation map</h1><p class="mt-1 text-sm text-slate-500">Explore verified hazard zones, safety facilities, and evacuation routes.</p></div>
-    <div class="mb-4 grid gap-3 rounded-2xl border bg-white p-4 shadow-sm lg:grid-cols-[1fr_220px_200px_auto]">
-      <form id="locationSearchForm" class="flex gap-2"><label for="locationSearch" class="sr-only">Search location</label><input id="locationSearch" required minlength="2" maxlength="160" type="search" placeholder="Search barangay, municipality, or address" class="min-w-0 flex-1 rounded-lg border px-4 py-2.5 text-sm"><button class="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">Search</button></form>
-      <label class="sr-only" for="municipalityFilter">Filter municipality</label><select id="municipalityFilter" class="rounded-lg border bg-white px-4 py-2.5 text-sm"><option value="">All municipalities</option></select>
-      <label class="sr-only" for="hazardTypeFilter">Filter hazard type</label><select id="hazardTypeFilter" class="rounded-lg border bg-white px-4 py-2.5 text-sm"><option value="">All hazard types</option><option value="flood">Flood zones</option><option value="storm">Storm surge</option><option value="earthquake">Earthquake areas</option></select>
-      <button id="fitLayersBtn" class="rounded-lg border px-4 py-2.5 text-sm font-semibold">Fit visible layers</button>
-    </div>
-    <div class="grid gap-4 lg:grid-cols-[260px_1fr]">
-      <aside class="space-y-4 rounded-2xl border bg-white p-4 shadow-sm lg:sticky lg:top-24 lg:self-start">
-        <div><h2 class="font-semibold">Map layers</h2><p id="layerStatus" class="text-xs text-slate-500">Loading GIS data…</p></div>
-        <div id="layerToggles" class="space-y-2 text-sm">
-          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-sm bg-blue-500"></i>Flood layer</span><input data-layer="flood" type="checkbox" checked class="h-4 w-4 accent-blue-600"></label>
-          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-sm bg-violet-600"></i>Storm surge layer</span><input data-layer="storm" type="checkbox" checked class="h-4 w-4 accent-violet-600"></label>
-          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-sm bg-orange-500"></i>Earthquake layer</span><input data-layer="earthquake" type="checkbox" checked class="h-4 w-4 accent-orange-600"></label>
-          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-full bg-emerald-500"></i>Safe zones</span><input data-layer="safeZones" type="checkbox" checked class="h-4 w-4 accent-emerald-600"></label>
-          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-3 w-3 rounded-full bg-indigo-700"></i>Evacuation centers</span><input data-layer="centers" type="checkbox" checked class="h-4 w-4 accent-indigo-700"></label>
-          <label class="flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-slate-50"><span><i class="mr-2 inline-block h-1 w-4 bg-teal-600"></i>Routes</span><input data-layer="routes" type="checkbox" checked class="h-4 w-4 accent-teal-600"></label>
+  <main id="home">
+    <section class="hero-section hero-cinematic">
+      <img class="hero-bg-image" src="assets/img/disaster-hero-ops.png" alt="Coastal disaster readiness command center with hazard map overlays">
+      <div class="hero-copy">
+        <p class="eyebrow">Public situational awareness</p>
+        <h1>Prepared communities start with a clear map.</h1>
+        <p class="hero-lead">A polished public readiness portal for checking Cavite hazards, evacuation facilities, safe zones, and active alerts in one place.</p>
+        <div class="hero-actions">
+          <a href="#live-map" class="button-solid button-large">Open live map</a>
+          <a href="#preparedness" class="button-ghost button-large">View safety steps</a>
         </div>
-        <div class="border-t pt-4"><h2 class="font-semibold">Risk legend</h2><div class="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-600"><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-emerald-500"></i>Low</span><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-amber-500"></i>Moderate</span><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-orange-500"></i>High</span><span><i class="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-red-600"></i>Critical</span></div></div>
-        <p class="border-t pt-4 text-xs text-slate-500">Location search results are provided by OpenStreetMap Nominatim.</p>
-      </aside>
-      <div id="publicMapShell" class="map-shell"><button id="fullscreenMapBtn" class="absolute right-3 top-3 z-[500] rounded-xl bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-lg">Full screen</button><div id="map" aria-label="Interactive GIS disaster map"></div></div>
-    </div>
+        <div class="trust-row" aria-label="Platform highlights">
+          <span><b>6</b> GIS layers</span>
+          <span><b>24/7</b> alert-ready</span>
+          <span><b>Cavite</b> focused</span>
+        </div>
+      </div>
+
+      <div class="hero-command-panel" aria-label="Emergency operations highlights">
+        <article>
+          <span class="status-dot"></span>
+          <div>
+            <small>Live public readiness</small>
+            <strong>Hazards and facilities in one view</strong>
+          </div>
+        </article>
+        <article>
+          <b>01</b>
+          <div>
+            <small>Priority workflow</small>
+            <strong>Search area, check risk, find nearby safety facilities</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="alert-wrap">
+      <div id="alertStrip" class="hidden alert-strip" aria-live="polite"></div>
+    </section>
+
+    <section class="quick-stats" aria-label="Public readiness highlights">
+      <article>
+        <span>01</span>
+        <strong>Hazards</strong>
+        <p>Flood, storm surge, and earthquake overlays with risk levels.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <strong>Facilities</strong>
+        <p>Safe zones and evacuation centers kept visible for public planning.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <strong>Alerts</strong>
+        <p>Active advisories shown beside local context and map filters.</p>
+      </article>
+    </section>
+
+    <section id="live-map" class="map-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Interactive public map</p>
+          <h2>Everything important stays visible while you explore.</h2>
+        </div>
+        <p>Use municipality and hazard filters to focus the map on the areas that matter before, during, and after an incident.</p>
+      </div>
+
+      <div class="map-toolbar">
+        <form id="locationSearchForm" class="search-form filter-control filter-control-search">
+          <span class="filter-icon">S</span>
+          <div>
+            <label for="locationSearch">Find location</label>
+            <input id="locationSearch" required minlength="2" maxlength="160" type="search" placeholder="Barangay, municipality, or address">
+          </div>
+          <button type="submit">Search</button>
+        </form>
+
+        <div class="filter-control">
+          <span class="filter-icon">M</span>
+          <div>
+            <label for="municipalityFilter">Municipality</label>
+            <select id="municipalityFilter">
+              <option value="">All municipalities</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filter-control">
+          <span class="filter-icon">!</span>
+          <div>
+            <label for="hazardTypeFilter">Hazard type</label>
+            <select id="hazardTypeFilter">
+              <option value="">All hazard types</option>
+              <option value="flood">Flood zones</option>
+              <option value="storm">Storm surge</option>
+              <option value="earthquake">Earthquake areas</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="fitLayersBtn" class="map-action-button" type="button">
+          <span>Fit map</span>
+          <b>Visible layers</b>
+        </button>
+      </div>
+
+      <div class="map-layout">
+        <aside class="layer-panel">
+          <div class="panel-heading">
+            <span class="panel-kicker">Controls</span>
+            <h3>Visible map layers</h3>
+            <p id="layerStatus">Loading GIS data...</p>
+          </div>
+
+          <div id="layerToggles" class="layer-list">
+            <label><span><i class="swatch flood"></i>Flood layer</span><input data-layer="flood" type="checkbox" checked></label>
+            <label><span><i class="swatch storm"></i>Storm surge layer</span><input data-layer="storm" type="checkbox" checked></label>
+            <label><span><i class="swatch quake"></i>Earthquake layer</span><input data-layer="earthquake" type="checkbox" checked></label>
+            <label><span><i class="swatch safe"></i>Safe zones</span><input data-layer="safeZones" type="checkbox" checked></label>
+            <label><span><i class="swatch center"></i>Evacuation centers</span><input data-layer="centers" type="checkbox" checked></label>
+          </div>
+
+          <div class="risk-card">
+            <h3>Risk legend</h3>
+            <div class="risk-grid">
+              <span><i class="risk low"></i>Low</span>
+              <span><i class="risk moderate"></i>Moderate</span>
+              <span><i class="risk high"></i>High</span>
+              <span><i class="risk critical"></i>Critical</span>
+            </div>
+          </div>
+
+          <p class="source-note">Location search results are provided by OpenStreetMap Nominatim.</p>
+        </aside>
+
+        <div id="publicMapShell" class="map-shell public-map-shell">
+          <div class="map-ribbon">
+            <span>Public GIS viewer</span>
+            <b>Cavite coverage</b>
+          </div>
+          <button id="fullscreenMapBtn" class="fullscreen-button" type="button">Full screen</button>
+          <div id="map" aria-label="Interactive GIS disaster map"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="content-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">About the platform</p>
+          <h2>Built for residents, responders, and local decision makers.</h2>
+        </div>
+        <p>Disaster Map organizes critical location data into a clean public interface so people can identify risk, nearby facilities, and evacuation options quickly.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article>
+          <span class="feature-icon">01</span>
+          <h3>Hazard visibility</h3>
+          <p>Flood, storm surge, and earthquake layers are shown with risk levels for easier assessment.</p>
+        </article>
+        <article>
+          <span class="feature-icon">02</span>
+          <h3>Evacuation planning</h3>
+          <p>Safe zones and evacuation centers help residents prepare practical safety plans.</p>
+        </article>
+        <article>
+          <span class="feature-icon">03</span>
+          <h3>Public alerts</h3>
+          <p>Important active advisories can surface on the landing page without forcing users into the dashboard.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="preparedness" class="preparedness-section">
+      <div>
+        <p class="eyebrow">Preparedness</p>
+        <h2>Simple actions before leaving home.</h2>
+        <p>Use the map together with official barangay and municipal instructions. Keep plans practical, familiar, and easy to repeat.</p>
+      </div>
+      <div class="steps-list">
+        <article><b>1</b><span>Check your barangay and the nearest visible hazard layer.</span></article>
+        <article><b>2</b><span>Identify at least two nearby safe zones or evacuation centers.</span></article>
+        <article><b>3</b><span>Prepare medicine, IDs, phone power, water, and essential supplies.</span></article>
+        <article><b>4</b><span>Follow official advisories before floodwater, wind, or road conditions worsen.</span></article>
+      </div>
+    </section>
+
+    <section id="faqs" class="content-section faq-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FAQs</p>
+          <h2>Common questions</h2>
+        </div>
+      </div>
+
+      <div class="faq-list">
+        <details open>
+          <summary>What can I see on the public map?</summary>
+          <p>You can inspect mapped hazards, safe zones, and evacuation centers for Cavite.</p>
+        </details>
+        <details>
+          <summary>Does the map show my exact location?</summary>
+          <p>Only when you click "Use my location" and your browser allows location access. The page uses it to center the map.</p>
+        </details>
+        <details>
+          <summary>Can I search for a barangay or address?</summary>
+          <p>Yes. The search box supports Cavite locations and uses OpenStreetMap Nominatim results.</p>
+        </details>
+        <details>
+          <summary>Should this replace official emergency instructions?</summary>
+          <p>No. Treat this as a public awareness tool and still follow instructions from local authorities and emergency responders.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div>
+        <p class="eyebrow">For authorized teams</p>
+        <h2>Manage reports, alerts, GIS records, and response data in the dashboard.</h2>
+      </div>
+      <a href="login.html" class="button-solid button-large">Go to dashboard</a>
+    </section>
   </main>
-  <div id="toast" class="fixed bottom-5 right-5 hidden max-w-sm rounded-xl bg-slate-900 px-4 py-3 text-sm text-white shadow-xl" role="status"></div>
-  <script src="vendor/leaflet/leaflet.js?v=1.9.4"></script><script src="vendor/sweetalert2/sweetalert2.all.min.js?v=11"></script>
-  <script src="config.js?v=20260620-fix2"></script><script src="assets/js/api.js?v=20260620-fix2"></script><script src="assets/js/alerts.js?v=20260620-fix1"></script><script src="assets/js/map.js?v=20260620-4"></script>
+
+  <footer class="public-footer">
+    <strong>Disaster Map</strong>
+    <span>Cavite public hazard and evacuation information portal.</span>
+  </footer>
+
+  <div id="toast" class="fixed bottom-5 right-5 hidden max-w-sm rounded-xl bg-slate-950 px-4 py-3 text-sm text-white shadow-xl" role="status"></div>
+  <script src="vendor/leaflet/leaflet.js?v=1.9.4"></script>
+  <script src="vendor/sweetalert2/sweetalert2.all.min.js?v=11"></script>
+  <script src="config.js?v=20260620-fix2"></script>
+  <script src="assets/js/api.js?v=20260620-fix2"></script>
+  <script src="assets/js/alerts.js?v=20260620-fix1"></script>
+  <script src="assets/js/map.js?v=20260701-nearest1"></script>
 </body>
 </html>

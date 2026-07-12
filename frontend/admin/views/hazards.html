@@ -1,0 +1,145 @@
+<section id="view-hazards" class="view hidden">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">Hazard mapping</h1>
+      <p class="text-sm text-slate-500">Choose a drawing shape, map the affected area, then complete the hazard details.</p>
+    </div>
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <button id="newHazardBtn" type="button" class="manager-only rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white">Draw hazard area</button>
+    </div>
+  </div>
+
+  <div class="mt-5 grid gap-5 xl:grid-cols-3">
+    <div class="hazard-map-host overflow-hidden rounded-2xl border bg-white xl:col-span-2">
+      <div class="hazard-heatmap-legend" aria-label="Hazard heatmap legend">
+        <span>Heatmap guide</span>
+        <strong>Risk level</strong>
+        <ul>
+          <li><i class="risk-high"></i>High Risk</li>
+          <li><i class="risk-medium"></i>Medium</li>
+          <li><i class="risk-low"></i>Low</li>
+          <li><i class="risk-safe"></i>Safe</li>
+        </ul>
+      </div>
+      <div id="adminMap" class="h-[520px]"></div>
+    </div>
+
+    <aside id="hazardFormCard" class="hidden rounded-2xl border bg-white p-5">
+      <form id="hazardForm" class="hazard-form">
+        <input name="id" type="hidden">
+        <div class="hazard-form-header">
+          <div>
+            <span>Hazard record</span>
+            <h2 id="hazardFormTitle">Add hazard</h2>
+          </div>
+          <strong>Map-linked</strong>
+        </div>
+
+        <div id="hazardDrawTools" class="hazard-form-draw">
+          <div class="hazard-form-draw-title">
+            <span>Draw boundary</span>
+            <strong>Select a shape, then draw on the map</strong>
+          </div>
+          <div class="hazard-shape-picker">
+            <button type="button" data-hazard-draw="rectangle">
+              <span class="shape-icon shape-rectangle"></span>
+              <div>
+                <strong>Rectangle</strong>
+                <small>Two opposite corners</small>
+              </div>
+            </button>
+            <button type="button" data-hazard-draw="polygon">
+              <span class="shape-icon shape-polygon"></span>
+              <div>
+                <strong>Polygon</strong>
+                <small>Trace affected boundary</small>
+              </div>
+            </button>
+          </div>
+          <div class="hazard-draw-actions">
+            <button type="button" id="redrawHazardArea" class="hidden">Redraw</button>
+            <button type="button" id="finishHazardArea">Finish</button>
+            <button type="button" id="undoHazardPoint">Undo</button>
+            <button type="button" id="clearHazardArea">Clear</button>
+          </div>
+          <p id="hazardDrawStatus" data-tone="info">Choose a shape to start drawing.</p>
+        </div>
+
+        <label class="hazard-field full">
+          <span>Hazard name</span>
+          <input name="hazard_name" required minlength="2" maxlength="180" placeholder="e.g. Barangay flood-prone zone">
+        </label>
+
+        <div class="hazard-field-grid">
+          <label class="hazard-field">
+            <span>Hazard type</span>
+            <select name="hazard_type" required>
+              <option value="flood_zone">Flood</option>
+              <option value="storm_surge_area">Storm Surge</option>
+              <option value="landslide">Landslide</option>
+              <option value="earthquake_area">Earthquake</option>
+              <option value="fire">Fire</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label class="hazard-field">
+            <span>Risk level</span>
+            <select name="risk_level" required>
+              <option value="low">Low risk</option>
+              <option value="moderate">Moderate risk</option>
+              <option value="high">High risk</option>
+              <option value="critical">Critical risk</option>
+            </select>
+          </label>
+        </div>
+
+        <label id="hazardOtherTypeField" class="hazard-field full hidden">
+          <span>Other hazard type</span>
+          <input name="hazard_type_other" maxlength="80" placeholder="Enter hazard type">
+        </label>
+
+        <label class="hazard-field full">
+          <span>Municipality</span>
+          <select name="municipality_id" required>
+            <option value="">Select municipality</option>
+          </select>
+        </label>
+
+        <label class="hazard-field full">
+          <span>Description</span>
+          <textarea name="description" maxlength="5000" rows="4" placeholder="Add affected areas, known triggers, or response notes."></textarea>
+        </label>
+
+        <div class="hazard-geometry-panel">
+          <div>
+            <span>Boundary data</span>
+            <strong>Draw on the map or upload GeoJSON</strong>
+          </div>
+          <label class="hazard-upload">
+            Upload GeoJSON
+            <input id="geojsonFile" type="file" accept=".geojson,.json,application/geo+json,application/json">
+          </label>
+          <textarea name="geojson_text" required rows="5" placeholder="GeoJSON appears here after drawing or upload"></textarea>
+        </div>
+
+        <p id="hazardFormError" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700"></p>
+        <button type="submit" class="hazard-save-button">Save hazard</button>
+      </form>
+    </aside>
+  </div>
+
+  <div class="hazards-table-card mt-5 overflow-x-auto rounded-2xl border bg-white">
+    <table class="w-full text-left text-sm">
+      <thead class="bg-slate-50 text-slate-500">
+        <tr>
+          <th class="p-4">Hazard</th>
+          <th class="p-4">Type</th>
+          <th class="p-4">Municipality</th>
+          <th class="p-4">Risk</th>
+          <th class="p-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="hazardsTable"></tbody>
+    </table>
+  </div>
+</section>

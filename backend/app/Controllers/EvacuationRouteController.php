@@ -18,8 +18,10 @@ final class EvacuationRouteController
     public function roadRoute(Request $r): never
     {
         $startLat=$this->coordinate($r->query('start_lat'),'start_lat',90);$startLng=$this->coordinate($r->query('start_lng'),'start_lng',180);$endLat=$this->coordinate($r->query('end_lat'),'end_lat',90);$endLng=$this->coordinate($r->query('end_lng'),'end_lng',180);
-        $fallback=['type'=>'LineString','coordinates'=>[[$startLng,$startLat],[$endLng,$endLat]]];$url=sprintf('https://router.project-osrm.org/route/v1/driving/%.7F,%.7F;%.7F,%.7F?overview=full&geometries=geojson&steps=false',$startLng,$startLat,$endLng,$endLat);$context=stream_context_create(['http'=>['timeout'=>8,'header'=>"User-Agent: DisasterMap/1.0\r\n"]]);$raw=@file_get_contents($url,false,$context);$payload=$raw?json_decode($raw,true):null;$route=$payload['routes'][0]??null;
-        Response::success(['geojson_data'=>$route['geometry']??$fallback,'distance_m'=>(float)($route['distance']??$this->haversine($startLat,$startLng,$endLat,$endLng)*1000),'duration_s'=>$route? (float)$route['duration']:null,'source'=>$route?'osrm':'straight_line_fallback']);
+        $mode=(string)$r->query('mode','driving');$profiles=['driving'=>'driving','car'=>'driving','motorcycle'=>'driving','motor'=>'driving','walking'=>'walking','walk'=>'walking','cycling'=>'cycling','bicycle'=>'cycling','bike'=>'cycling'];if(!isset($profiles[$mode]))Response::error('Mode must be driving, motorcycle, walking, or cycling',422);$profile=$profiles[$mode];$displayMode=in_array($mode,['motorcycle','motor'],true)?'motorcycle':$profile;
+        $fallback=['type'=>'LineString','coordinates'=>[[$startLng,$startLat],[$endLng,$endLat]]];$url=sprintf('https://router.project-osrm.org/route/v1/%s/%.7F,%.7F;%.7F,%.7F?overview=full&geometries=geojson&steps=false',$profile,$startLng,$startLat,$endLng,$endLat);$context=stream_context_create(['http'=>['timeout'=>8,'header'=>"User-Agent: DisasterMap/1.0\r\n"]]);$raw=@file_get_contents($url,false,$context);$payload=$raw?json_decode($raw,true):null;$route=$payload['routes'][0]??null;
+        $distance=$route?(float)$route['distance']:$this->estimatedDistanceMeters($startLat,$startLng,$endLat,$endLng,$displayMode);$duration=$this->estimatedDurationSeconds($distance,$displayMode);
+        Response::success(['geojson_data'=>$route['geometry']??$fallback,'distance_m'=>$distance,'duration_s'=>$duration,'source'=>$route?'osrm_mode_estimate':'estimated_'.$displayMode.'_fallback','mode'=>$displayMode]);
     }
     private function validated(Request $r): array
     {
@@ -33,5 +35,7 @@ final class EvacuationRouteController
     private function queryCoordinates(Request $r): array { return [$this->coordinate($r->query('latitude'),'latitude',90),$this->coordinate($r->query('longitude'),'longitude',180)]; }
     private function coordinate(mixed $value,string $field,int $max): float { $number=filter_var($value,FILTER_VALIDATE_FLOAT);if($number===false||abs((float)$number)>$max)Response::error("Valid $field is required",422);return (float)$number; }
     private function haversine(float $lat1,float $lng1,float $lat2,float $lng2): float { $earth=6371;$dLat=deg2rad($lat2-$lat1);$dLng=deg2rad($lng2-$lng1);$a=sin($dLat/2)**2+cos(deg2rad($lat1))*cos(deg2rad($lat2))*sin($dLng/2)**2;return $earth*2*atan2(sqrt($a),sqrt(1-$a)); }
+    private function estimatedDistanceMeters(float $lat1,float $lng1,float $lat2,float $lng2,string $profile): float { $factor=['driving'=>1.3,'motorcycle'=>1.28,'cycling'=>1.22,'walking'=>1.12][$profile]??1.2;return $this->haversine($lat1,$lng1,$lat2,$lng2)*1000*$factor; }
+    private function estimatedDurationSeconds(float $distanceMeters,string $profile): float { $speedKmh=['driving'=>30,'motorcycle'=>28,'cycling'=>14,'walking'=>4.8][$profile]??20;return ($distanceMeters/1000)/$speedKmh*3600; }
     private function assertScope(Request $r,array $item): void { if($r->user['role']==='subadmin'&&(int)$item['municipality_id']!==(int)$r->user['municipality_id'])Response::error('Forbidden',403); }
 }

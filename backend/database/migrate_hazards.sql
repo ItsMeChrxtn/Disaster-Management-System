@@ -6,7 +6,7 @@ UPDATE hazards SET type=CASE
   WHEN type='storm_surge' THEN 'storm_surge_area'
   WHEN type='earthquake' THEN 'earthquake_area'
   ELSE 'high_risk_area' END;
-ALTER TABLE hazards CHANGE type hazard_type ENUM('flood_zone','storm_surge_area','earthquake_area','high_risk_area') NOT NULL;
+ALTER TABLE hazards CHANGE type hazard_type VARCHAR(80) NOT NULL;
 ALTER TABLE hazards CHANGE severity risk_level ENUM('low','moderate','high','critical') NOT NULL;
 ALTER TABLE hazards CHANGE geojson geojson_data JSON NOT NULL;
 ALTER TABLE hazards DROP COLUMN instructions;

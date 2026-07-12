@@ -16,6 +16,7 @@ CREATE TABLE users (
   phone VARCHAR(30) NULL, address VARCHAR(255) NULL, barangay VARCHAR(120) NULL,
   role ENUM('admin','subadmin','resident') NOT NULL DEFAULT 'resident',
   status ENUM('active','disabled','deleted') NOT NULL DEFAULT 'active', email_verified_at TIMESTAMP NULL,
+  password_must_change TINYINT(1) NOT NULL DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_user_municipality FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE SET NULL,
   INDEX idx_users_scope (municipality_id,role,status)
@@ -37,7 +38,7 @@ CREATE TABLE password_reset_tokens (
 CREATE TABLE hazards (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, municipality_id BIGINT UNSIGNED NULL,
   hazard_name VARCHAR(180) NOT NULL,
-  hazard_type ENUM('flood_zone','storm_surge_area','earthquake_area','high_risk_area') NOT NULL,
+  hazard_type VARCHAR(80) NOT NULL,
   risk_level ENUM('low','moderate','high','critical') NOT NULL, description TEXT NULL, geojson_data JSON NOT NULL,
   status ENUM('active','archived') NOT NULL DEFAULT 'active', created_by BIGINT UNSIGNED NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -84,7 +85,7 @@ CREATE TABLE weather_updates (
 CREATE TABLE safe_zones (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, municipality_id BIGINT UNSIGNED NOT NULL,
   safezone_name VARCHAR(180) NOT NULL, address VARCHAR(255) NULL, latitude DECIMAL(10,7) NOT NULL, longitude DECIMAL(10,7) NOT NULL,
-  capacity INT UNSIGNED NULL, description TEXT NULL, status ENUM('active','inactive') NOT NULL DEFAULT 'active', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  capacity INT UNSIGNED NULL, contact_person VARCHAR(120) NULL, contact_number VARCHAR(30) NULL, description TEXT NULL, status ENUM('active','inactive') NOT NULL DEFAULT 'active', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_safe_zone_municipality FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE CASCADE,
   INDEX idx_safe_zone_scope (municipality_id,status)
@@ -92,7 +93,7 @@ CREATE TABLE safe_zones (
 
 CREATE TABLE evacuation_centers (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, municipality_id BIGINT UNSIGNED NOT NULL,
-  center_name VARCHAR(180) NOT NULL, address VARCHAR(255) NOT NULL, contact_number VARCHAR(30) NULL,
+  center_name VARCHAR(180) NOT NULL, address VARCHAR(255) NOT NULL, contact_person VARCHAR(120) NULL, contact_number VARCHAR(30) NULL,
   capacity INT UNSIGNED NOT NULL, status ENUM('available','full','closed','under_maintenance','deleted') NOT NULL DEFAULT 'available',
   latitude DECIMAL(10,7) NOT NULL, longitude DECIMAL(10,7) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

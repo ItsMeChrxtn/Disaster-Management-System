@@ -9,6 +9,6 @@ final class Report extends BaseModel
     }
     public function find(int $id): ?array { $s=$this->db->prepare('SELECT r.*,u.fullname generated_by_name FROM reports r JOIN users u ON u.id=r.generated_by WHERE r.id=?');$s->execute([$id]);return $s->fetch()?:null; }
     public function create(string $type,int $userId,string $path): int { $s=$this->db->prepare('INSERT INTO reports (report_type,generated_by,file_path) VALUES (?,?,?)');$s->execute([$type,$userId,$path]);return (int)$this->db->lastInsertId(); }
+    public function updatePath(int $id,string $path): void { $this->db->prepare('UPDATE reports SET file_path=? WHERE id=?')->execute([$path,$id]); }
     public function delete(int $id): void { $this->db->prepare('DELETE FROM reports WHERE id=?')->execute([$id]); }
 }
-

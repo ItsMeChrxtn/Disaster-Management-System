@@ -24,9 +24,8 @@ final class Municipality extends BaseModel
     {
         $s=$this->db->prepare('UPDATE municipalities SET municipality_name=?,description=?,status=? WHERE id=?');$s->execute([$data['municipality_name'],$data['description'],$data['status'],$id]);return $s->rowCount()>0;
     }
-    public function deactivate(int $id): bool
+    public function delete(int $id): bool
     {
-        $s=$this->db->prepare('UPDATE municipalities SET status="inactive" WHERE id=?');$s->execute([$id]);return $s->rowCount()>0;
+        $s=$this->db->prepare('DELETE FROM municipalities WHERE id=?');$s->execute([$id]);return $s->rowCount()>0;
     }
 }
-

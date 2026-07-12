@@ -27,9 +27,16 @@ final class ReportController
     }
     public function download(Request $request): never
     {
-        $item=(new Report())->find((int)$request->params['id']);if(!$item)Response::error('Report not found',404);$this->assertOwner($request,$item);
-        $storage=realpath(BASE_PATH.'/storage/reports');$file=realpath(BASE_PATH.'/'.$item['file_path']);
-        if(!$storage||!$file||!str_starts_with($file,$storage.DIRECTORY_SEPARATOR)||!is_file($file))Response::error('Report file is unavailable',404);
+        $model=new Report();$item=$model->find((int)$request->params['id']);if(!$item)Response::error('Report not found',404);$this->assertOwner($request,$item);
+        $file=$this->reportFile($item);
+        if(!$file){
+            $format=strtolower(pathinfo((string)$item['file_path'],PATHINFO_EXTENSION));if(!in_array($format,['pdf','xlsx'],true))$format='pdf';
+            $path=(new ReportGenerator())->generate($item['report_type'],$format,null,null,null,$item['generated_by_name']??$request->user['fullname']);
+            $model->updatePath((int)$item['id'],$path);
+            $item['file_path']=$path;
+            $file=$this->reportFile($item);
+        }
+        if(!$file)Response::error('Report file is unavailable',404);
         $extension=strtolower(pathinfo($file,PATHINFO_EXTENSION));header('Content-Type: '.($extension==='pdf'?'application/pdf':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'));header('Content-Disposition: attachment; filename="'.basename($file).'"');header('Content-Length: '.filesize($file));readfile($file);exit;
     }
     public function destroy(Request $request): never
@@ -38,4 +45,9 @@ final class ReportController
     }
     private function assertOwner(Request $request,array $item): void { if($request->user['role']==='subadmin'&&(int)$item['generated_by']!==(int)$request->user['id'])Response::error('Forbidden',403); }
     private function date(string $value): bool { $date=\DateTimeImmutable::createFromFormat('Y-m-d',$value);return $date&&$date->format('Y-m-d')===$value; }
+    private function reportFile(array $item): ?string
+    {
+        $storage=realpath(BASE_PATH.'/storage/reports');$file=realpath(BASE_PATH.'/'.$item['file_path']);
+        return $storage&&$file&&str_starts_with($file,$storage.DIRECTORY_SEPARATOR)&&is_file($file)?$file:null;
+    }
 }
