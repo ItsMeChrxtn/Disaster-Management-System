@@ -1,0 +1,716 @@
+# Cavite PDRRMO "List of Evacuation Center" (provided Oct 2026), transcribed as:
+# Municipality | Barangay | Evacuation center | Longitude | Latitude
+# Coordinates are kept exactly as listed (decimal or DMS). The seeder swaps lat/lng when the
+# source columns are reversed, and falls back to the barangay centroid when a row has no
+# coordinates or uses the repeated placeholder pair. Rows without a facility name are omitted.
+Trece Martires City||Provincial Gymnasium|120.867848|14.28130074
+Bacoor City|Alima|Bacoor Elementary School|120.930931|14.458225
+Bacoor City|Aniban I|Barangay Hall|120.963041|14.459729
+Bacoor City|Aniban I|Covered Court|120.962881|14.459796
+Bacoor City|Aniban II|Aniban Central School|120.964285|14.460969
+Bacoor City|Aniban III|Aniban III Multi-Purpose Hall|120.964285|14.460969
+Bacoor City|Aniban III|Aniban III Barangay Hall|120.964285|14.460969
+Bacoor City|Aniban IV|2nd Floor of Volunteer Houses|120.967908°|14.457905°
+Bacoor City|Aniban V|Barangay Hall|120.966896|14.454076
+Bacoor City|Banalo|Barangay Banalo Day Care Center|120.966884|14.454046
+Bacoor City|Banalo|Barangay Hall|120.93091|14.45815
+Bacoor City|Camposanto|Multipurpose Hall|120.938313|14.457676
+Bacoor City|Daang Bukid|Old Barangay Hall|120.941216|14.457207
+Bacoor City|Daang Bukid|New Barangay Hall|120.941351|14.457598
+Bacoor City|Daang Bukid|Barangay Covered Court|120.939606|14.457752
+Bacoor City|Digman|Digman Elementary School|120.952268|14.460048
+Bacoor City|Dulong Bayan|Multi-Purpose Hall|120.935916|14.448643
+Bacoor City|Habay I|Barangay Elementary School|120.944168|14.448785
+Bacoor City|Habay I|Multi-Purpose Hall (Bars)|120.951182|14.446461
+Bacoor City|Habay II|Barangay Hall|120.948325|14.444829
+Bacoor City|Habay II|Sagana Covered Court|120.948626|14.443941
+Bacoor City|Habay II|Church in Dulong Bayan|120.950553|14.442643
+Bacoor City|Habay II|Day Care Center|120.947491|14.443325
+Bacoor City|Kaingin|Barangay Multi-Purpose Hall|120.943045|14.462347
+Bacoor City|Kaingin|Maliksi Elementary School|120.944526|14.458993
+Bacoor City|Ligas I|Ligas II Elementary School|120.968653|14.453562
+Bacoor City|Ligas II|Barangay Hall|120.969475|14.450678
+Bacoor City|Ligas II|Covered Court / San Lorenzo Ruiz Church|120.967657|14.450115
+Bacoor City|Ligas II|Aglipayan Church (private)|120.969221|14.449991
+Bacoor City|Ligas III|Ligas II Elementary School|120.971636|14.441703
+Bacoor City|Ligas III|Multi-Purpose Hall / Day Care|120.970215|14.442108
+Bacoor City|Mabolo I|Barangay Hall|120.929912|14.452538
+Bacoor City|Mabolo II|Barangay Hall|120.934116|14.452585
+Bacoor City|Mabolo III|Chapel of Arisen Lord|120.930889|14.446764
+Bacoor City|Mabolo III|Barangay Hall|120.928132|14.449912
+Bacoor City|Maliksi I|Old Barangay Hall|120.952621|14.460244
+Bacoor City|Maliksi I|Maliksi Elementary School|120.952268|14.460048
+Bacoor City|Maliksi II|Maliksi Elementary School|120.949871|14.459268
+Bacoor City|Maliksi III|Maliksi Elementary School|120.952268|14.460048
+Bacoor City|Mambog I|Barangay Hall|120.950083|14.421315
+Bacoor City|Mambog I|Camella Homes Covered Court|120.947708|14.423366
+Bacoor City|Mambog I|Valleyfield Subdivision Covered Court|120.949823|14.427478
+Bacoor City|Mambog I|Cherry Homes Phase 2 Covered Court|120.953975|14.418787
+Bacoor City|Mambog I|Silver Homes Classic Covered Court|120.948195|14.428388
+Bacoor City|Mambog II|Mambog 2 Covered Court|120.948291|14.428432
+Bacoor City|Mambog III|Mambog Elementary School|120.949085|14.430827
+Bacoor City|Mambog III|Greentown Villas 1 Covered Court|120.958358|14.422967
+Bacoor City|Mambog III|Greentown Villas 1 Extension Covered Court|120.957131|14.421736
+Bacoor City|Mambog III|Vista Verde Clubhouse|120.958776|14.419478
+Bacoor City|Mambog IV|Multi-Purpose Hall|120.959503|14.415833
+Bacoor City|Mambog V|Multipurpose Hall Parkdale 2|120.953668|14.431486
+Bacoor City|Mambog V|Phase 1 Covered Court|120.949134|14.430819
+Bacoor City|Molino I|Bacoor National High School (Molino)|120.959879|14.425586
+Bacoor City|Molino II|Covered Court|120.971811|14.415003
+Bacoor City|Molino II|Day Care Center|120.976033|14.409686
+Bacoor City|Molino II|Other Hall|120.987657°|14.405905°
+Bacoor City|Molino III|Barangay Molino III Covered Court|120.975917|14.409622
+Bacoor City|Molino III|Molino Elementary School|120.978424|14.397956
+Bacoor City|Molino III|Bacoor Coliseum|120.977448|14.397508
+Bacoor City|Molino VI|Barangay Molino IV Covered Court|120.980774|14.371553
+Bacoor City|Molino VI|Likha Elementary School|120.976282|14.381832
+Bacoor City|Molino VI|Malipay III Elementary School|121.010012|14.379093
+Bacoor City|Molino VI|Bacoor National High School - Georgetown|120.981836|14.373638
+Bacoor City|Molino V|Phase 2B Covered Court|120.968756|14.396783
+Bacoor City|Molino V|Phase 1 Covered Court|120.973837|14.399103
+Bacoor City|Molino VII|SH IV Elementary School|120.982498|14.413653
+Bacoor City|Molino VII|St. Joseph Covered Court|120.996645|14.403166
+Bacoor City|Molino VII|San Lorenzo Ruiz Covered Court|120.997466|14.403306
+Bacoor City|Niog I|Senior Citizen Hall|120.957448|14.456225
+Bacoor City|Niog I|Daycare|120.957173|14.455916
+Bacoor City|Niog II|Multipurpose Hall|120.957421|14.456191
+Bacoor City|Niog II|Niog Elementary School|120.957837|14.453844
+Bacoor City|Niog III|Barangay Hall (Flood)|120.964348|14.446577
+Bacoor City|Niog III|Barangay Hall|120.964439|14.446613
+Bacoor City|Panapaan I|Covered Court|120.955536|14.448435
+Bacoor City|Panapaan II|Gov. P.F. Elementary School|120.966884|14.454046
+Bacoor City|Panapaan II|Barangay Hall of Panapaan II|120.966884|14.454046
+Bacoor City|Panapaan III|Barangay Hall / Multipurpose Hall|120.966884|14.454046
+Bacoor City|Panapaan IV|Covered Court (Daang Kalabaw)|120.953312|14.451463
+Bacoor City|Panapaan V|Covered Court|120.958257|14.444697
+Bacoor City|Panapaan VI|Barangay Hall|120.951986|14.442008
+Bacoor City|Panapaan VI|Multipurpose Hall|120.952031|14.441854
+Bacoor City|Panapaan VI|Covered Court|120.953148|14.442111
+Bacoor City|Panapaan VIII|Covered Court (Kamuning St.)|120.960139|14.436676
+Bacoor City|Panapaan VIII|Covered Court (PV4)|120.960171|14.436681
+Bacoor City|Queens Row Central|Covered Court|120.987925|14.398422
+Bacoor City|Queens Row East|Upland Covered Court|120.966884|14.454046
+Bacoor City|Queens Row West|Multi-Purpose Hall|120.966884|14.454046
+Bacoor City|Queens Row West|Old Barangay Hall|120.966884|14.454046
+Bacoor City|Real I|Multipurpose Hall|120.945094|14.435169
+Bacoor City|Real II|Barangay Real II Covered Court|120.952936|14.435601
+Bacoor City|Salinas I|Salinas Elementary School|120.935951|14.439884
+Bacoor City|Salinas II|Covered Court|120.941428|14.441465
+Bacoor City|Salinas II|Multi-Purpose Hall|120.941701|14.441413
+Bacoor City|Salinas III|Multi-Purpose Hall|120.966884|14.454046
+Bacoor City|Salinas III|Senior Citizens Office|120.966884|14.454046
+Bacoor City|Salinas III|Day Care Center|120.966884|14.454046
+Bacoor City|Salinas III|Basketball Covered Court|120.966884|14.454046
+Bacoor City|Salinas III|Tennis Court|120.966884|14.454046
+Bacoor City|Salinas III|Barangay Hall|120.966884|14.454046
+Bacoor City|Salinas IV|Health Center Building|120.966884|14.454046
+Bacoor City|San Nicolas I|Barangay Hall|120.966884|14.454046
+Bacoor City|San Nicolas II|San Nicolas Elementary School|120.974278|14.433121
+Bacoor City|San Nicolas II|Covered Court|120.966884|14.454046
+Bacoor City|San Nicolas III|Multi-Purpose Hall|120.930931|14.458225
+Bacoor City|San Nicolas III|Multi-Purpose Hall Greenvalley|120.966884|14.454046
+Bacoor City|San Nicolas III|Celestino Covered Court|120.930931|14.458225
+Bacoor City|San Nicolas III|Greenvalley Covered Court|120.937135|14.458356
+Bacoor City|Sineguelasan|Sineguelasan Elementary School|120.927227|14.459148
+Bacoor City|Sineguelasan|Multi-Purpose Hall|120.966884|14.454046
+Bacoor City|Sineguelasan|Multi-Purpose Building|120.966884|14.454046
+Bacoor City|Sineguelasan|Barangay Hall|120.966884|14.454046
+Bacoor City|Tabing Dagat|Bacoor National High School|120.939984|14.461459
+Bacoor City|Talaba I|Talaba Elementary School|120.960037|14.461135
+Bacoor City|Talaba II|Barangay Hall|120.966884|14.454046
+Bacoor City|Talaba II|Activity Center|120.966884|14.454046
+Bacoor City|Talaba II|Day Care|120.958784|14.463706
+Bacoor City|Talaba III|Multipurpose Hall (Talaba Elementary School)|120.966884|14.454046
+Bacoor City|Talaba IV|Barangay Hallway|120.966884|14.454046
+Bacoor City|Talaba IV|Multipurpose Hall (Talaba Elementary School)|120.966884|14.454046
+Bacoor City|Talaba V|Barangay Hall|120.966884|14.454046
+Bacoor City|Talaba V|Covered Court|120.966884|14.454046
+Bacoor City|Talaba VI|Barangay Hall|120.966884|14.454046
+Bacoor City|Talaba VII|Covered Court|120.966884|14.454046
+Bacoor City|Talaba VII|2 Barangay Hall (St. Michael Subd.)|120.966884|14.454046
+Bacoor City|Talaba VII|Old Barangay Hall (Tramo)|120.966884|14.454046
+Bacoor City|Zapote I|Barangay Hall|120.966884|14.454046
+Bacoor City|Zapote II|Zapote II Elementary School|120.964222|14.465431
+Bacoor City|Zapote II|Covered Court|120.963932|14.4644
+Bacoor City|Zapote II|Health Center|120.966884|14.454046
+Bacoor City|Zapote II|Day Care Center / Multipurpose Hall|120.966884|14.454046
+Bacoor City|Zapote III|Barangay Hall|120.966884|14.454046
+Bacoor City|Zapote III|Day Care Center / Multipurpose Hall|120.966884|14.454046
+Bacoor City|Zapote IV|Barangay Hall|120.966884|14.454046
+Bacoor City|Zapote IV|Multipurpose Hall|120.966884|14.454046
+Bacoor City|Zapote V|Barangay Hall|120.962821|14.468987
+Bacoor City|Zapote V|Longos Elementary School|120.965348°|14.468720°
+General Trias City|Tejero|Tejero Evacuation Center|120°51'50"E|14°23'32"N
+General Trias City|Sampalucan|General Trias Cultural and Convention Center|120°52'37"E|14°23'17"N
+General Trias City|San Juan I|General Trias Sports Complex|120°52'35"E|14°22'58"N
+General Trias City|Alingaro|Angel Bawalan Elementary School|120°54'27"E|14°13'38"N
+General Trias City|Bagumbayan|General Artemio Ricarte Elementary School|120°52'50"E|14°23'08"N
+General Trias City|Biclatan|General Alona Elementary School|120°54'58"E|14°16'39"N
+General Trias City|Buenavista I|Ipilan Barrio Elementary School|120°53'48"E|14°19'31"N
+General Trias City|Buenavista III|Buenavista Elementary School|120°54'05"E|14°18'27"N
+General Trias City|Javalera|Javalera Elementary School|120°54'58"E|14°15'23"N
+General Trias City|Manggahan|Manggahan Elementary School|120°54'42"E|14°17'47"N
+General Trias City|Panungyanan|Panungyanan Elementary School|120°55'19"E|14°14'06"N
+General Trias City|Pasong Camachile II|Mary Cris Elementary School|120°54'57"E|14°21'34"N
+General Trias City|Pasong Kawayan II|Belvedere Elementary School|120°52'24"E|14°19'24"N
+General Trias City|Pasong Kawayan II|Pasong Kawayan II Elementary School|120°52'48"E|14°20'03"N
+General Trias City|Pasong Kawayan II|Pasong Kawayan II Elementary School - West|120°52'24"E|14°18'50"N
+General Trias City|Pinagtipunan|Gov. Ferrer Memorial National High School - Main|120°52'42"E|14°22'30"N
+General Trias City|Sampalucan|Diego Mojica Elementary School|120°52'44"E|14°23'14"N
+General Trias City|San Francisco|San Francisco Elementary School|120°55'22"E|14°19'24"N
+General Trias City|San Francisco|Sunnybrooke Elementary School|120°54'57"E|14°18'52"N
+General Trias City|San Francisco|Tropical Village Elementary School|120°55'03"E|14°18'17"N
+General Trias City|San Francisco|Tropical Village National High School|120°55'03"E|14°18'11"N
+General Trias City|San Juan I|General Trias Memorial Elementary School (Main Hall)|120°52'38"E|14°22'55"N
+General Trias City|Santiago|Santiago Elementary School|120°54'23"E|14°20'40"N
+General Trias City|San Francisco|Parklane Elementary School|120°55'06"E|14°20'26"N
+General Trias City|Pinagtipunan|Luis Ferrer III Memorial Elementary School|120°52'53"E|14°22'14"N
+General Trias City|Pasong Camachile II|Cecilio M. Saliba Elementary School|120°53'51"E|14°21'41"N
+General Trias City|Tapia|Tapia Elementary School|120°52'46"E|14°21'52"N
+General Trias City|Pasong Kawayan I|Juliano C. Brosas Elementary School|120°52'52"E|14°20'50"N
+General Trias City|Pasong Kawayan II|Luis Y. Ferrer Jr. West National High School|120°52'25"E|14°19'01"N
+Imus City|Bucandala III|Bucandala 3 Covered Court|120.925742|14.408949
+Imus City|Pag-asa I|Narra Homes Covered Court|120.917349|14.429534
+Imus City|Anabu I-A|Anabu 1A Parkdale Classic Covered Court|120.944129|14.40199
+Imus City|Anabu II-B|Regatta Covered Court|120.941913|14.38664
+Imus City|Bayan Luma IV|Bayan Luma 4 Covered Court|120.938184|14.412932
+Imus City|Bayan Luma VII|Plaridel Subd. Covered Court|120.939198|14.409293
+Imus City|Maharlika|Maharlika Covered Court|120.959505|14.396535
+Imus City|Buhay na Tubig|Buhay na Tubig Covered Court|120.94595|14.421405
+Imus City|Palico IV|DILG Provincial Multi-Purpose Evacuation Center|120.947456|14.429108
+Imus City|Poblacion III-A|Imus Sports Complex|120.936495|14.429734
+Imus City|Malagasang II-A|Malagasang 2A Cluster Building Covered Court|120.924003|14.374017
+Imus City|Malagasang II-G|Malagasang 2G Goldenville II Covered Court|120.923356|14.354468
+Imus City|Alapan I-B|Alapan 1 Elementary School|120.918606|14.415578
+Imus City|Alapan II-A|Alapan 2A Elementary School|120.896401|14.408388
+Imus City|Anabu I-A|Anabu 1 Elementary School|120.940515|14.402317
+Imus City|Anabu II-B|Anabu 2 Elementary School|120.939966|14.387707
+Imus City|Bayan Luma I|Bayan Luma 1 Elementary School|120.934565|14.413068
+Imus City|Bayan Luma VIII|Bayan Luma 2 Elementary School|120.935758|14.407233
+Imus City|Buhay na Tubig|Buhay na Tubig Elementary School|120.960364|14.400152
+Imus City|Maharlika|Buhay na Tubig Elementary School - Maharlika Annex|120.960472|14.400094
+Imus City|Bucandala II|Bukandala Elementary School|120.926226|14.405024
+Imus City|Carsadang Bago I|Carsadang Bago Elementary School|120.927802|14.429615
+Imus City|Poblacion IV-C|Cayetano Topacio Elementary School|120.93358|14.426555
+Imus City|Medicion I-C|Estanislao Villanueva Elementary School|120.930941|14.434955
+Imus City|Medicion II-A|Gov. D.M. Camerino Elementary School|120.923845|14.4421694
+Imus City|Poblacion I-A|Imus Pilot Elementary School|120.938981|14.427311
+Imus City|Malagasang I-C|Malagasang 1 Elementary School|120.92834|14.388725
+Imus City|Malagasang II-A|Malagasang 2 Elementary School|120.928362|14.373278
+Imus City|Malagasang II-E|Malagasang 3 Elementary School|120.927618|14.360063
+Imus City|Palico IV|Palico Elementary School|120.947559|14.427832
+Imus City|Pasong Buaya I|Pasong Buaya 1 Elementary School|120.966161|14.374046
+Imus City|Pasong Buaya II|Pasong Buaya 2 Elementary School|120.964854|14.389822
+Imus City|Pasong Buaya II|Pasong Buaya 3 Elementary School|120.962121|14.390402
+Imus City|Anabu II-D|Pasong Santol Elementary School|120.941013|14.373685
+Imus City|Anabu II-E|Pasong Santol Elementary School - Golden City|120.928965|14.364971
+Imus City|Tanzang Luma V|Tanzang Luma Elementary School|120.945137|14.415265
+Imus City|Pag-asa I|Tinabunan Elementary School|120.91657|14.431743
+Imus City|Toclong I-C|Toclong Elementary School|120.931976|14.43872
+Imus City|Palico IV|General Emilio Aguinaldo National High School (GEANHS)|120.946527|14.427828
+Imus City|Pasong Buaya II|General Licerio Topacio National High School|120.959987|14.393342
+Imus City|Bucandala III|Imus National High School - Main|120.926104|14.407096
+Imus City|Malagasang II-A|General Tomas Mascardo National High School|120.926353|14.374879
+Imus City|Alapan II-A|Hipolito Saquilayan National High School|120.896612|14.408314
+Imus City|Pasong Buaya II|General Flaviano Yengko Senior High School|120.96232|14.392712
+Imus City|Toclong II-B|Governor Juanito Reyes Remulla Senior High School|120.929064|14.440822
+Imus City|Anabu II-A|General Juan Castañeda Senior High School|120.936773|14.382415
+Imus City|Malagasang I-G|General Pantaleon Garcia Senior High School|120.91991|14.392868
+Tanza|Bunga|Old Barangay Hall|120.837442|14.375466
+Tanza|Bunga|New Barangay Hall|120.871419|14.355402
+Tanza|Bunga|Day Care Center|120.871419|14.355402
+Tanza|Santol|Barangay Hall and Covered Court|120.874209|14.375123
+Tanza|Bucal|Bucal Elementary School|120.861945|14.390489
+Tanza|Biwas|Felipe Calderon Elementary School|120.855015|14.398179
+Tanza|Julugan II|Julugan Elementary School|120.846718|14.404187
+Tanza|Julugan II|Multi-Purpose Hall|120.846718|14.404187
+Tanza|Julugan VIII|Barangay Hall|120.841357|14.39914
+Tanza|Julugan VIII|Day Care Center|120.841357|14.39914
+Tanza|Amaya VII|Amaya VII Evacuation Center|120.829196|14.388821
+Tanza|Halayhay|Halayhay Elementary School|120.812492|14.372676
+Tanza|Calibuyo|Gregorio Fojas Memorial School|120.806798|14.358395
+Tanza|Calibuyo|Flaviana Arayata|120.807224|14.368591
+Tanza|Capipisa|Capipisa Elementary School|120.792315|14.358193
+Tanza|Capipisa|Capipisa Evacuation Center (not in use for the meantime)|120.791602|14.358151
+Tanza|Tres Cruses|Multi-Purpose Hall|120.833568|14.330923
+Maragondon|Bucal I|Bucal 1 Elementary School|120.74113|14.27307
+Maragondon|Bucal II|Bucal National Integrated School|120.75326|14.27437
+Maragondon|Bucal III-A|Bucal National Integrated School|120.75326|14.27437
+Maragondon|Bucal III-B|Evacuation Center|120.757|14.27885
+Maragondon|Bucal IV-A|Marcelo D. Samaniego Elementary School|120.76802|14.27476
+Maragondon|Bucal IV-B|Marcelo D. Samaniego Elementary School|120.76802|14.27476
+Maragondon|Caingin|Maragondon Elementary School|120.73517|14.2769
+Maragondon|Layong Mabilog|Layong Mabilog Elementary School|120.75565|14.23643
+Maragondon|Mabato|Mabato Elementary School|120.78039|14.2458
+Maragondon|Garita I-A|Maragondon Elementary School|120.73517|14.2769
+Maragondon|Garita I-B|Cavite Science Integrated School|120.73406|14.27692
+Maragondon|Pantihan I|Balayungan Elementary School|120.79073|14.26178
+Maragondon|Pantihan II|Pantihan 2 Elementary School|120.79446|14.24363
+Maragondon|Pantihan III|Pantihan 3 Elementary School|120.8001|14.22878
+Maragondon|Pantihan IV|Pulo ni Sara Elementary School|120.82044|14.19525
+Maragondon|Santa Mercedes|Sta. Mercedes Elementary School|120.62199|14.21947
+Maragondon|Pinagsanhan I-A|Pinagsanhan Elementary School|120.72975|14.27143
+Maragondon|Pinagsanhan I-B|Pinagsanhan Elementary School / Cavite State University|120.72975|14.27143
+Maragondon|Poblacion I-A|Maragondon Covered Court|120.73454|14.2742
+Maragondon|Poblacion I-B|Maragondon Elementary School|120.73517|14.2769
+Maragondon|Poblacion II-A|Maragondon Elementary School|120.73517|14.2769
+Maragondon|Poblacion II-B|Maragondon Elementary School|120.73517|14.2769
+Maragondon|San Miguel I-A|San Miguel Elementary School|120.74475|14.28487
+Maragondon|San Miguel I-B|San Miguel Elementary School|120.74475|14.28487
+Maragondon|Talipusngo|Talipusngo Elementary School|120.75523|14.21311
+Maragondon|Tulay A|Tulay Elementary School|120.77146|14.26914
+Maragondon|Tulay B|Tulay Elementary School|120.77146|14.26914
+Mendez|Galicia III|Mendez Joy Center|120.907761|14.1186066
+Amadeo|Barangay I (Poblacion)|Barangay Hall|14.16499|120.92454
+Amadeo|Barangay II (Poblacion)|Barangay Hall|14.16783|120.92368
+Amadeo|Barangay III (Poblacion)|Barangay Hall|14.17073|120.92203
+Amadeo|Barangay IV (Poblacion)|St. Mary Magdalene Parish Hall|14.17025|120.92153
+Amadeo|Barangay V (Poblacion)|Barangay Hall|14.1743|120.92066
+Amadeo|Barangay VI (Poblacion)|St. Mary Magdalene Parish Hall|14.17025|120.92153
+Amadeo|Barangay VII (Poblacion)|St. Mary Magdalene Parish Hall|14.17025|120.92153
+Amadeo|Barangay VIII (Poblacion)|Dorcas Academy|14.16867|120.92084
+Amadeo|Barangay IX (Poblacion)|Dorcas Academy|14.16867|120.92084
+Amadeo|Barangay X (Poblacion)|St. Mary Magdalene Parish Hall|14.17025|120.92153
+Amadeo|Barangay XI (Poblacion)|Barangay Hall|14.17086|120.91968
+Amadeo|Barangay XII (Poblacion)|Barangay Hall|14.1736|120.91674
+Amadeo|Salaban|Barangay Hall|14.12914|120.93313
+Amadeo|Talon|Barangay Hall|14.13645|120.94018
+Amadeo|Buho|Barangay Hall|14.13563|120.95302
+Amadeo|Maitim I|Barangay Hall|14.14011|120.9493
+Amadeo|Loma|Barangay Hall|14.14806|120.93021
+Amadeo|Bucal|Barangay Hall|14.16197|120.93547
+Amadeo|Maymangga|Covered Court / Barangay Hall|14.15665|120.93944
+Amadeo|Minantok Silangan|Barangay Hall|14.17378|120.94416
+Amadeo|Minantok Kanluran|Barangay Hall|14.16809|120.94096
+Amadeo|Dagatan|Barangay Hall|14.17986|120.92919
+Amadeo|Banaybanay|Covered Court / Barangay Hall|14.20358|120.93519
+Amadeo|Halang Banaybanay|Covered Court / Barangay Hall|14.20404|120.92278
+Amadeo|Tamacan|Tamacan Elementary School|14.22067|120.92767
+Amadeo|Pangil|School / Barangay Hall|14.19962|120.90554
+Carmona City|Lantic|Lantic Evacuation Center||
+Dasmarinas City|Langkaan II|Permanent Evacuation Center|120.9472126|14.2521119
+Dasmarinas City|Zone III|Permanent Evacuation Center|120.9376174|14.31229513
+Dasmarinas City|Burol I|Covered Court|120.9625917|14.3261549
+Dasmarinas City|Burol II|Covered Court|120.9642726|14.3240417
+Dasmarinas City|Burol III|Covered Court|120.9669918|14.3261975
+Dasmarinas City|Burol|Covered Court|120.9540791|14.3228234
+Dasmarinas City|Emmanuel Bergado I|Covered Court|120.959549|14.3163334
+Dasmarinas City|Emmanuel Bergado II|Covered Court|120.9611552|14.3153934
+Dasmarinas City|Fatima I|Covered Court|120.9635798|14.3181174
+Dasmarinas City|Fatima II|Covered Court|120.9640667|14.3164357
+Dasmarinas City|Fatima III|Covered Court|120.965538|14.3134698
+Dasmarinas City|H-2|Covered Court|120.9587234|14.3309477
+Dasmarinas City|Langkaan I|Covered Court|120.9357727|14.2925899
+Dasmarinas City|Langkaan II|Covered Court|120.929706|14.3129434
+Dasmarinas City|Luzviminda I|Covered Court|120.967327|14.3135526
+Dasmarinas City|Luzviminda II|Covered Court|120.9686691|14.3108849
+Dasmarinas City|Paliparan I|Covered Court|120.9872319|14.2948078
+Dasmarinas City|Paliparan II|Covered Court|120.9806844|14.3423152
+Dasmarinas City|Paliparan III|Covered Court|120.9802943|14.3192834
+Dasmarinas City|Sabang|Covered Court|120.9250983|14.3499653
+Dasmarinas City|Salawag|Covered Court|120.969388|14.3413025
+Dasmarinas City|Salitran I|Covered Court|120.9397157|14.3513096
+Dasmarinas City|Salitran II|Covered Court|120.942679|14.3438997
+Dasmarinas City|Salitran III|Covered Court|120.9455308|14.3439695
+Dasmarinas City|Salitran IV|Covered Court|120.9560408|14.3503588
+Dasmarinas City|Sampaloc I|Covered Court|120.9599315|14.2970326
+Dasmarinas City|Sampaloc II|Covered Court|120.9603496|14.2834735
+Dasmarinas City|Sampaloc III|Covered Court|120.9788113|14.2889329
+Dasmarinas City|Sampaloc IV|Covered Court|120.9683158|14.3134234
+Dasmarinas City|Sampaloc V|Covered Court|120.9642443|14.2807803
+Dasmarinas City|San Agustin I|Covered Court|120.9356098|14.3081996
+Dasmarinas City|San Agustin II|Covered Court|120.9522203|14.3174421
+Dasmarinas City|San Agustin III|Covered Court|120.9386391|14.319998
+Dasmarinas City|San Andres I & II|Covered Court|120.968192|14.32221
+Dasmarinas City|San Antonio de Padua I|Covered Court|120.9566376|14.3187172
+Dasmarinas City|San Antonio de Padua II|Covered Court|120.9569393|14.3177312
+Dasmarinas City|San Dionisio|Covered Court|120.9540245|14.341497
+Dasmarinas City|San Esteban|Covered Court|120.9568339|14.3383689
+Dasmarinas City|San Francisco I|Covered Court|120.9663544|14.3204855
+Dasmarinas City|San Francisco II|Covered Court|120.9681932|14.3191337
+Dasmarinas City|San Isidro Labrador I|Covered Court|120.9507412|14.3437458
+Dasmarinas City|San Isidro Labrador II|Covered Court|120.9498763|14.3414599
+Dasmarinas City|San Jose|Covered Court|120.9296812|14.3348366
+Dasmarinas City|San Juan|Covered Court|120.9502842|14.3394274
+Dasmarinas City|San Lorenzo Ruiz I|Covered Court|120.9605385|14.311182
+Dasmarinas City|San Lorenzo Ruiz II|Covered Court|120.9573043|14.3102018
+Dasmarinas City|San Luis I|Covered Court|120.9628544|14.3110124
+Dasmarinas City|San Luis II|Covered Court|120.9626277|14.3148196
+Dasmarinas City|San Manuel I & II|Covered Court|120.9514597|14.3355029
+Dasmarinas City|San Mateo|Covered Court|120.9688403|14.3169256
+Dasmarinas City|San Miguel I|Covered Court|120.9488917|14.3375734
+Dasmarinas City|San Miguel II|Covered Court|120.9491927|14.3378974
+Dasmarinas City|San Nicolas I|Covered Court|120.9696718|14.3150675
+Dasmarinas City|San Nicolas II|Covered Court|120.9720402|14.3170112
+Dasmarinas City|San Roque|Covered Court|120.9682767|14.3236202
+Dasmarinas City|San Simon|Covered Court|120.9713152|14.3191858
+Dasmarinas City|St. Peter I|Covered Court|120.947805|14.3390935
+Dasmarinas City|St. Peter II|Covered Court|120.9473568|14.3405282
+Dasmarinas City|Santa Cristina I|Covered Court|120.9692499|14.3239792
+Dasmarinas City|Santa Cristina II|Covered Court|120.9667803|14.3243682
+Dasmarinas City|Santa Cruz I|Covered Court|120.9587697|14.3133274
+Dasmarinas City|Santa Cruz II|Covered Court|120.956822|14.3155138
+Dasmarinas City|Santa Fe|Covered Court|120.9646175|14.3203691
+Dasmarinas City|Santa Lucia|Covered Court|120.9534454|14.3364016
+Dasmarinas City|Santa Maria|Covered Court|120.9572026|14.3222987
+Dasmarinas City|Santo Cristo|Covered Court|120.9543608|14.3414526
+Dasmarinas City|Santo Niño I|Covered Court|120.9542724|14.3422075
+Dasmarinas City|Santo Niño II|Covered Court|120.9539244|14.3424321
+Dasmarinas City|Sultan Esmael|Covered Court|120.9563727|14.336119
+Dasmarinas City|Victoria Reyes|Covered Court|120.9755691|14.3172028
+Dasmarinas City|Zone I|Covered Court|120.9347164|14.3303837
+Dasmarinas City|Zone I-A|Covered Court|120.9382987|14.3355969
+Dasmarinas City|Zone II and Zone IV|Covered Court|120.9320963|14.3297242
+Dasmarinas City|Zone III|Covered Court|120.936266|14.3190058
+Rosario|Poblacion|Rosario Elementary School|120.855904|14.41734
+Rosario|Sapa I|Galilee Academy|120.85109|14.41578
+Rosario|Sapa I|Barangay Hall|120.85267|14.41539
+Rosario|Sapa I|Multi-Purpose Hall|120.85275|14.4157
+Rosario|Sapa II|Barangay Hall|120.84936|14.41843
+Rosario|Sapa II|Multi-Purpose Hall|120.84109|14.42365
+Rosario|Sapa III|Barangay Hall|120.84928|14.41617
+Rosario|Sapa III|Multi-Purpose Hall|120.84684|14.42167
+Rosario|Sapa IV|Barangay Hall|120.85109|14.41582
+Rosario|Sapa IV|Multi-Purpose Hall|120.85051|14.4159
+Rosario|Sapa IV|Agustin Abadilla Elementary School|120.85102|14.41573
+Rosario|Bagbag I|Bagbag I Barangay Hall|120.86769|14.42312
+Rosario|Bagbag I|Bagbag I Multi-Purpose Hall|120.86687|14.42276
+Rosario|Bagbag II|Bagbag National High School|120.86751|14.42071
+Rosario|Bagbag II|Bagbag II Barangay Hall|120.8659|14.4224
+Rosario|Bagbag II|Bagbag II Multi-Purpose Hall|120.6541|14.42239
+Rosario|Bagbag II|Bagbag II Elementary School|120.86774|14.42358
+Rosario|Wawa I|D.P. Jimenez Elementary School|120.84861|14.41209
+Rosario|Wawa I|Barangay Hall|120.84636|14.41391
+Rosario|Wawa I|Multi-Purpose Hall|120.84626|14.41355
+Rosario|Kanluran|Kanluran Barangay Hall|120.85117|14.41879
+Rosario|Kanluran|Kanluran Multi-Purpose Hall|120.85047|14.41879
+Rosario|Silangan I|Silangan Elementary School|120.86045|14.42053
+Rosario|Silangan I|Barangay Hall|120.85951|14.41905
+Rosario|Silangan I|Multi-Purpose Hall|120.85667|14.42083
+Rosario|Silangan II|Barangay Hall|120.8567|14.4188
+Rosario|Silangan II|Multi-Purpose Hall|120.85671|14.43007
+Rosario|Tejeros Convention|Tejeros Convention Elementary School|120.86025|14.40321
+Rosario|Muzon I|Barangay Hall|120.85417|14.42105
+Rosario|Muzon II|Barangay Hall|120.85405|14.42107
+Rosario|Muzon II|Multi-Purpose Hall|120.85423|14.42095
+Rosario|Ligtong I|Barangay Hall|120.8662|14.42877
+Rosario|Ligtong I|Multi-Purpose Hall|120.86562|14.43463
+Rosario|Ligtong II|Barangay Hall|120.87252|14.42647
+Rosario|Ligtong III|Barangay Hall|120.87451|14.42317
+Rosario|Ligtong III|Multi-Purpose Hall|120.87182|14.42386
+Rosario|Ligtong IV|Barangay Hall|120.86722|14.42601
+Rosario|Ligtong IV|Multi-Purpose Hall|120.86649|14.42607
+Rosario|Wawa II|Barangay Hall|120.85457|14.417
+Rosario|Wawa II|Multi-Purpose Hall|120.84692|14.417
+Rosario|Wawa III|Barangay Hall|120.8495|14.40673
+Rosario|Wawa III|Multi-Purpose Hall|120.84933|14.40673
+Rosario|Tejeros Convention|Barangay Hall|120.86145|14.40324
+Magallanes|Poblacion IV|Evacuation Center|120 45'24.43"E|14 11'15.42"N
+Magallanes|Bendita I|Bendita National High School|120 45'19.31"E|14 9'38.81"N
+Magallanes|Caluangan|Caluangan National High School|120 46'26.06"E|14 9'15.81"N
+Magallanes|Poblacion I|Barangay Hall|120 45'32.55"E|14 11'26.21"N
+Magallanes|Poblacion II|Barangay Hall|120 45'25.53"E|14 11'21.69"N
+Magallanes|Poblacion III|Barangay Hall|120 45'27.04"E|14 11'13.71"N
+Magallanes|Poblacion IV|Barangay Hall|120 45'21.37"E|14 11'15.99"N
+Magallanes|Poblacion V|Barangay Hall|120 45'19.54"E|14 11'27.90"N
+Magallanes|Baliwag|Barangay Hall|120 47'25.77"E|14 8'43.89"N
+Magallanes|Bendita I|Barangay Hall|120 45'8.53"E|14 9'41.55"N
+Magallanes|Bendita II|Barangay Hall|120 45'36.27"E|14 9'35.03"N
+Magallanes|Caluangan|Barangay Hall|120 46'29.42"E|14 9'14.25"N
+Magallanes|Kabulusan|Barangay Hall|120 44'28.86"E|14 10'39.32"N
+Magallanes|Kabulusan|Kabulusan Elementary School|120°44'41.12"E|14°10'43.80"N
+Magallanes|Medina|Barangay Hall|120 47'45.67"E|14 8'8.27"N
+Magallanes|Pacheco|Barangay Hall|120 46'24.26"E|14 10'55.81"N
+Magallanes|Ramirez|Barangay Hall|120 43'49.04"E|14 10'53.36"N
+Magallanes|San Agustin|Barangay Hall|120 43'50.84"E|14 10'16.59"N
+Magallanes|Tua|Barangay Hall|120 46'52.03"E|14 8'1.22"N
+Magallanes|Urdaneta|Barangay Hall|120 43'57.16"E|14 9'51.96"N
+Ternate|Poblacion II|Ternate Evacuation Center (NAPOCOR)|120.72875|14.28264
+Ternate|Poblacion I-A|Ternate Integrated National High School|120.719335|14.284813
+Ternate|Poblacion I|Poblacion I Barangay Hall|120.71744|14.28605
+Ternate|Poblacion II|Ternate Central Elementary School|120.715237|14.286244
+Ternate|San Jose|Anastacio N.F. Dinglas Elementary School|120.71657|14.291843
+Ternate|San Juan I|San Juan Elementary School|120.73183|14.301044
+Ternate|San Juan II|San Juan Elementary School|120.718705|14.283491
+Ternate|Sapang I|Sapang Elementary School|120.708532|14.283984
+Ternate|Sapang II|Crusher Elementary School|120.707673|14.278138
+Ternate|Bucana|Ternate West National High School|120.715237|14.286244
+Trece Martires City|Aguado|Barangay Hall||
+Trece Martires City|Aguado|Multi-Purpose Hall||
+Trece Martires City|Aguado|Chapel||
+Trece Martires City|Aguado|Day Care Center||
+Trece Martires City|Cabezas|Multi-Purpose Hall||
+Trece Martires City|Cabezas|Chapel||
+Trece Martires City|Cabuco|Multi-Purpose Hall||
+Trece Martires City|Cabuco|Chapel||
+Trece Martires City|Conchu|Barangay Hall||
+Trece Martires City|Conchu|Chapel||
+Trece Martires City|Conchu|Day Care Center||
+Trece Martires City|De Ocampo|Old Barangay Hall||
+Trece Martires City|De Ocampo|Multi-Purpose Hall||
+Trece Martires City|Gregorio|Multi-Purpose Hall||
+Trece Martires City|Gregorio|Chapel||
+Trece Martires City|Inocencio|Multi-Purpose Hall||
+Trece Martires City|Inocencio|Chapel||
+Trece Martires City|Inocencio|Covered Court||
+Trece Martires City|Lallana|Multi-Purpose Hall||
+Trece Martires City|Lallana|Chapel||
+Trece Martires City|Lapidario|Multi-Purpose Hall||
+Trece Martires City|Lapidario|Chapel||
+Trece Martires City|Luciano|Multi-Purpose Hall||
+Trece Martires City|Luciano|Mini Forest Park||
+Trece Martires City|Luciano|Covered Court||
+Trece Martires City|Perez|Multi-Purpose Hall||
+Trece Martires City|Perez|Chapel||
+Trece Martires City|San Agustin|Multi-Purpose Hall||
+Trece Martires City|San Agustin|Covered Court||
+Trece Martires City|Osorio|Barangay Hall||
+Trece Martires City|Osorio|Club House||
+Trece Martires City|Osorio|Covered Court||
+Trece Martires City|Aguado|Aguado Evacuation Center||
+Trece Martires City|Cabuco|Cabuco Evacuation Center||
+Trece Martires City|Hugo Perez|Hugo Perez Evacuation Center||
+Trece Martires City|Conchu|Command Center Evacuation Center||
+General Mariano Alvarez|Barangay 4 Poblacion|Covered Court and Day Care Center||
+General Mariano Alvarez|Barangay 5 Poblacion|Covered Court and Day Care Center||
+General Mariano Alvarez|Nicolasa Virata|Multipurpose Hall and Covered Court||
+General Mariano Alvarez|Francisco Reyes|Barangay Hall, Multi-Purpose Halls and Covered Court||
+General Mariano Alvarez|Francisco De Castro|Maliksi Covered Court and Barangay Hall|121.027474|14.323975
+General Mariano Alvarez|Gregoria De Jesus|Covered Court, Multi-Purpose Hall and Day Care Centers||
+General Mariano Alvarez|Fiorello Calimag|Covered Court||
+General Mariano Alvarez|Benjamin Tirona|Multipurpose Hall|121.02267|14.3142
+General Mariano Alvarez|Epifanio Malia|Barangay Hall||
+General Mariano Alvarez|Marcelino Memije|Multi-Purpose Hall and Covered Court||
+General Mariano Alvarez|Aldiano Olaes|Multi-Purpose Hall and Covered Court|121.013233|14.310189
+General Mariano Alvarez|Kapitan Kua|Multi-Purpose Hall and Covered Court||
+General Mariano Alvarez|Pantaleon Granados|Multi-Purpose Hall and Covered Court|121.0142|14.3079
+General Mariano Alvarez|San Gabriel|Covered Court||
+General Mariano Alvarez|Jacinto Lumbreras|Barangay Hall||
+General Mariano Alvarez|Severino De Las Alas|Covered Court||
+General Mariano Alvarez|San Jose|Multipurpose Hall||
+Kawit|Batong Dalig|Tangulan Arena||
+Kawit|Congbalay-Legaspi|Congbalay Evacuation Center||
+Kawit|San Sebastian|San Sebastian Evacuation Center||
+Kawit|San Sebastian|Kalayaan Evacuation Center||
+Kawit|Pulvorista|F. Ilano Memorial Elementary School||
+Kawit|Pulvorista|Binakayan National High School||
+Kawit|Congbalay-Legaspi|Binakayan Elementary School||
+Kawit|Potol|Potol-Magdalo Evacuation Center||
+Indang|Agus-us|Multipurpose Hall||
+Indang|Alulod|Elementary School||
+Indang|Banaba Cerca|Multipurpose Hall and Covered Court||
+Indang|Banaba Cerca|Covered Court (Banaba Cerca 2)||
+Indang|Banaba Lejos|Covered Court||
+Indang|Bancod|Multipurpose Hall||
+Indang|Buna Cerca|Covered Court||
+Indang|Buna Lejos I|Elementary School||
+Indang|Buna Lejos II|Covered Court||
+Indang|Calumpang Cerca|Multipurpose Hall and Covered Court||
+Indang|Calumpang Lejos I|Multipurpose Hall and Covered Court||
+Indang|Carasuchi|Covered Court||
+Indang|Daine I|Multipurpose Hall||
+Indang|Daine II|Multipurpose Hall||
+Indang|Guyam Malaki|Covered Court||
+Indang|Guyam Munti|Multipurpose Hall||
+Indang|Harasan|Multipurpose Hall||
+Indang|Kayquit I|Multipurpose Hall||
+Indang|Kayquit II|Covered Court||
+Indang|Kayquit III|Multipurpose Hall||
+Indang|Kaytambog|Multipurpose Hall||
+Indang|Kaytapos|Covered Court||
+Indang|Limbon|Multipurpose Hall||
+Indang|Lumampong Balagbag|Covered Court||
+Indang|Lumampong Halayhay|Elementary School||
+Indang|Mahabang Kahoy Cerca|Elementary School||
+Indang|Mahabang Kahoy Lejos|Covered Court||
+Indang|Mataas na Lupa|Covered Court||
+Indang|Poblacion I|Indang Central Elementary School||
+Indang|Poblacion II|Multipurpose Hall||
+Indang|Poblacion III|Municipal Covered Court||
+Indang|Poblacion IV|Covered Court||
+Indang|Pulo|Multipurpose Hall||
+Indang|Tambo Balagbag|Multipurpose Hall and Elementary School||
+Indang|Tambo Ilaya|Barangay Covered Court||
+Indang|Tambo Malaki|Multipurpose Hall||
+Indang|Tambo Kulit|Covered Court||
+Silang|Acacia|Barangay Covered Court|120.9921841|14.27543204
+Silang|Adlas|Adlas Covered Court|120.9655972|14.25686972
+Silang|Anahaw I|Barangay Covered Court|120.9941264|14.27196117
+Silang|Anahaw II|Barangay Covered Court|120.9971023|14.27148169
+Silang|Balite I|Barangay Covered Court|120.9807125|14.20314376
+Silang|Balite II|Balite II Elementary School|120.9741167|14.18395573
+Silang|Balubad|Barangay Covered Court|120.9488462|14.19069121
+Silang|Balubad|Balubad Elementary School|120.9496961|14.19226611
+Silang|Banaba|Barangay Covered Court|120.9936862|14.28431718
+Silang|Banaba|Barangay Hall|120.9949093|14.28292396
+Silang|Batas|Barangay Covered Court|120.942794|14.23519157
+Silang|Biga I|Biga I Elementary School|120.9757246|14.25031675
+Silang|Biga I|Permanent Evacuation Center|120.9791683|14.24055419
+Silang|Biga II|Biga II Covered Court|120.9697407|14.25874816
+Silang|Biluso|Biluso Covered Court|120.9564446|14.24275148
+Silang|Bucal|Bucal Covered Court|120.9714227|14.1487739
+Silang|Buho|Barangay Covered Court|120.9559922|14.13684803
+Silang|Bulihan|Barangay Covered Court|120.9976743|14.27917754
+Silang|Cabangaan|Cabangaan Elementary School|121.0087381|14.16512895
+Silang|Carmen|Barangay Covered Court|121.0353351|14.22780998
+Silang|Hoyo|Hoyo Barangay Hall|121.0121307|14.20051021
+Silang|Hukay|Hukay Elementary School|121.0151191|14.21683947
+Silang|Iba|Barangay Covered Court|120.9775075|14.21757366
+Silang|Iba|Iba Barangay Hall|120.977332|14.21759112
+Silang|Inchican|Inchican Covered Court / Elementary School|121.0529981|14.250393
+Silang|Ipil I|Barangay Covered Court|120.9969107|14.27334162
+Silang|Ipil II|Barangay Covered Court|121.0004449|14.2718909
+Silang|Kalubkob|Kalubkob Covered Court|120.9533273|14.20838557
+Silang|Kaong|Barangay Covered Court|120.9964453|14.24513558
+Silang|Kaong|Kaong Elementary School|120.9988161|14.24487322
+Silang|Lalaan I|Barangay Covered Court|120.9624904|14.18763041
+Silang|Lalaan II|Lalaan Central School|120.9573209|14.15829496
+Silang|Litlit|Litlit Elementary School|120.944189|14.2056906
+Silang|Lucsuhin|Lucsuhin Barangay Hall|120.9617355|14.211605
+Silang|Lumil|Barangay Covered Court|121.0081898|14.1810433
+Silang|Maguyam|Barangay Covered Court|121.0056837|14.26394239
+Silang|Malabag|Barangay Covered Court|120.9689677|14.14111214
+Silang|Malaking Tatiao|Barangay Covered Court|120.990511|14.22591958
+Silang|Mataas na Burol|Barangay Covered Court|120.9718994|14.16675331
+Silang|Munting Ilog|Munting Ilog Elementary School|120.9996691|14.21638482
+Silang|Narra I|Barangay Covered Court|120.9949072|14.27873125
+Silang|Narra II|Barangay Covered Court|120.9940328|14.2761715
+Silang|Narra III|Barangay Covered Court|120.9934035|14.27838864
+Silang|Paligawan|Paligawan Barangay Hall|120.9800649|14.17752157
+Silang|Pasong Langka|Barangay Covered Court|120.9963086|14.16097729
+Silang|Poblacion I|Patio Medina|120.9737823|14.22338766
+Silang|Poblacion II|Barangay Hall|120.9747115|14.22140071
+Silang|Poblacion III|Patio Medina|120.9737823|14.22338766
+Silang|Poblacion IV|Silang Central Elementary School|120.9713262|14.22115057
+Silang|Poblacion V|Silang Central Elementary School|120.97133|14.22113219
+Silang|Pooc I|Barangay Covered Court|120.9935446|14.18762129
+Silang|Pooc II|Barangay Covered Court|120.9915354|14.19643443
+Silang|Pulong Bunga|Barangay Covered Court|120.9838193|14.17731726
+Silang|Pulong Saging|Barangay Covered Court|120.9821456|14.19395534
+Silang|Puting Kahoy|Barangay Covered Court|121.0306927|14.21500707
+Silang|Sabutan|Barangay Covered Court|120.9743395|14.23002063
+Silang|Santol|Santol Elementary School|120.9532427|14.16954507
+Silang|San Miguel I|Silang Central Elementary School|120.9713262|14.22115057
+Silang|San Miguel II|Barangay Hall|120.9697381|14.22341924
+Silang|San Vicente I|Silang Central Elementary School|120.9713262|14.22115057
+Silang|Tartaria|Barangay Covered Court|121.0135731|14.20282287
+Silang|Tibig|Barangay Covered Court|121.0005032|14.22721188
+Silang|Toledo|Toledo Multi-Purpose Hall|120.9645914|14.15395047
+Silang|Tubuan I|Silang Central Elementary School|120.9713262|14.22115057
+Silang|Tubuan II|Barangay Hall Function Hall|120.9696992|14.21493699
+Silang|Tubuan III|Barangay Hall|120.9711133|14.21772968
+Silang|Ulat|Ulat Elementary School|120.9884881|14.15172
+Silang|Yakal|Barangay Covered Court|120.9995838|14.26970285
+General Emilio Aguinaldo|Castaños Cerca|Bailen Elementary School||
+General Emilio Aguinaldo|Castaños Lejos|Castaños Lejos Elementary School||
+General Emilio Aguinaldo|Kabulusan|Kabulusan Elementary School||
+General Emilio Aguinaldo|Lumipa|Lumipa Elementary School||
+General Emilio Aguinaldo|Tabora|Tabora Elementary School||
+Noveleta|San Jose II|San Jose II Multi-Purpose Hall and Evacuation Center|120.885697|14.43116
+Noveleta|San Rafael IV|GLSMES Annex|120.881396|14.449222
+Noveleta|San Rafael IV|Health Center|120.880256|14.448824
+Noveleta|San Rafael III|TIP|120.876313|14.435304
+Noveleta|San Rafael III|Poblacion Elementary School (POAES)|120.878352|14.436712
+Noveleta|San Rafael III|Noveleta Science High School|120.878527|14.436905
+Noveleta|Poblacion|Multi-Purpose Hall|120.879148|14.425402
+Noveleta|San Antonio I|Camella Multi-Purpose Hall|120.887428|14.425415
+Noveleta|San Antonio II|San Antonio Elementary School (SAES)|120.885778|14.41878
+Noveleta|San Rafael II|Noveleta National High School|120.879842|14.431907
+Noveleta|San Rafael II|Barangay Hall|120.875707|14.431779
+Noveleta|San Rafael I|Barangay Hall|120.878352|14.42935
+Noveleta|Salcedo II|Multi-Purpose Hall|120.87363|14.42563
+Noveleta|San Juan I|Barangay Hall|120.88451|14.43337
+Noveleta|San Juan II|Barangay Hall|120.88547|14.43865
+Noveleta|San Juan II|San Juan Elementary School||
+Tagaytay City|Asisan|Barangay Hall||
+Tagaytay City|Bagong Tubig|Barangay Hall||
+Tagaytay City|Calabuso|Barangay Hall||
+Tagaytay City|Dapdap East|Barangay Hall||
+Tagaytay City|Dapdap West|Barangay Hall||
+Tagaytay City|Francisco|Barangay Hall||
+Tagaytay City|Guinhawa North|Barangay Hall||
+Tagaytay City|Guinhawa South|Barangay Hall||
+Tagaytay City|Iruhin Central|Barangay Hall||
+Tagaytay City|Iruhin East|Barangay Hall||
+Tagaytay City|Iruhin West|Barangay Hall||
+Tagaytay City|Kaybagal Central|Barangay Hall||
+Tagaytay City|Kaybagal North|Barangay Hall||
+Tagaytay City|Kaybagal South|Barangay Hall||
+Tagaytay City|Mag-asawang Ilat|Barangay Hall||
+Tagaytay City|Maharlika East|Barangay Hall||
+Tagaytay City|Maharlika West|Barangay Hall||
+Tagaytay City|Maitim II Central|Barangay Hall||
+Tagaytay City|Maitim II East|Barangay Hall||
+Tagaytay City|Maitim II West|Barangay Hall||
+Tagaytay City|Mendez Crossing East|Barangay Hall||
+Tagaytay City|Mendez Crossing West|Barangay Hall||
+Tagaytay City|Neogan|Barangay Hall||
+Tagaytay City|Patutong Malaki North|Barangay Hall||
+Tagaytay City|Patutong Malaki South|Barangay Hall||
+Tagaytay City|Sambong|Barangay Hall||
+Tagaytay City|San Jose|Barangay Hall||
+Tagaytay City|Silang Crossing East|Barangay Hall||
+Tagaytay City|Silang Crossing West|Barangay Hall||
+Tagaytay City|Sungay East|Barangay Hall||
+Tagaytay City|Sungay West|Barangay Hall||
+Tagaytay City|Tolentino East|Barangay Hall||
+Tagaytay City|Tolentino West|Barangay Hall||
+Tagaytay City|Zambal|Barangay Hall||
+Tagaytay City||Tagaytay City Permanent Evacuation Center 1||
+Tagaytay City||Tagaytay City Permanent Evacuation Center 2||
+Tagaytay City||Tagaytay City Permanent Evacuation Center 3||
+Tagaytay City|Kaybagal Central|Nicolasa Virata Barangay Hall||
+Naic|Bagong Kalsada|Barangay Hall|120° 45' 07.71" E|14° 19' 17.29" N
+Naic|Balsahan|Naic Covered Court|120° 45' 49.27" E|14° 19' 11.84" N
+Naic|Balsahan|Barangay Hall|120° 45' 44.80" E|14° 19' 12.66" N
+Naic|Bancaan|Barangay Hall|120° 44' 58.95" E|14° 19' 09.59" N
+Naic|Bancaan|Barangay Covered Court|120° 44' 59.36" E|14° 19' 08.82" N
+Naic|Bucana Malaki|Barangay Hall|120° 45' 18.78" E|14° 19' 31.39" N
+Naic|Bucana Malaki|Barangay Covered Court|120° 45' 18.96" E|14° 19' 30.82" N
+Naic|Bucana Sasahan|Barangay Hall|120° 45' 35.82" E|14° 19' 23.46" N
+Naic|Bucana Sasahan|Barangay Covered Court|120° 45' 35.70" E|14° 19' 23.53" N
+Naic|Calubcob|Barangay Hall|120° 47' 19.49" E|14° 17' 51.63" N
+Naic|Calubcob|Barangay Covered Court|120° 47' 28.26" E|14° 18' 03.08" N
+Naic|Capt. C. Nazareno|Barangay Hall|120°46' 03.77" E|14° 18' 56.90" N
+Naic|Capt. C. Nazareno|Multi-Purpose Building|120° 46' 03.63" E|14° 18' 56.97" N
+Naic|Gombalza|Barangay Hall|120° 46' 01.13" E|14° 19' 07.20" N
+Naic|Halang|Barangay Hall|120° 48' 26.89" E|14° 17' 25.79" N
+Naic|Halang|Naic Crisis Center|120° 48' 26.46" E|14° 17' 29.21" N
+Naic|Humbac|Barangay Hall|120° 46' 09.16" E|14° 18' 59.01" N
+Naic|Humbac|Humbac Chapel|120° 46' 08.02" E|14° 19' 00.00" N
+Naic|Ibayo Estacion|Barangay Hall (Old)|120° 45' 54.14" E|14° 19' 24.55" N
+Naic|Ibayo Estacion|Barangay Hall (New)|120° 46' 07.39" E|14° 19' 33.13"N
+Naic|Ibayo Estacion|Barangay Covered Court|120° 45' 59.77" E|14° 19' 32.63" N
+Naic|Ibayo Silangan|Barangay Hall|120° 46' 03.28" E|14° 19' 20.30" N
+Naic|Ibayo Silangan|Barangay Covered Court|120° 46' 40.08" E|14° 19' 26.81" N
+Naic|Kanluran|Barangay Hall (Old)|120° 45' 48.59" E|14° 19' 01.87" N
+Naic|Kanluran|Barangay Hall (New)|120° 45' 47.04" E|14° 19' 05.58" N
+Naic|Labac|Barangay Hall|120° 44' 12.23" E|14° 18' 45.43" N
+Naic|Latoria|Barangay Hall|120° 45' 40.64" E|14° 19' 17.33" N
+Naic|Latoria|Barangay Covered Court|120° 45' 39.03" E|14° 19' 14.26" N
+Naic|Asisan|Barangay Hall|120° 44' 46.70" E|14° 18' 54.01" N
+Naic|Makina|Barangay Hall|120° 46' 14.04" E|14° 18' 52.04" N
+Naic|Malainen Bago|Barangay Hall|120° 46' 07.26" E|14° 18' 25.45" N
+Naic|Malainen Bago|Barangay Covered Court|120° 46' 09.26" E|14° 18' 20.51" N
+Naic|Malainen Luma|Barangay Hall|120° 47' 31.58" E|14° 16' 11.99" N
+Naic|Malainen Luma|Barangay Covered Court|120° 47' 31.12" E|14° 16' 11.55" N
+Naic|Molino|Barangay Hall|120° 46' 52.37" E|14° 16' 42.16" N
+Naic|Molino|Barangay Covered Court|120° 46' 51.63" E|14° 16' 42.38" N
+Naic|Munting Mapino|Barangay Hall|120° 46' 17.15" E|14° 20' 02.43" N
+Naic|Munting Mapino|Barangay Covered Court|120° 46' 18.01" E|14° 20' 01.78" N
+Naic|Muzon|Barangay Hall|120° 45' 15.24" E|14° 17' 32.52" N
+Naic|Muzon|Barangay Covered Court|120° 45' 15.83" E|14° 17' 32.99" N
+Naic|Palangue 2 & 3|Barangay Hall|120° 49' 42.23" E|14° 15' 52.08" N
+Naic|Palangue 2 & 3|Barangay Covered Court|120° 50' 02.10" E|14° 15' 27.25" N
+Naic|Palangue Central|Barangay Hall|120° 48' 40.75" E|14° 16' 53.53" N
+Naic|Sabang|Barangay Hall|120° 47' 40.22" E|14° 18' 49.13" N
+Naic|Sabang|Barangay Covered Court|120° 47' 33.86" E|14° 19' 14.64" N
+Naic|Sapa|Barangay Hall|120° 45' 25.61" E|14° 19' 13.80" N
+Naic|Sapa|Barangay Covered Court|120° 45' 39.08" E|14° 18' 59.73" N
+Naic|Santulan|Barangay Hall|120° 46' 07.12" E|14° 18' 52.05" N
+Naic|San Roque|Barangay Hall|120° 46' 17.93" E|14° 18' 38.67" N
+Naic|San Roque|Barangay Covered Court|120° 46' 39.50" E|14° 18' 14.86" N
+Naic|Timalan Balsahan|Barangay Hall|120° 46' 51.39" E|14° 20' 35.88" N
+Naic|Timalan Balsahan|Barangay Covered Court|120° 46' 55.41" E|14° 20' 44.22" N
+Naic|Timalan Concepcion|Barangay Hall|120° 46' 49.42" E|14° 20' 09.44" N
+Naic|Timalan Concepcion|Barangay Covered Court|120° 46' 48.79" E|14° 20' 09.66" N

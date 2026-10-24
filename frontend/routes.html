@@ -3,63 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dashboard - Disaster Map</title>
-  <link rel="stylesheet" href="assets/css/tailwind.css?v=20260620-ui2">
-  <link rel="stylesheet" href="assets/css/app.css?v=20260623-admin-redesign2">
-  <link rel="stylesheet" href="assets/css/admin-modern.css?v=20260702-muni-search-250px1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Evacuation routes | Disaster Map</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/tailwind.css?v=20261024-r3">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
+  <link rel="stylesheet" href="assets/css/theme.css?v=20261024-r3">
 </head>
-<body class="admin-shell pro-dashboard bg-slate-50">
-<div class="min-h-screen lg:flex">
-  <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 hidden w-64 border-r bg-white p-4 lg:block">
-    <a href="index.html" class="brand-lockup mb-8 flex items-center gap-3 px-2">
-      <span class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-white">DM</span>
+<body class="admin-shell">
+<div class="admin-frame">
+  <aside id="sidebar" class="hidden">
+    <a href="index.html" class="brand-lockup">
+      <span>DM</span>
       <strong><span>Disaster Map</span><small>Operations Console</small></strong>
     </a>
     <p class="nav-section-label">Monitoring</p>
-    <nav class="space-y-1 text-sm">
-      <a href="dashboard.html" data-view="overview" data-view-src="admin/views/overview.html" class="nav-item nav-active block w-full rounded-lg px-3 py-2.5 text-left">Overview</a>
-      <a href="weather.html" data-view="weather" data-view-src="admin/views/weather.html" class="nav-item block w-full rounded-lg px-3 py-2.5 text-left">Weather monitoring</a>
-      <p class="nav-section-label">Response Data</p>
-      <a href="municipalities.html" data-view="municipalities" data-view-src="admin/views/municipalities.html" class="nav-item admin-only block w-full rounded-lg px-3 py-2.5 text-left">Municipalities</a>
-      <a href="hazards.html" data-view="hazards" data-view-src="admin/views/hazards.html" class="nav-item manager-only block w-full rounded-lg px-3 py-2.5 text-left">Hazard management</a>
-      <a href="safezones.html" data-view="safezones" data-view-src="admin/views/safezones.html" class="nav-item block w-full rounded-lg px-3 py-2.5 text-left">Safety facilities</a>
+    <nav>
+      <a href="dashboard.html" data-view="overview" data-view-src="admin/views/overview.html" class="nav-item nav-active">Overview</a>
+      <a href="weather.html" data-view="weather" data-view-src="admin/views/weather.html" class="nav-item">Weather monitoring</a>
+      <p class="nav-section-label">Response data</p>
+      <a href="municipalities.html" data-view="municipalities" data-view-src="admin/views/municipalities.html" class="nav-item admin-only">Municipalities</a>
+      <a href="coordination.html" data-view="coordination" data-view-src="admin/views/coordination.html" class="nav-item manager-only"><span class="nav-label">Municipality</span><span id="coordinationBadge" class="nav-badge hidden">0</span></a>
+      <a href="hazards.html" data-view="hazards" data-view-src="admin/views/hazards.html" class="nav-item manager-only">Hazard management</a>
+      <a href="safezones.html" data-view="safezones" data-view-src="admin/views/safezones.html" class="nav-item">Safety facilities</a>
       <p class="nav-section-label">Operations</p>
-      <a href="alerts.html" data-view="alerts" data-view-src="admin/views/alerts.html" class="nav-item flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left"><span>Alerts</span><span id="alertBadge" class="hidden rounded-full bg-red-600 px-2 py-0.5 text-xs text-white">0</span></a>
-      <a href="history.html" data-view="history" data-view-src="admin/views/history.html" class="nav-item block w-full rounded-lg px-3 py-2.5 text-left">Historical disasters</a>
-      <a href="reports.html" data-view="reports" data-view-src="admin/views/reports.html" class="nav-item manager-only block w-full rounded-lg px-3 py-2.5 text-left">Reports</a>
-      <a href="users.html" data-view="users" data-view-src="admin/views/users.html" class="nav-item admin-only block w-full rounded-lg px-3 py-2.5 text-left">Users</a>
-      <a href="profile.html" data-view="profile" data-view-src="admin/views/profile.html" class="nav-item block w-full rounded-lg px-3 py-2.5 text-left">Profile & password</a>
-      <a href="index.html" class="block rounded-lg px-3 py-2.5 hover:bg-slate-100">Public map</a>
+      <a href="alerts.html" data-view="alerts" data-view-src="admin/views/alerts.html" class="nav-item"><span>Alerts</span><span id="alertBadge" class="hidden">0</span></a>
+      <a href="history.html" data-view="history" data-view-src="admin/views/history.html" class="nav-item">Historical disasters</a>
+      <a href="reports.html" data-view="reports" data-view-src="admin/views/reports.html" class="nav-item manager-only">Reports</a>
+      <a href="users.html" data-view="users" data-view-src="admin/views/users.html" class="nav-item admin-only">Users</a>
+      <p class="nav-section-label">Account</p>
+      <a href="profile.html" data-view="profile" data-view-src="admin/views/profile.html" class="nav-item">Profile &amp; password</a>
+      <a href="index.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"/><path d="M9 3v15M15 6v15"/></svg>Public map</a>
     </nav>
-    <button id="logoutBtn" class="absolute bottom-5 left-4 right-4 rounded-lg border px-3 py-2 text-sm">Sign out</button>
+    <button id="logoutBtn">Sign out</button>
   </aside>
-  <div class="flex-1 lg:ml-64">
-    <header class="sticky top-0 z-20 flex items-center justify-between border-b bg-white/95 px-4 py-3 backdrop-blur lg:px-8">
-      <button id="menuBtn" class="rounded-lg border p-2 lg:hidden">Menu</button>
+  <div class="admin-content">
+    <header>
+      <button id="menuBtn">Menu</button>
       <div>
-        <p id="roleLabel" class="text-xs uppercase tracking-wide text-indigo-600"></p>
+        <p id="roleLabel"></p>
         <strong id="userName">Dashboard</strong>
         <span class="topbar-subtitle">Provincial disaster operations and response monitoring</span>
       </div>
-      <div class="h-9 w-9 rounded-full bg-indigo-100 text-center font-bold leading-9 text-indigo-700" id="avatar">U</div>
+      <div id="avatar">U</div>
     </header>
-    <main class="p-4 lg:p-8" data-admin-view-container>
-      <div id="adminViewLoading" class="rounded-2xl border bg-white p-6 text-sm text-slate-500">Loading admin modules...</div>
+    <main data-admin-view-container>
+      <div id="adminViewLoading">Loading modules&hellip;</div>
     </main>
   </div>
 </div>
-<div id="toast" class="fixed bottom-5 right-5 z-50 hidden rounded-xl bg-slate-900 px-4 py-3 text-sm text-white"></div>
-<link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
+<div id="toast" class="hidden"></div>
 <script src="vendor/leaflet/leaflet.js?v=1.9.4"></script>
 <script src="vendor/sweetalert2/sweetalert2.all.min.js?v=11"></script>
 <script src="vendor/chartjs/chart.umd.min.js?v=4.4.7"></script>
-<script src="config.js?v=20260620-fix2"></script>
-<script src="assets/js/api.js?v=20260620-fix2"></script>
-<script src="assets/js/alerts.js?v=20260620-fix1"></script>
-<script src="assets/js/admin-views.js?v=20260702-hazard-type-filter1"></script>
-<script src="assets/js/dashboard.js?v=20260702-hazard-type-filter1"></script>
-<script src="assets/js/modal.js?v=20260629-hazard-redraw-temp"></script>
-<script src="assets/js/ui.js?v=20260702-table-header-fix4"></script>
-<script src="assets/js/table.js?v=20260702-table-header-fix4"></script>
+<script>
+  if (window.Chart) {
+    Chart.defaults.font.family = "'Inter', ui-sans-serif, system-ui, sans-serif";
+    Chart.defaults.font.size = 12;
+    Chart.defaults.color = '#64748b';
+    Chart.defaults.borderColor = '#e6eaf0';
+    Chart.defaults.plugins.legend.labels.boxWidth = 10;
+    Chart.defaults.plugins.legend.labels.boxHeight = 10;
+    Chart.defaults.plugins.legend.labels.usePointStyle = true;
+    Chart.defaults.plugins.tooltip.backgroundColor = '#0b1220';
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.tooltip.cornerRadius = 8;
+  }
+</script>
+<script src="config.js?v=20261024-r3"></script>
+<script src="assets/js/api.js?v=20260920-ds1"></script>
+<script src="assets/js/alerts.js?v=20261024-r3"></script>
+<script src="assets/js/cavite-gis.js?v=20261024-r3"></script>
+<script src="assets/js/admin-views.js?v=20261024-r3"></script>
+<script src="assets/js/dashboard.js?v=20261024-r3"></script>
+<script src="assets/js/coordination.js?v=20261024-r3"></script>
+<script src="assets/js/modal.js?v=20261024-r3"></script>
+<script src="assets/js/ui.js?v=20261024-r3"></script>
+<script src="assets/js/table.js?v=20261024-r3"></script>
 </body>
 </html>

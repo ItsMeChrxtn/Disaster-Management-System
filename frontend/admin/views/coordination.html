@@ -1,0 +1,69 @@
+<section id="view-coordination" class="view hidden">
+  <div class="page-heading coordination-heading">
+    <div>
+      <h1 class="text-2xl font-bold" id="coordinationTitle">LGU coordination channel</h1>
+      <p class="text-sm text-slate-500" id="coordinationSubtitle">Send directives and advisories from the PDRRMO to every MDRRMO / CDRRMO, and receive their situation reports.</p>
+    </div>
+    <div class="coordination-tabs admin-only" role="tablist" aria-label="Municipalities module">
+      <a href="municipalities.html" data-open-view="municipalities" role="tab">Municipal registry</a>
+      <a href="coordination.html" data-open-view="coordination" role="tab" class="is-active" aria-selected="true">Coordination channel</a>
+    </div>
+  </div>
+
+  <div class="coordination-layout mt-5">
+    <aside class="coordination-channels" aria-label="Municipality channels">
+      <div class="coordination-channels-head">
+        <strong id="coordinationOffice">Channels</strong>
+        <input id="coordinationChannelSearch" type="search" placeholder="Search municipality" aria-label="Search municipality channel">
+      </div>
+      <div id="coordinationChannelList" class="coordination-channel-list"><p class="muted-note">Loading channels&hellip;</p></div>
+    </aside>
+
+    <div class="coordination-thread">
+      <div class="coordination-thread-head">
+        <div>
+          <span id="coordinationThreadKicker">Channel</span>
+          <h2 id="coordinationThreadTitle">Select a channel</h2>
+          <p id="coordinationThreadMeta"></p>
+        </div>
+        <button id="coordinationRefresh" type="button" class="button button-secondary button-sm">Refresh</button>
+      </div>
+      <div id="coordinationMessages" class="coordination-messages" aria-live="polite"></div>
+
+      <form id="coordinationForm" class="coordination-compose" autocomplete="off">
+        <div id="coordinationTargets" class="coordination-targets hidden">
+          <label class="coordination-target-mode"><input type="radio" name="target_mode" value="all" checked> All MDRRMO / CDRRMO</label>
+          <label class="coordination-target-mode"><input type="radio" name="target_mode" value="selected"> Selected municipalities</label>
+          <div id="coordinationTargetPicker" class="coordination-target-picker hidden"></div>
+        </div>
+        <div class="coordination-compose-row">
+          <label><span>Type</span>
+            <select name="category">
+              <option value="advisory">Advisory</option>
+              <option value="directive">Directive</option>
+              <option value="situation_report">Situation report</option>
+              <option value="request">Request / need</option>
+              <option value="response">Response / update</option>
+              <option value="general" selected>General message</option>
+            </select>
+          </label>
+          <label><span>Priority</span>
+            <select name="priority">
+              <option value="normal">Normal</option>
+              <option value="urgent">Urgent</option>
+              <option value="critical">Critical</option>
+            </select>
+          </label>
+          <label class="coordination-ack admin-only"><input type="checkbox" name="requires_ack" value="1"> Require acknowledgement</label>
+        </div>
+        <input name="subject" required minlength="2" maxlength="180" placeholder="Subject (e.g. Pre-emptive evacuation for coastal barangays)">
+        <textarea name="body" required maxlength="5000" rows="3" placeholder="Write the message, report or instruction&hellip;"></textarea>
+        <p id="coordinationError" class="hidden form-error"></p>
+        <div class="coordination-compose-actions">
+          <small id="coordinationComposeHint">Recipients are notified in their bell and on the mobile app.</small>
+          <button class="button button-primary" type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

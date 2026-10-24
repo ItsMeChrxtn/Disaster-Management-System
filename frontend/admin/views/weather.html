@@ -1,1 +1,80 @@
-<section id="view-weather" class="view hidden"><div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><h1 class="text-2xl font-bold">Weather monitoring</h1><p id="weatherLocation" class="text-sm text-slate-500">Loading location...</p></div><button id="refreshWeatherBtn" class="rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white">Update weather</button></div><div class="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><article class="rounded-2xl border bg-white p-5"><p class="text-sm text-slate-500">Current weather</p><p id="weatherCondition" class="mt-2 text-2xl font-bold">Loading...</p><p id="weatherTemperature" class="mt-1 text-sm text-slate-500"></p></article><article class="rounded-2xl border bg-white p-5"><p class="text-sm text-slate-500">Warning level</p><p id="weatherWarningLevel" class="mt-2 text-2xl font-bold">-</p><p class="mt-1 text-sm text-slate-500">Highest derived advisory</p></article><article class="rounded-2xl border bg-white p-5"><p class="text-sm text-slate-500">Humidity and clouds</p><p id="weatherHumidity" class="mt-2 text-2xl font-bold">-</p><p id="weatherClouds" class="mt-1 text-sm text-slate-500"></p></article><article class="rounded-2xl border bg-white p-5"><p class="text-sm text-slate-500">Wind</p><p id="weatherWind" class="mt-2 text-2xl font-bold">-</p><p id="weatherGust" class="mt-1 text-sm text-slate-500"></p></article></div><div id="weatherAdvisories" class="mt-5 grid gap-4 lg:grid-cols-3"></div><div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4"><p id="weatherOfficialNotice" class="text-sm text-amber-900"></p><p id="weatherUpdated" class="mt-2 text-xs text-amber-700"></p></div></section>
+<section id="view-weather" class="view hidden">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">Weather monitoring</h1>
+      <p id="weatherLocation" class="text-sm text-slate-500">Loading location...</p>
+    </div>
+    <button id="refreshWeatherBtn" class="button button-primary">Update weather</button>
+  </div>
+
+  <div id="aqiMaskBanner" class="aqi-mask-banner hidden" role="alert"></div>
+
+  <div class="weather-current-grid mt-5">
+    <article class="weather-card weather-card-now">
+      <div id="weatherIcon" class="weather-card-icon"></div>
+      <div>
+        <p class="weather-card-label">Current weather</p>
+        <p id="weatherCondition" class="weather-card-value">Loading...</p>
+        <p id="weatherTemperature" class="weather-card-sub"></p>
+      </div>
+    </article>
+    <article class="weather-card">
+      <p class="weather-card-label">Warning level</p>
+      <p id="weatherWarningLevel" class="weather-card-value">-</p>
+      <p class="weather-card-sub">Highest derived advisory</p>
+    </article>
+    <article class="weather-card">
+      <p class="weather-card-label">Humidity and clouds</p>
+      <p id="weatherHumidity" class="weather-card-value">-</p>
+      <p id="weatherClouds" class="weather-card-sub"></p>
+    </article>
+    <article class="weather-card">
+      <p class="weather-card-label">Wind</p>
+      <p id="weatherWind" class="weather-card-value">-</p>
+      <p id="weatherGust" class="weather-card-sub"></p>
+    </article>
+  </div>
+
+  <div class="weather-indicator-grid mt-5">
+    <article id="rainfallCard" class="indicator-card">
+      <header><span>PAGASA rainfall warning</span><strong id="rainfallStatus">-</strong></header>
+      <p id="rainfallMeaning" class="indicator-meaning"></p>
+      <div id="rainfallScale" class="rainfall-scale"></div>
+    </article>
+    <article id="aqiCard" class="indicator-card">
+      <header><span>Air Quality Index (US AQI)</span><strong id="aqiStatus">-</strong></header>
+      <div class="aqi-gauge"><div id="aqiGaugeBar" class="aqi-gauge-bar"></div><i id="aqiGaugeMarker" class="aqi-gauge-marker"></i></div>
+      <div class="aqi-gauge-labels"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>300+</span></div>
+      <p id="aqiAdvice" class="indicator-meaning"></p>
+      <dl id="aqiPollutants" class="aqi-pollutants"></dl>
+    </article>
+  </div>
+
+  <div id="weatherAdvisories" class="mt-5 grid gap-4 lg:grid-cols-2 xl:grid-cols-4"></div>
+
+  <section class="weather-municipal-panel mt-6" aria-labelledby="weatherMunicipalTitle">
+    <div class="weather-municipal-head">
+      <div>
+        <span>All municipalities at a glance</span>
+        <h2 id="weatherMunicipalTitle">Municipal weather, rainfall &amp; air quality</h2>
+        <p>Spot the municipalities that need action, then send an alert or map a hazard directly from each row.</p>
+      </div>
+      <div class="weather-municipal-tools">
+        <label class="weather-filter-toggle"><input id="weatherOnlyWarnings" type="checkbox"> Only with warnings</label>
+      </div>
+    </div>
+    <div id="weatherMunicipalSummary" class="weather-municipal-summary"></div>
+    <div class="weather-municipal-table-wrap">
+      <table class="weather-municipal-table">
+        <thead><tr><th>Municipality</th><th>Weather</th><th>Rainfall (PAGASA)</th><th>Wind</th><th>Air quality</th><th>Warning</th><th class="manager-only text-right">Quick actions</th></tr></thead>
+        <tbody id="weatherMunicipalTable"><tr><td colspan="7" class="p-8 text-center text-slate-500">Loading municipalities...</td></tr></tbody>
+      </table>
+    </div>
+    <p id="weatherMunicipalUpdated" class="weather-municipal-updated"></p>
+  </section>
+
+  <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+    <p id="weatherOfficialNotice" class="text-sm text-amber-900"></p>
+    <p id="weatherUpdated" class="mt-2 text-xs text-amber-700"></p>
+  </div>
+</section>

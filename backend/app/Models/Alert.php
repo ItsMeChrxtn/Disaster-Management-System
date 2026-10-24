@@ -9,7 +9,11 @@ final class Alert extends BaseModel
     public function find(int $id): ?array { $s=$this->db->prepare(self::SELECT.' WHERE a.id=?');$s->execute([$id]);return $s->fetch()?:null; }
     public function create(array $d,int $userId): int { $s=$this->db->prepare('INSERT INTO alerts (title,alert_type,alert_level,message,municipality_id,created_by,status) VALUES (?,?,?,?,?,?,"draft")');$s->execute([$d['title'],$d['alert_type'],$d['alert_level'],$d['message'],$d['municipality_id'],$userId]);return (int)$this->db->lastInsertId(); }
     public function update(int $id,array $d): void { $this->db->prepare('UPDATE alerts SET title=?,alert_type=?,alert_level=?,message=?,municipality_id=? WHERE id=?')->execute([$d['title'],$d['alert_type'],$d['alert_level'],$d['message'],$d['municipality_id'],$id]); }
-    public function setStatus(int $id,string $status): void { $this->db->prepare('UPDATE alerts SET status=?,sent_at=IF(?="sent",UTC_TIMESTAMP(),sent_at) WHERE id=?')->execute([$status,$status,$id]); }
+    public function setStatus(int $id,string $status): void
+    {
+        if($status==='sent')$this->db->prepare('UPDATE alerts SET status=?,sent_at=UTC_TIMESTAMP() WHERE id=?')->execute([$status,$id]);
+        else $this->db->prepare('UPDATE alerts SET status=? WHERE id=?')->execute([$status,$id]);
+    }
     public function history(int $userId,?int $municipalityId): array
     {
         $s=$this->db->prepare('SELECT a.id,a.title,a.alert_type,a.alert_level,a.message,a.municipality_id,a.sent_at,a.created_at,m.municipality_name,(r.read_at IS NOT NULL) is_read,r.read_at FROM alerts a LEFT JOIN municipalities m ON m.id=a.municipality_id LEFT JOIN alert_reads r ON r.alert_id=a.id AND r.user_id=? WHERE a.status="sent" AND (a.municipality_id IS NULL OR a.municipality_id=?) ORDER BY a.sent_at DESC LIMIT 250');$s->execute([$userId,$municipalityId??0]);$rows=$s->fetchAll();foreach($rows as &$row)$row['is_read']=(bool)$row['is_read'];return $rows;

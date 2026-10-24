@@ -1,8 +1,4 @@
-<IfModule mod_headers.c>
-  <FilesMatch "\.(?:html)$">
-    Header always set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
-    Header always set Pragma "no-cache"
-    Header always set Expires "0"
-  </FilesMatch>
-</IfModule>
-
+# Serve the Android package with the correct MIME type so browsers download it
+# instead of rendering it, and keep directory listings off.
+AddType application/vnd.android.package-archive .apk
+Options -Indexes

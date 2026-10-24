@@ -5,20 +5,20 @@
       <p class="text-sm text-slate-500">Choose a drawing shape, map the affected area, then complete the hazard details.</p>
     </div>
     <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
-      <button id="newHazardBtn" type="button" class="manager-only rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white">Draw hazard area</button>
+      <button id="newHazardBtn" type="button" class="manager-only button button-danger">Draw hazard area</button>
     </div>
   </div>
 
   <div class="mt-5 grid gap-5 xl:grid-cols-3">
     <div class="hazard-map-host overflow-hidden rounded-2xl border bg-white xl:col-span-2">
       <div class="hazard-heatmap-legend" aria-label="Hazard heatmap legend">
-        <span>Heatmap guide</span>
+        <span>Hazard colour guide</span>
         <strong>Risk level</strong>
         <ul>
-          <li><i class="risk-high"></i>High Risk</li>
-          <li><i class="risk-medium"></i>Medium</li>
-          <li><i class="risk-low"></i>Low</li>
-          <li><i class="risk-safe"></i>Safe</li>
+          <li title="Imminent danger to life and property. Pre-emptive or forced evacuation."><i class="risk-critical"></i>Critical</li>
+          <li title="Severe impact is likely. Prepare to evacuate."><i class="risk-high"></i>High</li>
+          <li title="Some impact is possible. Monitor advisories."><i class="risk-medium"></i>Moderate</li>
+          <li title="Minor impact expected. Stay informed."><i class="risk-low"></i>Low</li>
         </ul>
       </div>
       <div id="adminMap" class="h-[520px]"></div>
@@ -78,6 +78,8 @@
               <option value="storm_surge_area">Storm Surge</option>
               <option value="landslide">Landslide</option>
               <option value="earthquake_area">Earthquake</option>
+              <option value="tsunami">Tsunami</option>
+              <option value="volcanic">Volcanic / Ashfall</option>
               <option value="fire">Fire</option>
               <option value="other">Other</option>
             </select>
@@ -105,6 +107,14 @@
           </select>
         </label>
 
+        <div class="hazard-field full hazard-barangay-field">
+          <span>Affected barangays</span>
+          <input type="hidden" name="barangays">
+          <div id="hazardBarangayChips" class="barangay-picker" aria-live="polite"></div>
+          <select id="hazardBarangayAdd" aria-label="Add a barangay"><option value="">Select a municipality first</option></select>
+          <small id="hazardBarangayNote" class="hazard-field-note">Auto-detected from the drawn boundary. Remove or add barangays as needed.</small>
+        </div>
+
         <label class="hazard-field full">
           <span>Description</span>
           <textarea name="description" maxlength="5000" rows="4" placeholder="Add affected areas, known triggers, or response notes."></textarea>
@@ -122,7 +132,7 @@
           <textarea name="geojson_text" required rows="5" placeholder="GeoJSON appears here after drawing or upload"></textarea>
         </div>
 
-        <p id="hazardFormError" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700"></p>
+        <p id="hazardFormError" class="hidden form-error"></p>
         <button type="submit" class="hazard-save-button">Save hazard</button>
       </form>
     </aside>
@@ -135,6 +145,7 @@
           <th class="p-4">Hazard</th>
           <th class="p-4">Type</th>
           <th class="p-4">Municipality</th>
+          <th class="p-4">Barangays</th>
           <th class="p-4">Risk</th>
           <th class="p-4 text-right">Actions</th>
         </tr>

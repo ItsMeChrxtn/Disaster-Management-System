@@ -14,6 +14,39 @@
 
   <div id="stats" class="overview-stats grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
 
+  <div class="overview-dropdowns mt-6">
+    <details id="multiHazardPanel" class="multi-hazard-panel collapsible-panel" data-remember="overview-multi-hazard">
+      <summary class="collapsible-summary">
+        <div class="collapsible-title">
+          <span>All disasters &amp; calamities</span>
+          <h2 id="multiHazardTitle">Multi-hazard status</h2>
+        </div>
+        <div id="hazardStripSummary" class="collapsible-chips" aria-live="polite"></div>
+        <span class="collapsible-toggle"><span class="when-closed">Show</span><span class="when-open">Hide</span><svg class="collapse-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+      </summary>
+      <div class="collapsible-body">
+        <p class="panel-heading-note">Active hazard records per calamity type, with live rainfall, air quality and earthquake feeds.</p>
+        <div id="hazardStrip" class="hazard-strip"></div>
+      </div>
+    </details>
+
+    <details id="rainfallPanel" class="chart-panel collapsible-panel" data-remember="overview-rainfall">
+      <summary class="collapsible-summary">
+        <div class="collapsible-title">
+          <span>PAGASA rainfall warning</span>
+          <h2>Rainfall watch by municipality</h2>
+        </div>
+        <div id="rainfallSummary" class="collapsible-chips" aria-live="polite"><span class="summary-chip">Checking 23 municipalities…</span></div>
+        <span class="collapsible-toggle"><span class="when-closed">Show</span><span class="when-open">Hide</span><svg class="collapse-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+      </summary>
+      <div class="collapsible-body">
+        <div class="collapsible-actions"><a href="weather.html" data-open-view="weather" class="button button-secondary button-sm">Weather monitoring</a></div>
+        <div id="rainfallLegend" class="rainfall-legend"></div>
+        <div id="rainfallGrid" class="rainfall-grid"><p class="muted-note">Loading municipal rainfall&hellip;</p></div>
+      </div>
+    </details>
+  </div>
+
   <div class="overview-grid mt-6 grid gap-5 xl:grid-cols-12">
     <div class="chart-panel xl:col-span-4">
       <div class="panel-heading">
@@ -22,20 +55,26 @@
           <h2>Hazards by severity</h2>
         </div>
       </div>
-      <div class="chart-frame">
+      <div class="chart-frame severity-frame">
         <canvas id="severityChart"></canvas>
+        <div id="severityCenter" class="severity-center"></div>
       </div>
+      <ul id="severityBreakdown" class="severity-breakdown" aria-label="What each risk colour means"></ul>
     </div>
 
     <div class="chart-panel xl:col-span-5">
       <div class="panel-heading">
         <div>
           <span>Notification trend</span>
-          <h2>Alert activity</h2>
+          <h2>Alert activity · last 6 months</h2>
         </div>
       </div>
-      <div class="chart-frame">
+      <div class="chart-frame compact">
         <canvas id="alertsChart"></canvas>
+      </div>
+      <div class="alert-history">
+        <div class="alert-history-head"><strong>Alert history</strong><span id="alertHistoryCount"></span></div>
+        <ol id="alertHistory" class="alert-history-list"></ol>
       </div>
     </div>
 
@@ -49,7 +88,19 @@
       <div id="alertList" class="alert-list"></div>
     </div>
 
-    <div class="chart-panel xl:col-span-7">
+    <div class="chart-panel xl:col-span-6">
+      <div class="panel-heading">
+        <div>
+          <span>Calamity mix</span>
+          <h2>Hazards by type</h2>
+        </div>
+      </div>
+      <div class="chart-frame compact">
+        <canvas id="hazardTypeChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-panel xl:col-span-6">
       <div class="panel-heading">
         <div>
           <span>Response capacity</span>
@@ -60,5 +111,21 @@
         <canvas id="facilitiesChart"></canvas>
       </div>
     </div>
+    <div class="chart-panel xl:col-span-12">
+      <div class="panel-heading">
+        <div>
+          <span>Hazard management</span>
+          <h2>Hazards per municipality &amp; barangay</h2>
+        </div>
+        <a href="hazards.html" data-open-view="hazards" class="manager-only button button-secondary button-sm">Manage hazards</a>
+      </div>
+      <div class="area-table-wrap">
+        <table class="area-table">
+          <thead><tr><th>Municipality</th><th>Hazards</th><th>Types</th><th>Highest risk</th><th>Affected barangays</th></tr></thead>
+          <tbody id="hazardAreaTable"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </section>

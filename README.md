@@ -15,7 +15,7 @@ backend/
   app/Middleware/     authentication and role authorization
   app/Models/          domain persistence
   database/           MySQL schema and admin seed command
-  public/             Railway/Apache web root
+  public/             Apache web root (the only backend folder that is web-exposed)
   routes/             API route definitions
 frontend/
   assets/css/         responsive presentation
@@ -24,6 +24,10 @@ frontend/
   login.html           resident and staff authentication
   dashboard.html       role-aware operational dashboard
 ```
+
+## Android app
+
+A Flutter mobile app with the same features as the website lives in `mobile/` (see `mobile/README.md`). The signed APK is published at `frontend/downloads/disaster-map.apk` and linked from the landing page (`#mobile-app`), the hero, the footer, and the login page. `frontend/.htaccess` adds the `application/vnd.android.package-archive` MIME type so Apache serves it as a download. Rebuild with `flutter build apk --release --target-platform android-arm,android-arm64` and copy the APK into `frontend/downloads/` before deploying.
 
 ## Local setup
 
@@ -36,6 +40,7 @@ frontend/
 
 ## UI architecture
 
+- `assets/css/theme.css` is the single design system stylesheet (Inter, blue/navy palette, buttons, pills, tables, modals, Leaflet and SweetAlert2 theming, public landing, auth pages, dashboard). It loads after the compiled Tailwind utilities and intentionally uses no `!important` except for `.hidden`; `npm run build:css` recompiles `tailwind.css` from the HTML (including `admin/views/*.html`) and JS sources.
 - `assets/js/alerts.js` is the only notification/confirmation interface. CRUD success, API errors, authentication, destructive actions, alert sending, and report generation use SweetAlert2; native browser dialogs are not used.
 - `assets/js/modal.js` upgrades the live user, municipality, hazard, safe-zone, center, route, alert, historical-record, and report forms into responsive modal dialogs. It preserves each existing submit handler and API contract.
 - `assets/js/table.js` supplies module filters while the shared table controller supplies search, sorting, pagination, CSV, Excel-compatible export, print, and PDF-through-print output.
@@ -44,15 +49,18 @@ frontend/
 
 ## Environment variables
 
-Configure these in `backend/.env` locally and as Railway variables in production: `APP_ENV`, `APP_DEBUG`, `APP_URL`, `FRONTEND_URL`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, `JWT_TTL`, and optional `WEATHER_API_URL`. `FRONTEND_URL` accepts a comma-separated allowlist; include both the production Vercel URL and any approved preview origin.
+Configure these in `backend/.env` (create it on the server; it is never committed): `APP_ENV`, `APP_DEBUG`, `APP_URL`, `FRONTEND_URL`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, `JWT_TTL`, and optional `WEATHER_API_URL`. On a single-domain Hostinger deployment `APP_URL` and `FRONTEND_URL` are normally the same origin (e.g. `https://yourdomain.com`); `FRONTEND_URL` accepts a comma-separated allowlist if you also need to allow a staging origin.
 
-## Vercel frontend
+## Hostinger deployment (single hosting account)
 
-Import the repository, set the root directory to `frontend`, and deploy as a static site using the included `vercel.json`. Before deployment, set `DISASTER_MAP_CONFIG.API_URL` in `frontend/config.js` to the HTTPS Railway API URL. No build command is required because `assets/css/tailwind.css` is committed.
+This app is designed to run entirely from one Apache + PHP + MySQL hosting account — no separate frontend/backend host is required.
 
-## Railway backend and MySQL
-
-Create a MySQL service and a PHP service rooted at `backend`. Set the PHP start command to `php -S 0.0.0.0:$PORT -t public`, add the database and security environment variables, run `composer install --no-dev --optimize-autoloader`, then import `database/schema.sql` for a new database or execute the migrations for an existing database. Set `FRONTEND_URL` to the exact Vercel origin. Generated reports require a Railway volume mounted at `backend/storage/reports` or an object-storage replacement.
+1. **Upload the repository** to the domain's document root (e.g. `public_html`), keeping the existing layout: root `index.php`, `frontend/`, `backend/`. `backend/vendor/` and `backend/.env` are gitignored, so upload them separately (FTP/File Manager), or run `composer install --no-dev --optimize-autoloader` from an SSH terminal if your plan includes one.
+2. **Create the MySQL database** in hPanel → Databases → MySQL Databases (Hostinger prefixes the name/user, e.g. `u123456789_disaster_map`), then import your schema/data through phpMyAdmin. Use `backend/database/schema.sql` for an empty install, `backend/database/disaster_map_complete.sql` for schema + demo data, or a `mysqldump` export of an existing database — strip any `CREATE DATABASE`/`USE` statements first since shared hosting accounts cannot create databases via SQL.
+3. **Create `backend/.env`** from `backend/.env.example` with the Hostinger DB credentials, `DB_HOST=localhost`, and `APP_URL`/`FRONTEND_URL` set to your Hostinger domain.
+4. **Confirm `mod_rewrite` and `.htaccess` overrides are enabled** (default on Hostinger). `backend/.htaccess` denies direct access to everything in `backend/` except `backend/public/` — verify `backend/.env`, `backend/composer.json`, and anything under `backend/database/` return 403 when requested directly by URL.
+5. **Set folder permissions** so PHP can write to `backend/storage/reports` (typically 755; Hostinger's filesystem is persistent, so generated PDF/Excel reports do not need external object storage).
+6. Visit `https://yourdomain.com/` — it redirects to `frontend/`; `frontend/config.js` derives the API base URL from the current origin automatically, so no hardcoded API URL is needed as long as `frontend/` and `backend/` stay siblings under the same domain.
 
 ## API
 
@@ -124,9 +132,9 @@ Alerts use a draft → sent lifecycle with soft deletion. Residents receive prov
 
 Weather monitoring uses Open-Meteo current and hourly forecast data. Rainfall, thunderstorm, and strong-wind levels are derived guidance rather than official warnings; PAGASA and DRRMO bulletins remain authoritative.
 
-Reporting generates Hazard, Alert, and Historical Disaster reports as PDF or Excel. PDF reports use Dompdf; Excel workbooks use PhpSpreadsheet. Run `backend/database/migrate_reports.sql` when upgrading. Railway deployments must mount persistent storage at `backend/storage/reports` or replace local files with object storage.
+Reporting generates Hazard, Alert, and Historical Disaster reports as PDF or Excel. PDF reports use Dompdf; Excel workbooks use PhpSpreadsheet. Run `backend/database/migrate_reports.sql` when upgrading. `backend/storage/reports` must be writable by PHP; on Hostinger this is regular persistent disk storage, so no object-storage replacement is needed.
 
-Reports use Dompdf and PhpSpreadsheet to produce real PDF and XLSX files. Admin reports cover all municipalities; Sub Admin reports are municipality-scoped and only their own generated files are listed. Run `backend/database/migrate_reports.sql` when upgrading. Railway's filesystem is ephemeral, so production deployments should replace local report storage with persistent object storage.
+Reports use Dompdf and PhpSpreadsheet to produce real PDF and XLSX files. Admin reports cover all municipalities; Sub Admin reports are municipality-scoped and only their own generated files are listed. Run `backend/database/migrate_reports.sql` when upgrading. Downloads are always served through the authenticated `/api/reports/{id}/download` endpoint, never as direct static links.
 
 Historical disaster records are readable by every authenticated role and writable only by Admin. Existing installations that used the earlier reporting-only historical table must run `backend/database/migrate_historical_disasters.sql` once before deploying this module.
 
@@ -134,9 +142,7 @@ The public GIS map combines flood, storm surge, earthquake, safe-zone, evacuatio
 
 ## Deployment
 
-- Railway MySQL: run `database/schema.sql`; inject Railway's MySQL connection variables into the backend service.
-- Railway API: set the root directory to `backend`, define all `.env.example` variables, and use the included start command. Set `FRONTEND_URL` to the exact Vercel origin (comma-separated origins are accepted).
-- Vercel: set the root directory to `frontend`; replace `API_URL` in `config.js` with the HTTPS Railway API URL before deployment.
+See [Hostinger deployment](#hostinger-deployment-single-hosting-account) above for the primary deployment path. In short: one Apache + PHP + MySQL hosting account serves both `frontend/` and `backend/` from the same domain, so no CORS configuration or cross-host API URL is required.
 
 ## Security baseline
 
@@ -145,6 +151,7 @@ The public GIS map combines flood, storm surge, earthquake, safe-zone, evacuatio
 - Forgot-password tokens are random, stored only as SHA-256 hashes, expire after 30 minutes by default, and are single-use. Production must connect token delivery to its transactional email/SMS provider; debug mode returns the token for local testing.
 - PDO native prepared statements prevent SQL injection. JSON is safely encoded and map popup content is escaped.
 - CORS uses an allowlist; security headers are included. Production errors do not expose traces.
+- `backend/.htaccess` denies direct web access to everything in `backend/` except `backend/public/`. This matters most on shared hosting where `frontend/` and `backend/` sit under the same document root — without it, `.env`, `vendor/`, `database/*.sql`, and app source would be directly downloadable by URL.
 - Municipal scoping is enforced server-side, not trusted to the UI.
 - Serve only over HTTPS. Use secret environment variables, least-privilege DB credentials, regular backups, rate limiting at the edge, and scheduled deletion of expired tokens.
 - For high-volume emergency delivery, connect alert creation to an SMS/push provider through a queue. Browser polling currently refreshes public alerts every 30 seconds.

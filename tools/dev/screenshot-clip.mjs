@@ -1,0 +1,10 @@
+import puppeteer from 'puppeteer-core';
+const [out, url, selector] = process.argv.slice(2);
+const browser = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: 'new', args: ['--no-sandbox', '--disable-gpu'] });
+const page = await browser.newPage();
+await page.setViewport({ width: 1440, height: 900 });
+await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+await new Promise(r => setTimeout(r, 2500));
+const el = await page.$(selector);
+await el.screenshot({ path: out });
+await browser.close();

@@ -2,32 +2,32 @@
 namespace App\Controllers;
 
 use App\Core\{Database, Request, Response, Validator};
-use App\Models\Hazard;
+use App\Models\{Hazard, Notification};
 
 final class HazardController
 {
-    private const TYPES=['flood_zone','storm_surge_area','landslide','earthquake_area','fire','high_risk_area'];
+    private const TYPES=['flood_zone','storm_surge_area','landslide','earthquake_area','tsunami','volcanic','fire','high_risk_area'];
     private const RISKS=['low','moderate','high','critical'];
     private const GEOJSON_TYPES=['FeatureCollection','Feature','Point','MultiPoint','LineString','MultiLineString','Polygon','MultiPolygon','GeometryCollection'];
 
     public function index(Request $r): never
     {
-        $filters=['hazard_type'=>$this->nullable($r->query('hazard_type')),'risk_level'=>$this->nullable($r->query('risk_level')),'municipality_id'=>$this->nullable($r->query('municipality_id')),'search'=>$this->nullable(trim((string)$r->query('search','')))];
-        if($filters['hazard_type']!==null&&!$this->validHazardTypeFilter((string)$filters['hazard_type']))Response::error('Invalid hazard type filter',422);if($filters['risk_level']&&!in_array($filters['risk_level'],self::RISKS,true))Response::error('Invalid risk level filter',422);if($filters['municipality_id']!==null&&!ctype_digit((string)$filters['municipality_id']))Response::error('Invalid municipality filter',422);if($filters['search']!==null&&strlen($filters['search'])>100)Response::error('Search must not exceed 100 characters',422);
+        $filters=['hazard_type'=>$this->nullable($r->query('hazard_type')),'risk_level'=>$this->nullable($r->query('risk_level')),'municipality_id'=>$this->nullable($r->query('municipality_id')),'barangay'=>$this->nullable(trim((string)$r->query('barangay',''))),'search'=>$this->nullable(trim((string)$r->query('search','')))];
+        if($filters['hazard_type']!==null&&!$this->validHazardTypeFilter((string)$filters['hazard_type']))Response::error('Invalid hazard type filter',422);if($filters['risk_level']&&!in_array($filters['risk_level'],self::RISKS,true))Response::error('Invalid risk level filter',422);if($filters['municipality_id']!==null&&!ctype_digit((string)$filters['municipality_id']))Response::error('Invalid municipality filter',422);if($filters['search']!==null&&strlen($filters['search'])>100)Response::error('Search must not exceed 100 characters',422);if($filters['barangay']!==null&&strlen($filters['barangay'])>120)Response::error('Invalid barangay filter',422);
         Response::success((new Hazard())->all($filters));
     }
     public function show(Request $r): never { $item=(new Hazard())->find((int)$r->params['id'],true);if(!$item)Response::error('Hazard not found',404);Response::success($item); }
-    public function store(Request $r): never { $data=$this->validated($r);$model=new Hazard();$id=$model->create($data,(int)$r->user['id']);Response::success($model->find($id),201); }
-    public function update(Request $r): never { $id=(int)$r->params['id'];$model=new Hazard();$item=$model->find($id);if(!$item)Response::error('Hazard not found',404);$this->assertScope($r,$item);$model->update($id,$this->validated($r));Response::success($model->find($id)); }
+    public function store(Request $r): never { $data=$this->validated($r);$model=new Hazard();$id=$model->create($data,(int)$r->user['id']);$this->notifyChange($r,$data,'added');Response::success($model->find($id),201); }
+    public function update(Request $r): never { $id=(int)$r->params['id'];$model=new Hazard();$item=$model->find($id);if(!$item)Response::error('Hazard not found',404);$this->assertScope($r,$item);$data=$this->validated($r);$model->update($id,$data);$this->notifyChange($r,$data,'updated');Response::success($model->find($id)); }
     public function destroy(Request $r): never { $id=(int)$r->params['id'];$model=new Hazard();$item=$model->find($id);if(!$item)Response::error('Hazard not found',404);$this->assertScope($r,$item);$model->archive($id);Response::success(['message'=>'Hazard deleted']); }
 
     private function validated(Request $r): array
     {
         $d=$r->body();$required=['hazard_name','hazard_type','risk_level','geojson_data'];if($r->user['role']==='admin')$required[]='municipality_id';Validator::require($d,$required);$errors=[];$name=trim((string)$d['hazard_name']);$type=$this->validatedHazardType($d,$errors);$description=trim((string)($d['description']??''));$mid=$r->user['role']==='subadmin'?(int)$r->user['municipality_id']:(int)$d['municipality_id'];
-        if(strlen($name)<2||strlen($name)>180)$errors['hazard_name']='Must contain 2 to 180 characters';if(!in_array($d['risk_level'],self::RISKS,true))$errors['risk_level']='Invalid risk level';if(strlen($description)>5000)$errors['description']='Must not exceed 5000 characters';
+        if(strlen($name)<2||strlen($name)>180)$errors['hazard_name']='Must contain 2 to 180 characters';if(!in_array($d['risk_level'],self::RISKS,true))$errors['risk_level']='Invalid risk level';if(strlen($description)>5000)$errors['description']='Must not exceed 5000 characters';$barangays=$this->barangays($d['barangays']??null);if(strlen($barangays)>4000)$errors['barangays']='Too many barangays selected';
         $geojson=$d['geojson_data'];if(!is_array($geojson)||!$this->validGeoJson($geojson))$errors['geojson_data']='Must be valid GeoJSON with coordinates';else{$encoded=json_encode($geojson,JSON_UNESCAPED_SLASHES);if($encoded===false||strlen($encoded)>2097152)$errors['geojson_data']='GeoJSON must not exceed 2 MB';}
         $s=Database::connection()->prepare('SELECT 1 FROM municipalities WHERE id=? AND status="active"');$s->execute([$mid]);if(!$s->fetchColumn())$errors['municipality_id']='Municipality is invalid or inactive';if($errors)Response::error('Validation failed',422,$errors);
-        return ['hazard_name'=>$name,'hazard_type'=>$type,'municipality_id'=>$mid,'risk_level'=>$d['risk_level'],'description'=>$description?:null,'geojson_data'=>$encoded];
+        return ['hazard_name'=>$name,'hazard_type'=>$type,'municipality_id'=>$mid,'barangays'=>$barangays!==''?$barangays:null,'risk_level'=>$d['risk_level'],'description'=>$description?:null,'geojson_data'=>$encoded];
     }
     private function validatedHazardType(array $data,array &$errors): string
     {
@@ -56,6 +56,19 @@ final class HazardController
         return isset($value['coordinates'])&&is_array($value['coordinates'])&&$value['coordinates']!==[]&&$this->coordinatesNumeric($value['coordinates']);
     }
     private function coordinatesNumeric(array $coordinates): bool { foreach($coordinates as $value){if(is_array($value)){if(!$this->coordinatesNumeric($value))return false;}elseif(!is_int($value)&&!is_float($value))return false;}return true; }
+    // Accepts an array or comma-separated list; stores a de-duplicated "A, B, C" string.
+    private function barangays(mixed $value): string
+    {
+        $items=is_array($value)?$value:explode(',',(string)$value);$clean=[];
+        foreach($items as $item){$name=trim((string)preg_replace('/[\x00-\x1F\x7F]/','',(string)$item));if($name!==''&&strlen($name)<=120)$clean[strtolower($name)]=$name;}
+        return implode(', ',array_values($clean));
+    }
     private function nullable(mixed $value): mixed { return $value===null||$value===''?null:$value; }
     private function assertScope(Request $r,array $item): void { if($r->user['role']==='subadmin'&&(int)$item['municipality_id']!==(int)$r->user['municipality_id'])Response::error('Forbidden',403); }
+    private function notifyChange(Request $r,array $data,string $verb): void
+    {
+        $n=new Notification();
+        if($r->user['role']==='subadmin')$n->notifyRole('admin',null,'system_update','Hazard '.$verb,$r->user['fullname'].' '.$verb.' a hazard "'.$data['hazard_name'].'" in '.($r->user['municipality_name']??'their municipality').'.');
+        elseif($r->user['role']==='admin')$n->notifyRole('subadmin',$data['municipality_id'],'system_update','Hazard '.$verb.' for your municipality',$r->user['fullname'].' '.$verb.' a hazard "'.$data['hazard_name'].'" for your municipality.');
+    }
 }

@@ -57,15 +57,16 @@ Disaster-Management-System/
 │   │   └── api.php
 │   ├── storage/
 │   │   └── reports/
-│   ├── vendor/                 # Composer-generated dependencies
+│   ├── vendor/                 # Composer-generated dependencies (gitignored)
 │   ├── .env.example
+│   ├── .htaccess                # denies direct access to everything except public/
 │   ├── bootstrap.php
 │   ├── composer.json
-│   ├── composer.lock
-│   └── railway.json
+│   └── composer.lock
 ├── frontend/
 │   ├── assets/
-│   │   ├── css/app.css
+│   │   ├── css/theme.css        # design system (tokens, components, public site, dashboard)
+│   │   ├── css/tailwind.css     # compiled utilities (npm run build:css)
 │   │   └── js/
 │   │       ├── api.js
 │   │       ├── auth.js
@@ -78,8 +79,7 @@ Disaster-Management-System/
 │   ├── register.html
 │   ├── reset-password.html
 │   ├── config.example.js
-│   ├── config.js
-│   └── vercel.json
+│   └── config.js
 ├── docs/
 │   └── ARCHITECTURE.md
 └── README.md
@@ -288,9 +288,9 @@ Logout revokes the current JTI in `user_sessions`. Password resets hash the one-
 
 Production authentication requirements:
 
-- Use a random `JWT_SECRET` of at least 32 characters and rotate it through Railway secrets.
+- Use a random `JWT_SECRET` of at least 32 characters, stored only in `backend/.env` on the server (never committed).
 - Serve API and frontend only over HTTPS.
-- Restrict `FRONTEND_URL` to explicit Vercel origins; never use wildcard credentialed CORS.
+- Restrict `FRONTEND_URL` to explicit origins; never use wildcard credentialed CORS. On a single-domain deployment this is normally just your own domain.
 - Keep access tokens short-lived. For higher-risk deployments, migrate browser token storage from `sessionStorage` to Secure, HttpOnly, SameSite cookies with CSRF protection.
 - Add rate limiting to login, registration, forgot-password, reset-password, geocoding, and routing endpoints at the edge or API layer.
 - Connect a transactional email provider; debug reset tokens must remain disabled in production.
@@ -317,26 +317,31 @@ Frontend visibility is only a usability layer. Every privileged route is protect
 ## Production deployment structure
 
 ```text
-Vercel (HTTPS)
-  └── frontend/* static HTML/CSS/JS
-          |
-          | HTTPS JSON + Bearer JWT
-          v
-Railway PHP service
-  └── backend/public/index.php -> Router -> Middleware -> Controller -> Model/Service
-          |                                      |
-          | PDO prepared statements              ├── Open-Meteo
-          |                                      ├── OSRM
-          v                                      └── persistent report storage
-Railway MySQL
+Hostinger (Apache + PHP + MySQL, one hosting account, HTTPS)
+  Document root
+  ├── index.php          -> redirects "/" to frontend/
+  ├── frontend/*          static HTML/CSS/JS  (browser fetches this directly)
+  │                              |
+  │                              | same-origin JSON + Bearer JWT
+  │                              v
+  └── backend/
+        ├── .htaccess     -> denies direct access to everything below except public/
+        └── public/index.php -> Router -> Middleware -> Controller -> Model/Service
+                  |                                      |
+                  | PDO prepared statements              ├── Open-Meteo
+                  |                                      ├── OSRM
+                  v                                      └── backend/storage/reports (persistent disk)
+              MySQL (same hosting account)
 ```
+
+Because `frontend/` and `backend/` share one origin, there is no cross-host CORS to manage and no ephemeral-filesystem concern for generated reports.
 
 Before production launch:
 
 1. Import `schema.sql` for an empty database, or `disaster_map_complete.sql` only for a disposable demo environment.
-2. Set production environment secrets and disable `APP_DEBUG`.
-3. Replace local `backend/storage/reports` persistence with Railway volume storage or S3-compatible object storage.
-4. Run Composer with `--no-dev --optimize-autoloader` and pin PHP 8+.
+2. Set production environment secrets in `backend/.env` and disable `APP_DEBUG`.
+3. Confirm `backend/.htaccess` is in place and verify `.env`, `composer.json`, and `database/*.sql` return 403 when requested directly by URL.
+4. Run Composer with `--no-dev --optimize-autoloader` and pin PHP 8+ (upload `vendor/` if the host has no Composer/SSH access).
 5. Configure database backups, migration execution, health checks, centralized logs, error monitoring, and alerting.
 6. Review OpenStreetMap tile, Nominatim, Open-Meteo, and OSRM usage policies; use production-grade providers or self-hosting when traffic exceeds public-service limits.
 7. Add automated API integration tests for all role/scope boundaries and browser smoke tests for map layer toggles and responsive layouts.

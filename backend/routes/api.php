@@ -1,5 +1,5 @@
 <?php
-use App\Controllers\{AdminController, AlertController, AuthController, DashboardController, EvacuationCenterController, EvacuationRouteController, GisController, HazardController, HistoricalDisasterController, MunicipalityController, ReportController, SafeZoneController, UserController, WeatherController};
+use App\Controllers\{AdminController, AlertController, AuthController, CoordinationController, DashboardController, EvacuationCenterController, EvacuationRouteController, GisController, HazardController, HistoricalDisasterController, MunicipalityController, NotificationController, ReportController, SafeZoneController, UserController, WeatherController};
 use App\Core\{Request, Response, Router};
 use App\Middleware\{AuthMiddleware, RoleMiddleware, SecurityMiddleware};
 
@@ -14,12 +14,15 @@ $router->post('/api/auth/login/subadmin',[AuthController::class,'subadminLogin']
 $router->post('/api/auth/login/resident',[AuthController::class,'residentLogin']);
 $router->post('/api/auth/forgot-password',[AuthController::class,'forgotPassword']);
 $router->post('/api/auth/reset-password',[AuthController::class,'resetPassword']);
+$router->post('/api/auth/verify-email',[AuthController::class,'verifyEmail']);
+$router->post('/api/auth/resend-verification',[AuthController::class,'resendVerification']);
 $router->get('/api/auth/me',[AuthController::class,'me'],[$auth]);
 $router->post('/api/auth/logout',[AuthController::class,'logout'],[$auth]);
 $router->put('/api/auth/profile',[AuthController::class,'updateProfile'],[$auth]);
 $router->put('/api/auth/change-password',[AuthController::class,'changePassword'],[$auth]);
 $router->get('/api/dashboard',[DashboardController::class,'index'],[$auth]);
 $router->get('/api/weather/current',[WeatherController::class,'current'],[$auth]);
+$router->get('/api/weather/municipalities',[WeatherController::class,'municipalities'],[$auth]);
 $router->get('/api/reports',[ReportController::class,'index'],[$auth,$manager]);
 $router->post('/api/reports',[ReportController::class,'store'],[$auth,$manager]);
 $router->get('/api/reports/{id}/download',[ReportController::class,'download'],[$auth,$manager]);
@@ -73,8 +76,12 @@ $router->post('/api/alerts',[AlertController::class,'store'],[$auth,$manager]);
 $router->put('/api/alerts/{id}',[AlertController::class,'update'],[$auth,$manager]);
 $router->delete('/api/alerts/{id}',[AlertController::class,'destroy'],[$auth,$manager]);
 $router->post('/api/alerts/{id}/send',[AlertController::class,'send'],[$auth,$manager]);
-$router->get('/api/notifications/history',[AlertController::class,'history'],[$auth]);
-$router->get('/api/notifications/unread-count',[AlertController::class,'unreadCount'],[$auth]);
-$router->post('/api/notifications/{id}/read',[AlertController::class,'markRead'],[$auth]);
+$router->get('/api/notifications/history',[NotificationController::class,'history'],[$auth]);
+$router->get('/api/notifications/unread-count',[NotificationController::class,'unreadCount'],[$auth]);
+$router->post('/api/notifications/{id}/read',[NotificationController::class,'markRead'],[$auth]);
+$router->get('/api/coordination/channels',[CoordinationController::class,'channels'],[$auth,$manager]);
+$router->get('/api/coordination/messages',[CoordinationController::class,'messages'],[$auth,$manager]);
+$router->post('/api/coordination/messages',[CoordinationController::class,'store'],[$auth,$manager]);
+$router->post('/api/coordination/messages/{id}/acknowledge',[CoordinationController::class,'acknowledge'],[$auth,RoleMiddleware::allow('subadmin')]);
 $router->get('/api/admin/stats',[AdminController::class,'stats'],[$auth,$manager]);
 return $router;

@@ -1,6 +1,9 @@
 .env
 backend/.env
 frontend/.env
+backend/.env.*
+!backend/.env.example
+.vscode/sftp.json
 vendor/
 node_modules/
 *.log
@@ -9,3 +12,10 @@ backend/storage/reports/*
 !backend/storage/reports/.gitkeep
 backend/storage/reports/*
 !backend/storage/reports/.gitkeep
+backend/storage/cache/
+
+# Database dumps with real accounts/sessions: never publish (repo is public)
+backend/database/hostinger_import.sql
+backend/database/disaster_map_hostinger_export.sql
+# Built Android APK is deployed by FTP, not versioned
+frontend/downloads/*.apk

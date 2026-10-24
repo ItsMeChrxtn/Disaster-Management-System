@@ -1,0 +1,11 @@
+# Block all direct web access to this folder (source code, .env, vendor,
+# database dumps, storage). Only backend/public/ overrides this and serves
+# requests. This matters most on shared hosting (e.g. Hostinger) where the
+# whole repository ends up under the same document root.
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order deny,allow
+  Deny from all
+</IfModule>

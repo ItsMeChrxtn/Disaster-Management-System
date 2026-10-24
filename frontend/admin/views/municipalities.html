@@ -4,8 +4,14 @@
       <h1 class="text-2xl font-bold">Municipalities</h1>
       <p class="text-sm text-slate-500">Manage municipality records and availability.</p>
     </div>
-    <button id="addMunicipalityBtn" class="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white">Add municipality</button>
+    <button id="addMunicipalityBtn" class="button button-primary">Add municipality</button>
   </div>
+
+  <div class="coordination-tabs mt-5" role="tablist" aria-label="Municipalities module">
+    <a href="municipalities.html" data-open-view="municipalities" role="tab" class="is-active" aria-selected="true">Municipal registry</a>
+    <a href="coordination.html" data-open-view="coordination" role="tab">Coordination channel</a>
+  </div>
+  <div id="municipalCoordinationStrip" class="municipal-coordination-strip mt-4"></div>
 
   <div class="mt-5">
     <div class="municipalities-table-card overflow-x-auto rounded-2xl border bg-white">

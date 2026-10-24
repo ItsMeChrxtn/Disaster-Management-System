@@ -9,9 +9,33 @@ final class AuthController
     public function register(Request $r): never
     {
         $d=$r->body();Validator::require($d,['fullname','email','password','phone','address','municipality_id','barangay']);
-        $this->validateEmailPassword($d);$users=new User();
-        if($users->findByEmail($d['email']))Response::error('Email is already registered',409);
-        $id=$users->create($d);Response::success($users->publicById($id),201);
+        $this->validateEmailPassword($d);$email=strtolower($d['email']);
+        if((new User())->findByEmail($email))Response::error('Email is already registered',409);
+        $code=str_pad((string)random_int(0,999999),6,'0',STR_PAD_LEFT);$minutes=max(5,(int)env('EMAIL_VERIFICATION_TTL_MINUTES',30));
+        Database::connection()->prepare('INSERT INTO pending_registrations (municipality_id,fullname,email,password,phone,address,barangay,code_hash,expires_at) VALUES (?,?,?,?,?,?,?,?,DATE_ADD(UTC_TIMESTAMP(),INTERVAL ? MINUTE)) ON DUPLICATE KEY UPDATE municipality_id=VALUES(municipality_id),fullname=VALUES(fullname),password=VALUES(password),phone=VALUES(phone),address=VALUES(address),barangay=VALUES(barangay),code_hash=VALUES(code_hash),expires_at=VALUES(expires_at)')
+            ->execute([$d['municipality_id']?:null,$d['fullname'],$email,password_hash($d['password'],PASSWORD_DEFAULT),$d['phone']??null,$d['address']??null,$d['barangay']??null,hash('sha256',$code),$minutes]);
+        Response::success(['verification'=>['code'=>$code,'to_email'=>$email,'to_name'=>$d['fullname'],'expires_in_minutes'=>$minutes]],201);
+    }
+
+    public function verifyEmail(Request $r): never
+    {
+        $d=$r->body();Validator::require($d,['email','code']);$email=strtolower($d['email']);
+        $db=Database::connection();$s=$db->prepare('SELECT * FROM pending_registrations WHERE email=? AND code_hash=? AND expires_at>UTC_TIMESTAMP() LIMIT 1');$s->execute([$email,hash('sha256',$d['code'])]);$pending=$s->fetch();
+        if(!$pending)Response::error('Verification code is invalid or expired',422);
+        if((new User())->findByEmail($email))Response::error('Email is already registered',409);
+        (new User())->createVerified($pending);
+        $db->prepare('DELETE FROM pending_registrations WHERE id=?')->execute([$pending['id']]);
+        Response::success(['message'=>'Email verified successfully. You can now sign in.']);
+    }
+
+    public function resendVerification(Request $r): never
+    {
+        $d=$r->body();Validator::require($d,['email']);$email=strtolower($d['email']);
+        $db=Database::connection();$s=$db->prepare('SELECT * FROM pending_registrations WHERE email=? LIMIT 1');$s->execute([$email]);$pending=$s->fetch();
+        if(!$pending)Response::error('No pending registration found for that email.',404);
+        $code=str_pad((string)random_int(0,999999),6,'0',STR_PAD_LEFT);$minutes=max(5,(int)env('EMAIL_VERIFICATION_TTL_MINUTES',30));
+        $db->prepare('UPDATE pending_registrations SET code_hash=?,expires_at=DATE_ADD(UTC_TIMESTAMP(),INTERVAL ? MINUTE) WHERE id=?')->execute([hash('sha256',$code),$minutes,$pending['id']]);
+        Response::success(['message'=>'A new verification code has been generated.','verification'=>['code'=>$code,'to_email'=>$pending['email'],'to_name'=>$pending['fullname'],'expires_in_minutes'=>$minutes]]);
     }
 
     public function login(Request $r): never { $this->authenticate($r,null); }
@@ -23,6 +47,7 @@ final class AuthController
     {
         $d=$r->body();Validator::require($d,['email','password']);$user=(new User())->findByEmail(strtolower($d['email']));
         if(!$user||!password_verify($d['password'],$user['password'])||$user['status']!=='active'||($requiredRole&&$user['role']!==$requiredRole))Response::error('Invalid credentials',401);
+        if(!$user['email_verified_at'])Response::error('Please verify your email before signing in. Check your inbox for the verification code.',403);
         if(password_needs_rehash($user['password'],PASSWORD_DEFAULT)){Database::connection()->prepare('UPDATE users SET password=? WHERE id=?')->execute([password_hash($d['password'],PASSWORD_DEFAULT),$user['id']]);}
         $hours=max(1,(int)env('TOKEN_TTL_HOURS',24));$now=time();$jti=bin2hex(random_bytes(16));$expires=$now+$hours*3600;
         $token=Jwt::encode(['iss'=>env('JWT_ISSUER','disaster-map-api'),'sub'=>(string)$user['id'],'jti'=>$jti,'role'=>$user['role'],'iat'=>$now,'exp'=>$expires]);

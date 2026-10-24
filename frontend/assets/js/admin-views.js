@@ -12,7 +12,7 @@ window.AdminViews=(()=>{
     const modules=entries();
     const markup=modules.map(module=>{
       const request=new XMLHttpRequest();
-      request.open('GET',`${module.src}?v=20260712-users-no-emailjs`,false);
+      request.open('GET',`${module.src}?v=20261024-r3`,false);
       request.send(null);
       if(request.status!==0&&(request.status<200||request.status>=300)){
         throw new Error(`Unable to load ${module.id} from ${module.src}`);

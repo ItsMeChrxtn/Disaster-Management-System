@@ -7,18 +7,18 @@ final class User extends BaseModel
     private ?bool $hasPasswordMustChange=null;
 
     public function findByEmail(string $email): ?array { $s=$this->db->prepare('SELECT * FROM users WHERE email=? LIMIT 1');$s->execute([$email]);return $s->fetch()?:null; }
-    public function create(array $d): int { $s=$this->db->prepare('INSERT INTO users (municipality_id,fullname,email,password,phone,address,barangay,role,status) VALUES (?,?,?,?,?,?,?,"resident","active")');$s->execute([$d['municipality_id']?:null,$d['fullname'],strtolower($d['email']),password_hash($d['password'],PASSWORD_DEFAULT),$d['phone']??null,$d['address']??null,$d['barangay']??null]);return (int)$this->db->lastInsertId(); }
+    public function createVerified(array $pending): int { $s=$this->db->prepare('INSERT INTO users (municipality_id,fullname,email,password,phone,address,barangay,role,status,email_verified_at) VALUES (?,?,?,?,?,?,?,"resident","active",UTC_TIMESTAMP())');$s->execute([$pending['municipality_id']?:null,$pending['fullname'],$pending['email'],$pending['password'],$pending['phone']??null,$pending['address']??null,$pending['barangay']??null]);return (int)$this->db->lastInsertId(); }
     public function publicById(int $id): ?array { return $this->findManaged($id); }
     public function managedList(?int $municipalityId=null): array
     {
         $sql='SELECT '.$this->publicColumns().' FROM users u LEFT JOIN municipalities m ON m.id=u.municipality_id';$values=[];
-        if($municipalityId!==null){$sql.=' WHERE u.municipality_id=? AND u.role="resident" AND u.status<>"deleted"';$values[]=$municipalityId;}$sql.=' ORDER BY u.created_at DESC LIMIT 500';$s=$this->db->prepare($sql);$s->execute($values);return $s->fetchAll();
+        if($municipalityId!==null){$sql.=' WHERE u.municipality_id=? AND u.role="resident" AND u.status<>"deleted"';$values[]=$municipalityId;}else{$sql.=' WHERE u.status<>"deleted"';}$sql.=' ORDER BY u.created_at DESC LIMIT 500';$s=$this->db->prepare($sql);$s->execute($values);return $s->fetchAll();
     }
     public function findManaged(int $id): ?array { $s=$this->db->prepare('SELECT '.$this->publicColumns().' FROM users u LEFT JOIN municipalities m ON m.id=u.municipality_id WHERE u.id=?');$s->execute([$id]);return $s->fetch()?:null; }
     public function managementCreate(array $d): int
     {
-        if($this->hasPasswordMustChange()){$s=$this->db->prepare('INSERT INTO users (municipality_id,fullname,email,password,phone,address,barangay,role,status,password_must_change) VALUES (?,?,?,?,?,?,?,? ,"active",?)');$s->execute([$d['municipality_id'],$d['fullname'],$d['email'],password_hash($d['password'],PASSWORD_DEFAULT),$d['phone'],$d['address'],$d['barangay'],$d['role'],!empty($d['password_must_change'])?1:0]);}
-        else{$s=$this->db->prepare('INSERT INTO users (municipality_id,fullname,email,password,phone,address,barangay,role,status) VALUES (?,?,?,?,?,?,?,? ,"active")');$s->execute([$d['municipality_id'],$d['fullname'],$d['email'],password_hash($d['password'],PASSWORD_DEFAULT),$d['phone'],$d['address'],$d['barangay'],$d['role']]);}
+        if($this->hasPasswordMustChange()){$s=$this->db->prepare('INSERT INTO users (municipality_id,fullname,email,password,phone,address,barangay,role,status,email_verified_at,password_must_change) VALUES (?,?,?,?,?,?,?,?,"active",UTC_TIMESTAMP(),?)');$s->execute([$d['municipality_id'],$d['fullname'],$d['email'],password_hash($d['password'],PASSWORD_DEFAULT),$d['phone'],$d['address'],$d['barangay'],$d['role'],!empty($d['password_must_change'])?1:0]);}
+        else{$s=$this->db->prepare('INSERT INTO users (municipality_id,fullname,email,password,phone,address,barangay,role,status,email_verified_at) VALUES (?,?,?,?,?,?,?,?,"active",UTC_TIMESTAMP())');$s->execute([$d['municipality_id'],$d['fullname'],$d['email'],password_hash($d['password'],PASSWORD_DEFAULT),$d['phone'],$d['address'],$d['barangay'],$d['role']]);}
         return (int)$this->db->lastInsertId();
     }
     public function managementUpdate(int $id,array $d): void

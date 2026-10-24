@@ -4,75 +4,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Secure Disaster Map operations sign in">
+  <meta name="theme-color" content="#0f1b33">
   <title>Sign in | Disaster Map</title>
-  <link rel="stylesheet" href="assets/css/tailwind.css?v=20260620-ui2">
-  <link rel="stylesheet" href="assets/css/app.css?v=20260620-ui2">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/tailwind.css?v=20261001-ds3">
+  <link rel="stylesheet" href="assets/css/theme.css?v=20261001-ds3">
 </head>
 <body class="auth-shell">
-  <main class="grid min-h-screen lg:grid-cols-[1.08fr_.92fr]">
-    <section class="auth-visual hidden min-h-screen items-center p-12 text-white lg:flex">
-      <div class="auth-grid"></div>
-      <span class="auth-orbit -left-24 top-20 h-80 w-80"></span>
-      <span class="auth-orbit bottom-10 right-10 h-56 w-56"></span>
-      <div class="relative z-10 mx-auto max-w-xl">
-        <a href="index.html" class="inline-flex items-center gap-3">
-          <span class="grid h-12 w-12 place-items-center rounded-2xl bg-sky-500 font-bold shadow-2xl">DM</span>
-          <span>
-            <strong class="block text-lg">Disaster Map</strong>
-            <small class="text-sky-200">Provincial Emergency Operations Platform</small>
-          </span>
+  <main class="auth-layout">
+    <section class="auth-visual">
+      <div class="auth-grid" aria-hidden="true"></div>
+      <span class="auth-orbit a" aria-hidden="true"></span>
+      <span class="auth-orbit b" aria-hidden="true"></span>
+      <div class="auth-visual-inner">
+        <a href="index.html" class="brand-mark">
+          <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+          <span class="brand-text"><strong>Disaster Map</strong><small>Provincial Emergency Operations Platform</small></span>
         </a>
-        <p class="mt-20 text-sm font-bold uppercase tracking-[.22em] text-sky-300">Real-time situational awareness</p>
-        <h1 class="mt-4 text-5xl font-black leading-tight tracking-tight">Prepared communities.<br><span class="text-sky-300">Faster response.</span></h1>
-        <p class="mt-6 max-w-lg text-base leading-7 text-slate-300">A unified hazard intelligence, evacuation planning, and emergency alert platform for PDRRMO, municipal teams, and residents.</p>
-        <div class="mt-10 grid grid-cols-3 gap-3">
-          <div class="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur"><strong class="block text-xl">24/7</strong><span class="text-xs text-slate-400">Monitoring</span></div>
-          <div class="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur"><strong class="block text-xl">GIS</strong><span class="text-xs text-slate-400">Hazard layers</span></div>
-          <div class="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur"><strong class="block text-xl">Live</strong><span class="text-xs text-slate-400">Public alerts</span></div>
+        <p class="eyebrow">Real-time situational awareness</p>
+        <h1>Prepared communities.<br><span>Faster response.</span></h1>
+        <p class="lead">A unified hazard intelligence, evacuation planning, and emergency alert platform for PDRRMO, municipal teams, and residents of Cavite.</p>
+        <div class="auth-stats">
+          <div><strong>24/7</strong><span>Monitoring</span></div>
+          <div><strong>GIS</strong><span>Hazard layers</span></div>
+          <div><strong>Live</strong><span>Public alerts</span></div>
         </div>
       </div>
     </section>
 
-    <section class="flex min-h-screen items-center justify-center bg-slate-50 px-5 py-10 sm:px-10">
-      <div class="auth-card animate__animated animate__fadeIn">
-        <a href="index.html" class="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-600">Return to public hazard map</a>
-        <p class="text-xs font-extrabold uppercase tracking-[.18em] text-blue-600">Secure operations access</p>
-        <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950">Welcome back</h2>
-        <p class="mt-2 text-sm text-slate-500">Sign in with your assigned Disaster Map credentials. Your account type is detected automatically.</p>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <a href="index.html" class="auth-back">&larr; Return to public hazard map</a>
+        <p class="eyebrow">Secure operations access</p>
+        <h2>Welcome back</h2>
+        <p class="intro">Sign in with your assigned Disaster Map credentials. Your account type is detected automatically.</p>
 
-        <form id="loginForm" class="mt-8 space-y-5">
-          <label class="block text-sm font-bold text-slate-700">
-            Email address
-            <input name="email" type="email" autocomplete="email" required placeholder="name@example.gov.ph" class="mt-2">
-          </label>
-
-          <label class="block text-sm font-bold text-slate-700">
-            Password
-            <div class="password-field mt-2">
+        <form id="loginForm" class="auth-form">
+          <label>Email address<input name="email" type="email" autocomplete="email" required placeholder="name@example.gov.ph"></label>
+          <label>Password
+            <div class="password-field">
               <input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
               <button type="button" class="password-toggle" data-password-toggle="loginPassword">Show</button>
             </div>
           </label>
-
-          <p class="rounded-xl bg-blue-50 px-4 py-3 text-xs font-semibold leading-5 text-blue-700">No need to choose Admin, Sub Admin, or Resident. The system identifies your role from the account credentials.</p>
-          <p id="error" class="hidden"></p>
-          <button type="submit" class="button button-primary w-full">Sign in securely</button>
+          <p class="auth-note">No need to choose Admin, Sub Admin, or Resident &mdash; the system identifies your role from the account.</p>
+          <p id="error"></p>
+          <button type="submit" class="button button-primary">Sign in securely</button>
         </form>
 
-        <div class="mt-6 flex flex-wrap justify-between gap-3 text-sm">
-          <a href="register.html" class="font-bold text-blue-600">Create resident account</a>
-          <a href="forgot-password.html" class="font-medium text-slate-500 hover:text-blue-600">Forgot password?</a>
+        <div class="auth-links">
+          <a href="register.html">Create resident account</a>
+          <a href="forgot-password.html" class="muted">Forgot password?</a>
         </div>
-        <p class="mt-10 border-t pt-5 text-xs leading-5 text-slate-400">Authorized access only. Activity is recorded in the platform audit log.</p>
+        <p class="auth-foot">On Android? <a href="downloads/disaster-map.apk" download>Download the Disaster Map app (.apk)</a>.<br>Authorized access only. Activity is recorded in the platform audit log.</p>
       </div>
     </section>
   </main>
-
   <script src="vendor/sweetalert2/sweetalert2.all.min.js?v=11"></script>
-  <script src="config.js?v=20260620-fix2"></script>
-  <script src="assets/js/api.js?v=20260620-fix2"></script>
-  <script src="assets/js/alerts.js?v=20260620-fix1"></script>
-  <script src="assets/js/auth-pages.js?v=20260620-fix1"></script>
-  <script src="assets/js/auth.js?v=20260705-temp-password1"></script>
+  <script src="config.js?v=20260920-ds1"></script>
+  <script src="assets/js/api.js?v=20260920-ds1"></script>
+  <script src="assets/js/alerts.js?v=20261024-r3"></script>
+  <script src="assets/js/auth-pages.js?v=20260920-ds1"></script>
+  <script src="assets/js/auth.js?v=20260920-ds1"></script>
 </body>
 </html>

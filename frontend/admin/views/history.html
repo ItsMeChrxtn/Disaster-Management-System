@@ -2,10 +2,12 @@
   <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
     <div>
       <h1 class="text-2xl font-bold">Historical disaster records</h1>
-      <p class="text-sm text-slate-500">Review recorded disasters, casualties, and estimated damages.</p>
+      <p class="text-sm text-slate-500">Review recorded disasters, affected barangays, casualties, and estimated damages.</p>
     </div>
-    <button id="newHistoricalBtn" class="admin-only rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white">Add record</button>
+    <button id="newHistoricalBtn" class="admin-only button button-primary">Add record</button>
   </div>
+
+  <div id="historicalSummary" class="history-summary mt-5" aria-live="polite"></div>
 
   <div class="mt-5 grid gap-5 xl:grid-cols-3">
     <div class="history-table-card overflow-x-auto rounded-2xl border bg-white xl:col-span-2">
@@ -15,6 +17,7 @@
             <th class="p-4">Disaster</th>
             <th class="p-4">Municipality</th>
             <th class="p-4">Date</th>
+            <th class="p-4">Affected barangays</th>
             <th class="p-4">Casualties</th>
             <th class="p-4">Damages</th>
             <th class="p-4 text-right">Actions</th>
@@ -29,12 +32,12 @@
         <h2 id="historicalFormTitle" class="font-semibold">Add historical record</h2>
         <label class="history-form-field history-form-field-full">
           <span>Record title</span>
-          <input name="title" required minlength="2" maxlength="180" placeholder="e.g. Barangay flood event" class="w-full rounded-lg border p-3">
+          <input name="title" required minlength="2" maxlength="180" placeholder="e.g. Barangay flood event">
         </label>
         <div class="history-form-grid">
           <label class="history-form-field">
             <span>Disaster type</span>
-            <select name="disaster_type" required class="w-full rounded-lg border p-3">
+            <select name="disaster_type" required>
               <option value="">Select disaster type</option>
               <option value="Flood">Flood</option>
               <option value="Flash Flood">Flash Flood</option>
@@ -72,27 +75,47 @@
           </label>
           <label class="history-form-field">
             <span>Municipality</span>
-            <select name="municipality_id" required class="w-full rounded-lg border p-3"><option value="">Select municipality</option></select>
+            <select name="municipality_id"><option value="">Province-wide (all of Cavite)</option></select>
           </label>
           <label class="history-form-field">
             <span>Date occurred</span>
-            <input name="date_occurred" type="date" required class="w-full rounded-lg border p-3">
+            <input name="date_occurred" type="date" required>
           </label>
           <label class="history-form-field">
-            <span>Casualties</span>
-            <input name="casualties" type="number" min="0" required placeholder="0" class="w-full rounded-lg border p-3">
+            <span>Event / typhoon name</span>
+            <input name="event_name" maxlength="160" placeholder='e.g. Typhoon "Carina" (2024)'>
+          </label>
+          <label class="history-form-field">
+            <span>Casualties (deaths)</span>
+            <input name="casualties" type="number" min="0" required placeholder="0">
+          </label>
+          <label class="history-form-field">
+            <span>Injured</span>
+            <input name="injured" type="number" min="0" placeholder="0">
+          </label>
+          <label class="history-form-field">
+            <span>Evacuated families</span>
+            <input name="evacuated_families" type="number" min="0" placeholder="0">
           </label>
           <label class="history-form-field">
             <span>Estimated damages</span>
-            <input name="damages" type="number" min="0" step="0.01" required placeholder="0.00" class="w-full rounded-lg border p-3">
+            <input name="damages" type="number" min="0" step="0.01" required placeholder="0.00">
           </label>
         </div>
         <label class="history-form-field history-form-field-full">
-          <span>Description</span>
-          <textarea name="description" maxlength="5000" rows="5" placeholder="Briefly describe the impact, affected areas, and response notes." class="w-full rounded-lg border p-3"></textarea>
+          <span>Affected barangays <small>(one per line; the count is computed automatically)</small></span>
+          <textarea name="affected_barangays" rows="4" placeholder="Bancaan&#10;Labac&#10;Mabulo"></textarea>
         </label>
-        <p id="historicalFormError" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700"></p>
-        <button class="w-full rounded-lg bg-indigo-600 p-3 font-semibold text-white">Save record</button>
+        <label class="history-form-field history-form-field-full">
+          <span>Description</span>
+          <textarea name="description" maxlength="5000" rows="5" placeholder="Briefly describe the impact, affected areas, and response notes."></textarea>
+        </label>
+        <label class="history-form-field history-form-field-full">
+          <span>Source</span>
+          <input name="source" maxlength="255" placeholder="e.g. PDRRMO SitRep 15">
+        </label>
+        <p id="historicalFormError" class="hidden form-error"></p>
+        <button class="button button-primary w-full">Save record</button>
       </form>
     </aside>
   </div>

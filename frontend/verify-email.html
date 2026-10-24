@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verify Email | Disaster Map</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/tailwind.css?v=20261001-ds3">
+  <link rel="stylesheet" href="assets/css/theme.css?v=20261001-ds3">
+</head>
+<body class="auth-shell">
+  <main class="auth-panel auth-panel-solo">
+    <div class="auth-card solo">
+      <a href="index.html" class="brand-mark">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+        <span class="brand-text"><strong>Disaster Map</strong><small>Cavite Readiness Hub</small></span>
+      </a>
+      <p class="eyebrow">Account verification</p>
+      <h1>Verify your email</h1>
+      <p id="verifyIntro" class="intro">Enter the 6-digit code we emailed you to activate your account.</p>
+      <form id="verifyForm" class="auth-form">
+        <input type="hidden" name="email">
+        <input type="hidden" name="code">
+        <label id="emailFieldLabel">Email address<input name="emailVisible" type="email" required autocomplete="email" placeholder="name@example.gov.ph"></label>
+        <label>Verification code
+          <div id="otpBoxes">
+            <input class="otp-box" maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="Digit 1">
+            <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 2">
+            <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 3">
+            <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 4">
+            <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 5">
+            <input class="otp-box" maxlength="1" inputmode="numeric" aria-label="Digit 6">
+          </div>
+        </label>
+        <button type="submit" class="button button-primary">Verify email</button>
+      </form>
+      <div class="auth-links">
+        <a href="login.html" class="muted">&larr; Back to sign in</a>
+        <button type="button" id="resendBtn" class="button button-secondary button-sm">Resend code</button>
+      </div>
+    </div>
+  </main>
+  <script src="https://unpkg.com/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="vendor/sweetalert2/sweetalert2.all.min.js?v=11"></script>
+  <script src="config.js?v=20260920-ds1"></script>
+  <script src="assets/js/api.js?v=20260920-ds1"></script>
+  <script src="assets/js/alerts.js?v=20261024-r3"></script>
+  <script src="assets/js/auth-pages.js?v=20260920-ds1"></script>
+</body>
+</html>

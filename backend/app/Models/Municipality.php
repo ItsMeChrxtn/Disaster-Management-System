@@ -5,7 +5,7 @@ final class Municipality extends BaseModel
 {
     public function all(bool $activeOnly=false): array
     {
-        $sql='SELECT id,municipality_name,description,status,created_at,updated_at FROM municipalities'.($activeOnly?' WHERE status="active"':'').' ORDER BY municipality_name';
+        $sql='SELECT id,municipality_name,description,status,center_lat,center_lng,created_at,updated_at FROM municipalities'.($activeOnly?' WHERE status="active"':'').' ORDER BY municipality_name';
         return $this->db->query($sql)->fetchAll();
     }
     public function find(int $id): ?array

@@ -6,7 +6,7 @@ use App\Models\EvacuationCenter;
 
 final class EvacuationCenterController
 {
-    public function index(Request $r): never { $mid=$r->user['role']==='subadmin'?(int)$r->user['municipality_id']:($r->query('municipality_id')!==null?(int)$r->query('municipality_id'):null);Response::success((new EvacuationCenter())->all($mid)); }
+    public function index(Request $r): never { $mid=$r->user['role']==='subadmin'?(int)$r->user['municipality_id']:($r->query('municipality_id')!==null&&$r->query('municipality_id')!==''?(int)$r->query('municipality_id'):null);Response::success((new EvacuationCenter())->all($mid)); }
     public function show(Request $r): never { $item=(new EvacuationCenter())->find((int)$r->params['id']);if(!$item)Response::error('Evacuation center not found',404);$this->assertScope($r,$item);Response::success($item); }
     public function nearest(Request $r): never
     {

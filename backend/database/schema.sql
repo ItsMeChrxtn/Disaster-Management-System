@@ -35,8 +35,31 @@ CREATE TABLE password_reset_tokens (
   CONSTRAINT fk_reset_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE, INDEX idx_reset_validation (token_hash,expires_at,used_at)
 ) ENGINE=InnoDB;
 
+CREATE TABLE email_verification_tokens (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, user_id BIGINT UNSIGNED NOT NULL, token_hash CHAR(64) NOT NULL UNIQUE,
+  expires_at TIMESTAMP NOT NULL, used_at TIMESTAMP NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_verify_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE, INDEX idx_verify_validation (token_hash,expires_at,used_at)
+) ENGINE=InnoDB;
+
+-- Registrations are held here until the email is verified; only then does a real users row get created.
+CREATE TABLE pending_registrations (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  municipality_id BIGINT UNSIGNED NULL,
+  fullname VARCHAR(150) NOT NULL,
+  email VARCHAR(190) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  phone VARCHAR(30) NULL,
+  address VARCHAR(255) NULL,
+  barangay VARCHAR(120) NULL,
+  code_hash CHAR(64) NOT NULL,
+  expires_at TIMESTAMP NOT NULL DEFAULT '2000-01-01 00:00:00',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_pending_email (email)
+) ENGINE=InnoDB;
+
 CREATE TABLE hazards (
-  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, municipality_id BIGINT UNSIGNED NULL,
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, municipality_id BIGINT UNSIGNED NULL, barangays TEXT NULL,
   hazard_name VARCHAR(180) NOT NULL,
   hazard_type VARCHAR(80) NOT NULL,
   risk_level ENUM('low','moderate','high','critical') NOT NULL, description TEXT NULL, geojson_data JSON NOT NULL,
@@ -85,7 +108,7 @@ CREATE TABLE weather_updates (
 CREATE TABLE safe_zones (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY, municipality_id BIGINT UNSIGNED NOT NULL,
   safezone_name VARCHAR(180) NOT NULL, address VARCHAR(255) NULL, latitude DECIMAL(10,7) NOT NULL, longitude DECIMAL(10,7) NOT NULL,
-  capacity INT UNSIGNED NULL, contact_person VARCHAR(120) NULL, contact_number VARCHAR(30) NULL, description TEXT NULL, status ENUM('active','inactive') NOT NULL DEFAULT 'active', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  capacity INT UNSIGNED NULL, perimeter_radius_m INT UNSIGNED NULL, contact_person VARCHAR(120) NULL, contact_number VARCHAR(30) NULL, description TEXT NULL, status ENUM('active','inactive') NOT NULL DEFAULT 'active', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_safe_zone_municipality FOREIGN KEY (municipality_id) REFERENCES municipalities(id) ON DELETE CASCADE,
   INDEX idx_safe_zone_scope (municipality_id,status)
